@@ -8,5 +8,5 @@ urlpatterns = [
     path('connexion/', views.connexion, name='connexion'),
     path('accueil/', views.accueil, name='accueil'),
     path('deconnexion/', views.deconnexion, name='deconnexion'),
-
+    path('envoyer-code/', views.envoyer_code_view, name='envoyer_code'),
 ]

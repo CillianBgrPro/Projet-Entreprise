@@ -1,19 +1,29 @@
+import random
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.db import IntegrityError
 
 def inscription(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request=request)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('accueil')
+            try:
+                user = form.save()
+                login(request, user)
+                if 'verification_code' in request.session:
+                    del request.session['verification_code']
+                return redirect('accueil')
+            except IntegrityError:
+                form.add_error(None, "Une erreur est survenue : cet utilisateur existe probablement déjà.")
     else:
-        form = CustomUserCreationForm()
-    return render(request, 'inscription.html', {'form': form})
+        form = CustomUserCreationForm(request=request)
+    
+    return render(request, 'connexion/inscription.html', {'form': form})
 
 def connexion(request):
     if request.method == 'POST':
@@ -25,7 +35,8 @@ def connexion(request):
             return redirect('accueil')
         else:
             messages.error(request, 'Identifiants invalides.')
-    return render(request, 'connexion.html')
+    
+    return render(request, 'connexion/connexion.html')
 
 @login_required
 def accueil(request):
@@ -34,3 +45,20 @@ def accueil(request):
 def deconnexion(request):
     logout(request)
     return redirect('connexion')
+
+def envoyer_code_view(request):
+    email = request.GET.get('email')
+    if email:
+        code = str(random.randint(100000, 999999))
+        request.session['verification_code'] = code
+        request.session['email_a_verifier'] = email
+        
+        send_mail(
+            'Votre code de vérification - DR. VIRTUORL',
+            f'Votre code est : {code}',
+            'noreply@virtuorl.fr',
+            [email],
+            fail_silently=False,
+        )
+        return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'error', 'message': 'Email manquant'})
