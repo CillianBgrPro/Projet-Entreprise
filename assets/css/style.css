@@ -1,3 +1,127 @@
-body{
-    background-color: black;
+/* 1. Box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
+
+/* 2. Remove default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 3. HTML & body defaults */
+html, body {
+  height: 100%;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+body {
+  text-rendering: optimizeSpeed;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 4. Remove list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* 5. Anchor reset */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 6. Images & media */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Forms */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* Remove default button styling */
+button {
+  cursor: pointer;
+}
+
+/* Prevent textarea resize overflow issues */
+textarea {
+  resize: vertical;
+}
+
+/* 8. Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 9. Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* 10. Paragraphs */
+p {
+  overflow-wrap: break-word;
+}
+
+/* 11. Remove default fieldset styles */
+fieldset {
+  border: 0;
+}
+
+/* 12. Remove quote styling */
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+}
+
+/* 13. Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 14. Remove default focus outline (replace if needed) */
+:focus {
+  outline: none;
+}
+
+/* Optional: visible focus for accessibility */
+:focus-visible {
+  outline: 2px solid #4d90fe;
+  outline-offset: 2px;
+}
+
+/*
+    Fin du reset CSS
+*/

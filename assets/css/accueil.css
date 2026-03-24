@@ -1,0 +1,127 @@
+main{
+    display: flex;
+    flex-direction: column;
+}
+
+main > div#background{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 150px;
+    background: url("../images/banner.jpg") center/cover no-repeat;
+    text-align: center;
+}
+
+main > div#background > h2{
+    color: white;
+    filter: drop-shadow(2px 2px 2px black);
+    width: 100%;
+    font-size: 22px;
+}
+
+main > div#container{
+    width: 100vw;
+    margin: 2% 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.card, div.card-type-one, div.card-type-two{
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    /* filter: drop-shadow(12px 12px 12px #3862a5); */ /*a revoir*/
+    margin: 2% 1%;
+    min-height: 100px;
+    background-color: #2B4570;
+    color: white;
+    width: 30vw;
+}
+
+main > div#container > div.card > *{
+    padding: 0 4%;
+}
+
+main > div#container > div.card > div#container-img{
+    min-width: 80px;
+    max-width: 300px;
+}
+
+main > div#container > div.card > div#container-img > span{
+    width: 100%;
+    font-size: 5rem;
+}
+
+main > div#container > div.card > div#container-descritpion{
+    min-width: 100px;
+    max-width: 100%;
+}
+
+main > div#container > div.card > div#container-descritpion > h3{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+main > div#container > div.card > div#container-descritpion > p{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+h2{
+    text-align: center;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+main > div#about{
+    width: 100vw;
+}
+
+main > div#about > h3{
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+main > div#about > div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+main > div#about > div > div{
+    width: 40vw;
+}
+
+main > div#about > div > div.card-type-two > span{
+    font-size: 10rem;
+}
+
+main > div#about > div > div > div > span{
+    font-size: 10rem;
+}
+
+main > div#about > div > div.card-type-one{
+    display: flex;
+    flex-direction: row;
+}
+
+main > div#about > div > div.card-type-two{
+    display: flex;
+    flex-direction: column;
+}
+
+main > div#publication > div#list-ex{
+    display: flex;
+    flex-direction: column;
+    background-color: #4E9DC7;
+    border-radius: 25px;
+    padding: 3%;
+    margin: 0 5%;
+}
+
+main > div#publication > div#list-ex > div.row{
+    display: flex;
+    flex-direction: row;
+}
