@@ -106,6 +106,7 @@ main > div#about > div > div > div > span{
 
 main > div#about > div > div.card-type-one{
     display: flex;
+    justify-content: center;
     flex-direction: row;
 }
 
