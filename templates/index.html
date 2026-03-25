@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Virtuorl{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    {% include 'partials/headers/header_main.html' %}
+    <div id="app-content">
+        {% block content %}{% endblock %}
+        {% block extra_script %}{% endblock %}
+    </div>
+
+    <script src="{% static 'js/router.js' %}"></script>
+</body>
+
+</html>

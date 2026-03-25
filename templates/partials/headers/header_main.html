@@ -1,18 +1,20 @@
+{% load static %}
 <header>
+    <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
     <nav class="navbar">
         <div class="logo">
-            <a href="/">Virtuorl</a>
+            <a href="{% url 'accueil' %}">Virtuorl</a>
         </div>
 
         <ul class="nav-links">
-            <li><a href="/about">A propos</a></li>
-            <li><a href="/login">Se connecter</a></li>
-            <li><a href="/signup">Créer un compte</a></li>
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
+            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
         </ul>
 
         <div class="account">
-            <a href="/account">Mon compte</a>
-            <img src="/static/images/avatar.png" alt="Image de profil" />
+            <a href="#">Mon compte</a>
+            <img src="{% static 'images/avatar.png' %}" alt="Image de profil" />
         </div>
     </nav>
 </header>

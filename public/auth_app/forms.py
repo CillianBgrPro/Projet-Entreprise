@@ -4,10 +4,12 @@ from .models import User
 
 class CustomUserCreationForm(UserCreationForm):
     verification_code = forms.CharField(label="Code de vérification", max_length=6)
+    university = forms.CharField(label="Université", required=False)
+    study_year = forms.IntegerField(label="Année d'étude", required=False)
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "last_name", "first_name", "email", "university", "study_year")
+        fields = ("username", "last_name", "first_name", "email")
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -37,4 +39,13 @@ class CustomUserCreationForm(UserCreationForm):
         user.email = email
         if commit:
             user.save()
+            from .models import Student
+            university = self.cleaned_data.get('university')
+            study_year = self.cleaned_data.get('study_year')
+            Student.objects.create(
+                user=user,
+                ine=0,  # par defaut
+                university=university if university else "",
+                year_of_study=study_year if study_year else None
+            )
         return user

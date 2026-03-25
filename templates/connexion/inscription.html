@@ -1,116 +1,119 @@
+{% extends base_template %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - DR. VIRTUORL</title>
-    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
-</head>
-<body class="inscription-page">
+{% block title %}Inscription - DR. VIRTUORL{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/connexion.css' %}">
+{% endblock %}
+{% block body_class %}inscription-page{% endblock %}
+{% block content %}
 
-    <header class="header">
-        <div class="logo">DR. VIRTU<span>ORL</span></div>
-        <div class="user-icon">👤</div>
-    </header>
+<header class="header">
+    <div class="logo">DR. VIRTU<span>ORL</span></div>
+    <div class="user-icon">👤</div>
+</header>
 
-    <div class="container">
-        {% if form.errors %}
-            <ul class="error-list">
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ field.label }} : {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endif %}
-            </ul>
+<div class="container">
+    {% if form.errors %}
+    <ul class="error-list">
+        {% for field in form %}
+        {% for error in field.errors %}
+        <li>{{ field.label }} : {{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
         {% endif %}
+    </ul>
+    {% endif %}
 
-        <form method="post" action="{% url 'inscription' %}" id="register-form">
-            {% csrf_token %}
-            <input type="hidden" name="username" id="id_username">
+    <form method="post" action="{% url 'inscription' %}" id="register-form">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="id_username">
 
-            <div class="form-grid">
-                <div class="col">
-                    <div class="input-group">
-                        <label>Nom</label>
-                        <input type="text" name="last_name" placeholder="----------------------------" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Prénom</label>
-                        <input type="text" name="first_name" placeholder="----------------------------" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Mail</label>
-                        <input type="email" id="user-email" name="email" placeholder="----------------------------" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Mot de Passe</label>
-                        <input type="password" id="pass1" name="password1" placeholder="----------------------------" required>
-                        <span class="eye-icon" onclick="togglePass('pass1')">voir</span>
-                    </div>
+        <div class="form-grid">
+            <div class="col">
+                <div class="input-group">
+                    <label>Nom</label>
+                    <input type="text" name="last_name" placeholder="----------------------------" required>
                 </div>
-
-                <div class="col">
-                    <div class="input-group">
-                        <label>Université</label>
-                        <input type="text" name="university" placeholder="----------------------------">
-                    </div>
-                    <div class="input-group">
-                        <label>Année d'étude</label>
-                        <input type="text" name="study_year" placeholder="---------">
-                    </div>
-                    <div class="email-row">
-                        <div class="input-group">
-                            <label>Code de vérification</label>
-                            <input type="text" name="verification_code" placeholder="------" required>
-                        </div>
-                        <button type="button" class="btn-send-code" id="send-code-btn">Envoyer le code</button>
-                    </div>
-                    <div class="input-group" style="margin-top: 20px;">
-                        <label>Confirmation Mot de Passe</label>
-                        <input type="password" id="pass2" name="password2" placeholder="----------------------------" required>
-                        <span class="eye-icon" onclick="togglePass('pass2')">voir</span>
-                    </div>
+                <div class="input-group">
+                    <label>Prénom</label>
+                    <input type="text" name="first_name" placeholder="----------------------------" required>
+                </div>
+                <div class="input-group">
+                    <label>Mail</label>
+                    <input type="email" id="user-email" name="email" placeholder="----------------------------"
+                        required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de Passe</label>
+                    <input type="password" id="pass1" name="password1" placeholder="----------------------------"
+                        required>
+                    <span class="eye-icon" onclick="togglePass('pass1')">voir</span>
                 </div>
             </div>
 
-            <div class="consent-container">
-                <input type="checkbox" name="consent" id="consent" required>
-                <label for="consent">J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique menée à l'aide de ce site...</label>
+            <div class="col">
+                <div class="input-group">
+                    <label>Université</label>
+                    <input type="text" name="university" placeholder="----------------------------">
+                </div>
+                <div class="input-group">
+                    <label>Année d'étude</label>
+                    <input type="text" name="study_year" placeholder="---------">
+                </div>
+                <div class="email-row">
+                    <div class="input-group">
+                        <label>Code de vérification</label>
+                        <input type="text" name="verification_code" placeholder="------" required>
+                    </div>
+                    <button type="button" class="btn-send-code" id="send-code-btn">Envoyer le code</button>
+                </div>
+                <div class="input-group" style="margin-top: 20px;">
+                    <label>Confirmation Mot de Passe</label>
+                    <input type="password" id="pass2" name="password2" placeholder="----------------------------"
+                        required>
+                    <span class="eye-icon" onclick="togglePass('pass2')">voir</span>
+                </div>
             </div>
+        </div>
 
-            <button type="submit" class="btn-submit">Enregistrer</button>
-        </form>
-    </div>
+        <div class="consent-container">
+            <input type="checkbox" name="consent" id="consent" required>
+            <label for="consent">J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique
+                menée à l'aide de ce site...</label>
+        </div>
 
-    <script>
-        const emailInput = document.getElementById('user-email');
-        const usernameInput = document.getElementById('id_username');
-        emailInput.addEventListener('input', () => { usernameInput.value = emailInput.value; });
+        <button type="submit" class="btn-submit">Enregistrer</button>
+    </form>
+</div>
 
-        function togglePass(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === "password" ? "text" : "password";
-        }
+{% endblock %}
+{% block extra_script %}
+<script>
+    const emailInput = document.getElementById('user-email');
+    const usernameInput = document.getElementById('id_username');
+    emailInput.addEventListener('input', () => { usernameInput.value = emailInput.value; });
 
-        document.getElementById('send-code-btn').addEventListener('click', function() {
-            const email = emailInput.value;
-            if (!email || !emailInput.checkValidity()) { alert("Veuillez saisir un email valide."); return; }
-            const btn = this; btn.innerText = "Envoi..."; btn.disabled = true;
+    function togglePass(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
 
-            fetch(`/envoyer-code/?email=${email}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'ok') alert("Code envoyé !");
-                    else alert("Erreur : " + data.message);
-                    btn.innerText = "Renvoyer ?"; btn.disabled = false;
-                });
-        });
-    </script>
-</body>
-</html>
+    document.getElementById('send-code-btn').addEventListener('click', function () {
+        const email = emailInput.value;
+        if (!email || !emailInput.checkValidity()) { alert("Veuillez saisir un email valide."); return; }
+        const btn = this; btn.innerText = "Envoi..."; btn.disabled = true;
+
+        fetch(`/envoyer-code/?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') alert("Code envoyé !");
+                else alert("Erreur : " + data.message);
+                btn.innerText = "Renvoyer ?"; btn.disabled = false;
+            });
+    });
+</script>
+{% endblock %}

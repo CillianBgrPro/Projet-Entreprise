@@ -1,55 +1,54 @@
+{% extends base_template %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - DR. VIRTUORL</title>
-    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
-</head>
-<body>
+{% block title %}Connexion - DR. VIRTUORL{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/connexion.css' %}">
+{% endblock %}
+{% block content %}
 
-    <header class="header">
-        <div class="logo">DR. VIRTU<span>ORL</span></div>
-        <div class="user-icon">👤</div>
-    </header>
+<header class="header">
+    <div class="logo">DR. VIRTU<span>ORL</span></div>
+    <div class="user-icon">👤</div>
+</header>
 
-    <div class="login-wrapper">
-        <div class="container">
-            <form method="post" action="{% url 'connexion' %}">
-                {% csrf_token %}
+<div class="login-wrapper">
+    <div class="container">
+        <form method="post" action="{% url 'connexion' %}">
+            {% csrf_token %}
 
-                <div class="input-group">
-                    <label>Mail</label>
-                    <input type="text" name="username" required>
-                </div>
+            <div class="input-group">
+                <label>Mail</label>
+                <input type="text" name="username" required>
+            </div>
 
-                <div class="input-group">
-                    <label>Mot de passe</label>
-                    <input type="password" name="password" id="id_password" placeholder="----------------------------" required>
-                    <span class="eye-icon" onclick="togglePassword()">voir</span>
-                    
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="error-text">{{ message }}</p>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+            <div class="input-group">
+                <label>Mot de passe</label>
+                <input type="password" name="password" id="id_password" placeholder="----------------------------"
+                    required>
+                <span class="eye-icon" onclick="togglePassword()">voir</span>
 
-                <div class="actions">
-                    <button type="submit" class="btn-submit">Connexion</button>
-                    <a href="#" class="forgot-link">Mot de passe oublié ?</a>
-                    <p class="register-link">Pas encore inscrit ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
-                </div>
-            </form>
-        </div>
+                {% if messages %}
+                {% for message in messages %}
+                <p class="error-text">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-submit">Connexion</button>
+                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                <p class="register-link">Pas encore inscrit ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
+            </div>
+        </form>
     </div>
+</div>
 
-    <script>
-        function togglePassword() {
-            const passInput = document.getElementById('id_password');
-            passInput.type = passInput.type === "password" ? "text" : "password";
-        }
-    </script>
-</body>
-</html>
+{% endblock %}
+{% block extra_script %}
+<script>
+    function togglePassword() {
+        const passInput = document.getElementById('id_password');
+        passInput.type = passInput.type === "password" ? "text" : "password";
+    }
+</script>
+{% endblock %}
