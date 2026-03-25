@@ -15,6 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
         if 'username' in self.fields:
             self.fields['username'].required = False
 
+
     def clean_verification_code(self):
         code_saisi = self.cleaned_data.get('verification_code')
         code_attendu = self.request.session.get('verification_code')
@@ -24,14 +25,16 @@ class CustomUserCreationForm(UserCreationForm):
         return code_saisi
     
     def clean_email(self):
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
         if User.objects.filter(username=email).exists():
             raise forms.ValidationError("Un compte avec cette adresse email existe déjà.")
         return email
     
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.username = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
+        user.username = email
+        user.email = email
         if commit:
             user.save()
         return user

@@ -5,181 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - DR. VIRTUORL</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-        :root {
-            --blue-light: #5ba2cf;
-            --blue-dark: #2c4471;
-            --gray-logo: #d3d3d3;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto 40px auto;
-            padding: 10px 20px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--blue-dark);
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--gray-logo);
-        }
-
-        .user-icon {
-            font-size: 35px;
-            color: var(--blue-dark);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px 60px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .input-group label {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            margin-left: 20px;
-            color: #333;
-        }
-
-        .input-group input {
-            background-color: var(--blue-light);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-size: 15px;
-            color: white;
-            outline: none;
-        }
-
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.8);
-            letter-spacing: 2px;
-        }
-
-        .email-row {
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-        }
-        .email-row .input-group { flex: 1; margin-bottom: 0; }
-
-        .btn-send-code {
-            background-color: var(--blue-dark);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            transition: transform 0.2s;
-        }
-
-        .btn-send-code:active { transform: scale(0.95); }
-
-        .eye-icon {
-            position: absolute;
-            right: 20px;
-            top: 45px;
-            font-size: 20px;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .consent-container {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 15px;
-            margin: 40px auto;
-            max-width: 750px;
-        }
-
-        .consent-container input[type="checkbox"] {
-            width: 25px;
-            height: 25px;
-            accent-color: var(--blue-light);
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .consent-container label {
-            font-size: 14px;
-            line-height: 1.4;
-            color: #333;
-            text-align: center;
-        }
-
-        .btn-submit {
-            display: block;
-            margin: 0 auto;
-            background-color: var(--blue-dark);
-            color: white;
-            border: none;
-            padding: 15px 80px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .btn-submit:hover { opacity: 0.9; }
-
-        .error-list {
-            color: red;
-            background: #ffe6e6;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            list-style: none;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
 </head>
-<body>
+<body class="inscription-page">
 
     <header class="header">
         <div class="logo">DR. VIRTU<span>ORL</span></div>
@@ -204,7 +32,6 @@
 
         <form method="post" action="{% url 'inscription' %}" id="register-form">
             {% csrf_token %}
-            
             <input type="hidden" name="username" id="id_username">
 
             <div class="form-grid">
@@ -213,17 +40,14 @@
                         <label>Nom</label>
                         <input type="text" name="last_name" placeholder="----------------------------" required>
                     </div>
-                    
                     <div class="input-group">
                         <label>Prénom</label>
                         <input type="text" name="first_name" placeholder="----------------------------" required>
                     </div>
-
                     <div class="input-group">
                         <label>Mail</label>
                         <input type="email" id="user-email" name="email" placeholder="----------------------------" required>
                     </div>
-
                     <div class="input-group">
                         <label>Mot de Passe</label>
                         <input type="password" id="pass1" name="password1" placeholder="----------------------------" required>
@@ -236,20 +60,17 @@
                         <label>Université</label>
                         <input type="text" name="university" placeholder="----------------------------">
                     </div>
-
                     <div class="input-group">
                         <label>Année d'étude</label>
                         <input type="text" name="study_year" placeholder="---------">
                     </div>
-
                     <div class="email-row">
                         <div class="input-group">
-                            <label>Code de vérification (reçu par mail)</label>
+                            <label>Code de vérification</label>
                             <input type="text" name="verification_code" placeholder="------" required>
                         </div>
                         <button type="button" class="btn-send-code" id="send-code-btn">Envoyer le code</button>
                     </div>
-
                     <div class="input-group" style="margin-top: 20px;">
                         <label>Confirmation Mot de Passe</label>
                         <input type="password" id="pass2" name="password2" placeholder="----------------------------" required>
@@ -260,9 +81,7 @@
 
             <div class="consent-container">
                 <input type="checkbox" name="consent" id="consent" required>
-                <label for="consent">
-                    J'accepte que mes données (liste des données) soient collectées afin de contribuer à l'étude scientifique menée à l'aide de ce site...
-                </label>
+                <label for="consent">J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique menée à l'aide de ce site...</label>
             </div>
 
             <button type="submit" class="btn-submit">Enregistrer</button>
@@ -272,10 +91,7 @@
     <script>
         const emailInput = document.getElementById('user-email');
         const usernameInput = document.getElementById('id_username');
-        
-        emailInput.addEventListener('input', function() {
-            usernameInput.value = this.value;
-        });
+        emailInput.addEventListener('input', () => { usernameInput.value = emailInput.value; });
 
         function togglePass(id) {
             const input = document.getElementById(id);
@@ -284,37 +100,17 @@
 
         document.getElementById('send-code-btn').addEventListener('click', function() {
             const email = emailInput.value;
-
-            if (!email || !emailInput.checkValidity()) {
-                alert("Veuillez saisir une adresse mail valide avant d'envoyer le code.");
-                return;
-            }
-
-            const btn = this;
-            const originalText = btn.innerText;
-            btn.innerText = "Envoi...";
-            btn.disabled = true;
+            if (!email || !emailInput.checkValidity()) { alert("Veuillez saisir un email valide."); return; }
+            const btn = this; btn.innerText = "Envoi..."; btn.disabled = true;
 
             fetch(`/envoyer-code/?email=${email}`)
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(data => {
-                    if (data.status === 'ok') {
-                        alert("Le code a été envoyé ! Vérifiez votre boîte mail (ou le terminal VS Code).");
-                        btn.innerText = "Renvoyer ?";
-                    } else {
-                        alert("Erreur : " + data.message);
-                        btn.innerText = originalText;
-                    }
-                    btn.disabled = false;
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    alert("Impossible de contacter le serveur.");
-                    btn.innerText = originalText;
-                    btn.disabled = false;
+                    if (data.status === 'ok') alert("Code envoyé !");
+                    else alert("Erreur : " + data.message);
+                    btn.innerText = "Renvoyer ?"; btn.disabled = false;
                 });
         });
     </script>
-
 </body>
 </html>
