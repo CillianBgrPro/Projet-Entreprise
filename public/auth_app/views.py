@@ -48,7 +48,7 @@ def connexion(request):
     
     return render(request, 'connexion/connexion.html')
 
-@login_required
+#@login_required
 def accueil(request):
     return render(request, 'accueil.html')
 
