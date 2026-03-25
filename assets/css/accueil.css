@@ -7,7 +7,7 @@ main > div#background{
     display: flex;
     align-items: center;
     width: 100vw;
-    height: 150px;
+    height: 250px;
     background: url("../images/banner.jpg") center/cover no-repeat;
     text-align: center;
 }
@@ -16,7 +16,7 @@ main > div#background > h2{
     color: white;
     filter: drop-shadow(2px 2px 2px black);
     width: 100%;
-    font-size: 22px;
+    font-size: 2.5rem;
 }
 
 main > div#container{
@@ -105,14 +105,14 @@ main > div#about > div > div.card-type-two > span{
 
 main > div#about > div > div > div > span{
     font-size: 8rem;
-    /* padding: 20px; */
+    padding: 20px;
 }
 
 main > div#about > div > div.card-type-one{
     display: flex;
     justify-content: center;
     flex-direction: row;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 main > div#about > div > div.card-type-two{
@@ -141,7 +141,7 @@ main > div#publication > div#list-ex{
     flex-direction: column;
     background-color: #2b4570c4;
     border-radius: 25px;
-    padding: 3%;
+    /* padding: 3%; */
     margin: 2% 5%;
 }
 
@@ -154,6 +154,8 @@ main > div#publication > div#list-ex > div.row{
     color: white;
     background-color: #2B4570;
     margin: 1% 0;
+    min-width: 95%;
+    min-height: 72px;
 }
 
 main > div#publication > div#list-ex > div.row > *{
