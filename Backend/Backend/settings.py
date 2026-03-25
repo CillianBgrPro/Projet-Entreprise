@@ -77,14 +77,13 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cillianbauger_projetentreprise',
-        'USER': 'cillianbauger',
-        'PASSWORD': 'ProjetEntreprise2026!',
-        'HOST': 'postgresql-cillianbauger.alwaysdata.net',
+        'NAME': 'local_entreprise_db',
+        'USER': 'admin',
+        'PASSWORD': 'admincoda2026!',
+        'HOST': 'db',   # Correspond au nom du service dans le docker-compose
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
