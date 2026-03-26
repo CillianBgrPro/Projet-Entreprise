@@ -14,7 +14,7 @@ main{
 main > div#background{
     display: flex;
     align-items: center;
-    width: 100vw;
+    width: 100dw;
     height: 250px;
     background: url("../images/banner.jpg") center/cover no-repeat;
     text-align: center;
@@ -28,7 +28,7 @@ main > div#background > h2{
 }
 
 main > div#container{
-    width: 100vw;
+    width: 100dw;
     margin: 2% 0px;
     display: flex;
     flex-wrap: wrap;
@@ -88,7 +88,7 @@ h2{
 }
 
 main > div#about{
-    width: 100vw;
+    width: 100dw;
 }
 
 main > div#about > h3{

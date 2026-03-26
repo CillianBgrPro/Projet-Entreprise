@@ -10,7 +10,8 @@ header > nav.navbar{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    width: 100dw;
+    padding: 1% 0;
 }
 
 .logo {
@@ -32,4 +33,5 @@ header > nav.navbar > ul.nav-links > li{
     padding: 0.5% 1%;
     border-radius: 12px;
     border: 2px solid black;
+    margin: 0 1%;
 }
