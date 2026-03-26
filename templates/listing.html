@@ -1,0 +1,14 @@
+<div>
+    <input type="text" placeholder="Rechercher un ..." />
+    <button>Rechercher</button>
+    <button>Filtrer</button>
+</div>
+<ul>
+    {% for item in items %}
+    <li>
+        <p>nom de l'item</p>
+        <p>description de l'item</p>
+        <button>Voir les détails</button>
+    </li>
+    {% endfor %}
+</ul>

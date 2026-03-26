@@ -9,30 +9,14 @@
         <div>
             <h2>Derniers entrainements d'élèves</h2>
             <ul>
+                {% for training in trainings %}
                 <li>
-                    <div>
-                        <p>nom de l'élève</p>
-                        <button>nom du cas</button>
-                        <p>note</p>
-                        <p>temps</p>
-                    </div>
+                    <p>nom de l'élève</p>
+                    <button>nom du cas</button>
+                    <p>note</p>
+                    <p>temps</p>
                 </li>
-                <li>
-                    <div>
-                        <p>nom de l'élève</p>
-                        <button>nom du cas</button>
-                        <p>note</p>
-                        <p>temps</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <p>nom de l'élève</p>
-                        <button>nom du cas</button>
-                        <p>note</p>
-                        <p>temps</p>
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
