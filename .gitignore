@@ -1,3 +1,6 @@
+public/Backend/
+public/auth_app/__pycache__
+public/auth_app/migrations/__pycache__
 Backend/auth_app/__pycache__
-Backend/auth_app/migrations
-Backend/Backend/
+Backend/auth_app/migrations/__pycache__
+Backend/Backend/__pycache__
