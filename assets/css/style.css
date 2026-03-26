@@ -123,6 +123,18 @@ q::after {
   outline-offset: 2px;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
 /*
     Fin du reset CSS
 */

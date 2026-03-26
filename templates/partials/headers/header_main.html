@@ -1,10 +1,11 @@
 {% load static %}
 <header>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
     <nav class="navbar">
         <div class="logo">
-            <a href="{% url 'accueil' %}">Virtuorl</a>
+            <a href="{% url 'accueil' %}">VirtuORL</a>
         </div>
 
         <ul class="nav-links">
@@ -15,7 +16,7 @@
 
         <div class="account">
             <a href="#">Mon compte</a>
-            <img src="{% static 'images/avatar.png' %}" alt="Image de profil" />
+            <span class="material-symbols-outlined">person</span>
         </div>
     </nav>
 </header>
