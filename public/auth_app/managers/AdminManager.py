@@ -4,7 +4,6 @@ from django.db.models import Q
 class ClinicalCaseManager(models.Manager):
     
     def get_cases_for_study_level(self, level):
-        """Filtre par MM1, MM2 ou MM3 (insensible à la casse)"""
         return self.filter(study_level__iexact=level)
         
     def get_cases_with_standardized_patient(self):
@@ -12,7 +11,6 @@ class ClinicalCaseManager(models.Manager):
 
 
     def get_recent_cases(self, limit=10):
-        """Récupère les derniers cas créés"""
         return self.all().order_by('-created_at')[:limit]
 
     def search_cases(self, query):
