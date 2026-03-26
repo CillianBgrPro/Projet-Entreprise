@@ -1,0 +1,19 @@
+# Dossiers virtuels Python (si tu en utilises un hors Docker)
+venv/
+env/
+
+# Fichiers compilés Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers de configuration locaux et variables d'environnement
+.env
+
+# Anciennes bases de données locales SQLite (au cas où)
+*.sqlite3
+db.sqlite3
+
+# Fichiers systèmes OS
+.DS_Store
+Thumbs.db
