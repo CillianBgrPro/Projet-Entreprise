@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 class CustomUserCreationForm(UserCreationForm):
-    verification_code = forms.CharField(label="Code de vérification", max_length=6)
+    verification_code = forms.CharField(label="Code de vérification", max_length=6, required=False)
     university = forms.CharField(label="Université", required=False)
     study_year = forms.IntegerField(label="Année d'étude", required=False)
 
@@ -18,13 +18,17 @@ class CustomUserCreationForm(UserCreationForm):
             self.fields['username'].required = False
 
 
-    def clean_verification_code(self):
-        code_saisi = self.cleaned_data.get('verification_code')
-        code_attendu = self.request.session.get('verification_code')
+    # def clean_verification_code(self):
+    #     code_saisi = self.cleaned_data.get('verification_code')
+    #     code_attendu = self.request.session.get('verification_code')
         
-        if not code_attendu or code_saisi != code_attendu:
-            raise forms.ValidationError("Le code de vérification est incorrect ou a expiré.")
-        return code_saisi
+    #     if not code_attendu or code_saisi != code_attendu:
+    #         raise forms.ValidationError("Le code de vérification est incorrect ou a expiré.")
+    #     return code_saisi
+
+    def clean_verification_code(self):
+        # Bypass de la vérification du code pour le développement
+        return self.cleaned_data.get('verification_code')
     
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
@@ -37,6 +41,7 @@ class CustomUserCreationForm(UserCreationForm):
         email = self.cleaned_data.get('email').lower()
         user.username = email
         user.email = email
+        user.role = 'student'
         if commit:
             user.save()
             from .models import Student

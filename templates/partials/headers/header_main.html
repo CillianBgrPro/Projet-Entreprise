@@ -15,7 +15,13 @@
         </ul>
 
         <div class="account">
-            <a href="#">Mon compte</a>
+            <a href="#">
+                {% if user.is_authenticated %}
+                    {{ user.first_name }} {{ user.last_name }}
+                {% else %}
+                    Mon compte
+                {% endif %}
+            </a>
             <span class="material-symbols-outlined">person</span>
         </div>
     </nav>

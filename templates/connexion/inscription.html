@@ -31,21 +31,21 @@
             <div class="col">
                 <div class="input-group">
                     <label>Nom</label>
-                    <input type="text" name="last_name" placeholder="----------------------------" required>
+                    <input type="text" name="last_name" placeholder="----------------------------" required tabindex="1">
                 </div>
                 <div class="input-group">
                     <label>Prénom</label>
-                    <input type="text" name="first_name" placeholder="----------------------------" required>
+                    <input type="text" name="first_name" placeholder="----------------------------" required tabindex="3">
                 </div>
                 <div class="input-group">
                     <label>Mail</label>
                     <input type="email" id="user-email" name="email" placeholder="----------------------------"
-                        required>
+                        required tabindex="5">
                 </div>
                 <div class="input-group">
                     <label>Mot de Passe</label>
                     <input type="password" id="pass1" name="password1" placeholder="----------------------------"
-                        required>
+                        required tabindex="7">
                     <span class="eye-icon" onclick="togglePass('pass1')">voir</span>
                 </div>
             </div>
@@ -53,35 +53,35 @@
             <div class="col">
                 <div class="input-group">
                     <label>Université</label>
-                    <input type="text" name="university" placeholder="----------------------------">
+                    <input type="text" name="university" placeholder="----------------------------" tabindex="2">
                 </div>
                 <div class="input-group">
                     <label>Année d'étude</label>
-                    <input type="text" name="study_year" placeholder="---------">
+                    <input type="text" name="study_year" placeholder="---------" tabindex="4">
                 </div>
                 <div class="email-row">
                     <div class="input-group">
                         <label>Code de vérification</label>
-                        <input type="text" name="verification_code" placeholder="------" required>
+                        <input type="text" name="verification_code" placeholder="------" tabindex="6"> <!-- required -->
                     </div>
-                    <button type="button" class="btn-send-code" id="send-code-btn">Envoyer le code</button>
+                    <button type="button" class="btn-send-code" id="send-code-btn" tabindex="-1">Envoyer le code</button>
                 </div>
                 <div class="input-group" style="margin-top: 20px;">
                     <label>Confirmation Mot de Passe</label>
                     <input type="password" id="pass2" name="password2" placeholder="----------------------------"
-                        required>
+                        required tabindex="8">
                     <span class="eye-icon" onclick="togglePass('pass2')">voir</span>
                 </div>
             </div>
         </div>
 
         <div class="consent-container">
-            <input type="checkbox" name="consent" id="consent" required>
+            <input type="checkbox" name="consent" id="consent" required tabindex="9">
             <label for="consent">J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique
                 menée à l'aide de ce site...</label>
         </div>
 
-        <button type="submit" class="btn-submit">Enregistrer</button>
+        <button type="submit" class="btn-submit" tabindex="10">Enregistrer</button>
     </form>
 </div>
 

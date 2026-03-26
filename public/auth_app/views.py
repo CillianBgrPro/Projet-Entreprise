@@ -14,7 +14,7 @@ def inscription(request):
         if form.is_valid():
             try:
                 user = form.save()
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 if 'verification_code' in request.session:
                     del request.session['verification_code']
                 return redirect('accueil')
