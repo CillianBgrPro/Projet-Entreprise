@@ -1,3 +1,11 @@
+:root {
+    --blue-light: #5ba2cf;
+    --blue-dark: #2c4471;
+    --gray-logo: #d3d3d3;
+    --error-red: #d93025;
+    --link-blue: #3498db;
+}
+
 main{
     display: flex;
     flex-direction: column;

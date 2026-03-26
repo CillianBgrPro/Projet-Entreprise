@@ -1,0 +1,35 @@
+:root {
+    --blue-light: #5ba2cf;
+    --blue-dark: #2c4471;
+    --gray-logo: #d3d3d3;
+    --error-red: #d93025;
+    --link-blue: #3498db;
+}
+
+header > nav.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+header > nav.navbar > ul.nav-links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+header > nav.navbar > ul.nav-links > li{
+    padding: 0.5% 1%;
+    border-radius: 12px;
+    border: 2px solid black;
+}
