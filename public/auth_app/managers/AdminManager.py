@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Q
 
-class ClinicalCaseManager(models.Manager):
+class AdminManager(models.Manager):
     
     def get_cases_for_study_level(self, level):
         return self.filter(study_level__iexact=level)
