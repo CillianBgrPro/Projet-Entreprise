@@ -1,0 +1,20 @@
+<h2>Création de cas</h2>
+<div>
+    <h3>prompt pour l'ia</h3>
+    <input type="text" class="form-control" id="prompt" placeholder="Entrez le prompt pour l'IA" />
+</div>
+<div>
+    <menu>
+        {% for specialty in specialties %}
+        <li><button id="{{ specialty.id }}">{{ specialty.name }}</button></li>
+        {% endfor %}
+    </menu>
+    <menu>
+        <li><button id="1">Facile</button></li>
+        <li><button id="2">Moyen</button></li>
+        <li><button id="3">Difficile</button></li>
+    </menu>
+</div>
+<button class="btn btn-primary" onclick="window.location.href = '/teacher/case_creation/new'">
+    Créer un nouveau cas
+</button>
