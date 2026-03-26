@@ -9,7 +9,6 @@ class AdminManager(models.Manager):
     def get_cases_with_standardized_patient(self):
         return self.filter(has_standardized_patient=True)
 
-
     def get_recent_cases(self, limit=10):
         return self.all().order_by('-created_at')[:limit]
 

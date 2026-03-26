@@ -2,7 +2,7 @@ from django.contrib.auth.models import UserManager as DefaultUserManager
 
 class UserManager(DefaultUserManager):
 
-    # getter pour avoir juste 1 élément
+    # getter for just 1 element
 
     def get_by_id(self, user_id):
         """Get a single user by their ID."""
@@ -12,7 +12,7 @@ class UserManager(DefaultUserManager):
         """Get a single user by their email (unique)."""
         return self.get(email=email)
 
-    # getter pour avoir plusieurs éléments
+    # getter for multiple elements
 
     def get_by_first_name(self, first_name):
         """Get users matching a first name."""
