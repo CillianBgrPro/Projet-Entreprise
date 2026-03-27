@@ -6,7 +6,7 @@
     --link-blue: #3498db;
 }
 
-header > nav.navbar{
+header>nav.navbar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,26 +22,26 @@ header > nav.navbar{
     text-decoration: none;
 }
 
-header > nav.navbar > ul.nav-links{
+header>nav.navbar>ul.nav-links {
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 758px;
 }
 
-header > nav.navbar > ul.nav-links > li{
+header>nav.navbar>ul.nav-links>li {
     padding: 0.5% 1%;
     border-radius: 12px;
     border: 2px solid black;
     margin: 0 1%;
 }
 
-header > nav.navbar > div.account{
+header>nav.navbar>div.account {
     display: flex;
     align-items: center;
 }
 
-header > nav.navbar > div.account > span{
+header>nav.navbar>div.account>span {
     font-size: 3rem;
     padding: 0.5%;
     border-radius: 50%;

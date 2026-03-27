@@ -5,7 +5,7 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="/account">
+            <li><a href="{% url 'compte' %}">
                 {% if user.is_authenticated %}
                     {{ user.first_name }} {{ user.last_name }}
                 {% else %}
