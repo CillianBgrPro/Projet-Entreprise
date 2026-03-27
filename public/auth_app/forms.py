@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 class CustomUserCreationForm(UserCreationForm):
-    verification_code = forms.CharField(label="Code de vérification", max_length=6, required=False)
+    verification_code = forms.CharField(label="Code de vérification", max_length=6, required=True)
     university = forms.CharField(label="Université", required=False)
     study_year = forms.IntegerField(label="Année d'étude", required=False)
 
@@ -27,8 +27,22 @@ class CustomUserCreationForm(UserCreationForm):
     #     return code_saisi
 
     def clean_verification_code(self):
-        # Bypass de la vérification du code pour le développement
-        return self.cleaned_data.get('verification_code')
+        import time
+        code_saisi = self.cleaned_data.get('verification_code', '').strip()
+        code_attendu = self.request.session.get('verification_code') if self.request else None
+        code_timestamp = self.request.session.get('verification_code_time', 0) if self.request else 0
+
+        if not code_attendu:
+            raise forms.ValidationError("Aucun code envoyé. Veuillez cliquer sur \"Envoyer le code\" d'abord.")
+
+        # Expiration après 10 minutes
+        if time.time() - code_timestamp > 600:
+            raise forms.ValidationError("Le code a expiré. Veuillez en demander un nouveau.")
+
+        if code_saisi != code_attendu:
+            raise forms.ValidationError("Code de vérification incorrect.")
+
+        return code_saisi
     
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()

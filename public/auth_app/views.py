@@ -1,4 +1,7 @@
+import time
 import random
+import resend
+from django.conf import settings
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate, logout
@@ -15,8 +18,8 @@ def inscription(request):
             try:
                 user = form.save()
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                if 'verification_code' in request.session:
-                    del request.session['verification_code']
+                request.session.pop('verification_code', None)
+                request.session.pop('verification_code_time', None)
                 return redirect('accueil')
             except IntegrityError:
                 form.add_error(None, "Une erreur est survenue : cet utilisateur existe probablement déjà.")
@@ -57,18 +60,44 @@ def deconnexion(request):
     return redirect('connexion')
 
 def envoyer_code_view(request):
-    email = request.GET.get('email')
-    if email:
-        code = str(random.randint(100000, 999999))
-        request.session['verification_code'] = code
-        request.session['email_a_verifier'] = email
-        
-        send_mail(
-            'Votre code de vérification - DR. VIRTUORL',
-            f'Votre code est : {code}',
-            'noreply@virtuorl.fr',
-            [email],
-            fail_silently=False,
-        )
+    email = request.GET.get('email', '').strip().lower()
+    if not email:
+        return JsonResponse({'status': 'error', 'message': 'Email manquant'})
+
+    # Initialiser la clé à chaque appel (en cas de rechargement du .env)
+    resend.api_key = settings.RESEND_API_KEY
+
+    if not resend.api_key:
+        return JsonResponse({'status': 'error', 'message': 'Clé API Resend non configurée dans le .env'})
+
+    code = str(random.randint(100000, 999999))
+    request.session['verification_code'] = code
+    request.session['verification_code_time'] = time.time()
+
+    try:
+        resend.Emails.send({
+            "from": "onboarding@resend.dev",
+            "to": [email],
+            "subject": "Votre code de vérification — DR. VIRTUORL",
+            "html": f"""
+                <div style="font-family: Arial, sans-serif; max-width: 480px; margin: auto; padding: 32px;
+                            border: 1px solid #e5e7eb; border-radius: 12px;">
+                    <h2 style="color: #111827; margin-bottom: 8px;">Vérification de votre adresse email</h2>
+                    <p style="color: #6b7280; margin-bottom: 24px;">
+                        Utilisez le code ci-dessous pour finaliser votre inscription sur <strong>DR. VIRTUORL</strong>.
+                        Ce code est valable <strong>10 minutes</strong>.
+                    </p>
+                    <div style="background: #f3f4f6; border-radius: 8px; padding: 24px; text-align: center;">
+                        <span style="font-size: 36px; font-weight: bold; letter-spacing: 8px; color: #111827;">
+                            {code}
+                        </span>
+                    </div>
+                    <p style="color: #9ca3af; font-size: 12px; margin-top: 24px;">
+                        Si vous n'avez pas demandé ce code, ignorez cet email.
+                    </p>
+                </div>
+            """,
+        })
         return JsonResponse({'status': 'ok'})
-    return JsonResponse({'status': 'error', 'message': 'Email manquant'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})

@@ -61,11 +61,13 @@
                 </div>
                 <div class="email-row">
                     <div class="input-group">
-                        <label>Code de vérification</label>
-                        <input type="text" name="verification_code" placeholder="------" tabindex="6"> <!-- required -->
+                        <label>Code de vérification <small style="color:#9ca3af;font-weight:400">(valable 10 min)</small></label>
+                        <input type="text" name="verification_code" placeholder="------" tabindex="6" required
+                               maxlength="6" inputmode="numeric" autocomplete="one-time-code">
                     </div>
                     <button type="button" class="btn-send-code" id="send-code-btn" tabindex="-1">Envoyer le code</button>
                 </div>
+                <div id="code-status" style="font-size:13px; margin-top:4px; min-height:18px;"></div>
                 <div class="input-group" style="margin-top: 20px;">
                     <label>Confirmation Mot de Passe</label>
                     <input type="password" id="pass2" name="password2" placeholder="----------------------------"
@@ -99,15 +101,39 @@
 
     document.getElementById('send-code-btn').addEventListener('click', function () {
         const email = emailInput.value;
-        if (!email || !emailInput.checkValidity()) { alert("Veuillez saisir un email valide."); return; }
-        const btn = this; btn.innerText = "Envoi..."; btn.disabled = true;
+        const statusEl = document.getElementById('code-status');
 
-        fetch(`/envoyer-code/?email=${email}`)
+        if (!email || !emailInput.checkValidity()) {
+            statusEl.style.color = '#dc2626';
+            statusEl.textContent = 'Veuillez saisir un email valide avant d\'envoyer le code.';
+            return;
+        }
+
+        const btn = this;
+        btn.innerText = 'Envoi...';
+        btn.disabled = true;
+        statusEl.style.color = '#6b7280';
+        statusEl.textContent = 'Envoi en cours...';
+
+        fetch(`/envoyer-code/?email=${encodeURIComponent(email)}`)
             .then(res => res.json())
             .then(data => {
-                if (data.status === 'ok') alert("Code envoyé !");
-                else alert("Erreur : " + data.message);
-                btn.innerText = "Renvoyer ?"; btn.disabled = false;
+                if (data.status === 'ok') {
+                    statusEl.style.color = '#16a34a';
+                    statusEl.textContent = '✓ Code envoyé ! Vérifiez votre boîte mail.';
+                    btn.innerText = 'Renvoyer le code';
+                } else {
+                    statusEl.style.color = '#dc2626';
+                    statusEl.textContent = 'Erreur : ' + data.message;
+                    btn.innerText = 'Réessayer';
+                }
+                btn.disabled = false;
+            })
+            .catch(() => {
+                statusEl.style.color = '#dc2626';
+                statusEl.textContent = 'Erreur réseau. Réessayez.';
+                btn.innerText = 'Réessayer';
+                btn.disabled = false;
             });
     });
 </script>
