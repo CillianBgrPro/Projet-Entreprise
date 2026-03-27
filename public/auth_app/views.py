@@ -80,7 +80,7 @@ def envoyer_code_view(request):
 
     try:
         resend.Emails.send({
-            "from": "onboarding@resend.dev",
+            "from": "mail@mailentreprise.carodavid2026.fr",
             "to": [email],
             "subject": "Votre code de vérification — DR. VIRTUORL",
             "html": f"""
