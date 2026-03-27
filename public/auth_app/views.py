@@ -55,6 +55,10 @@ def connexion(request):
 def accueil(request):
     return render(request, 'accueil.html')
 
+def compte(request):
+    # verifier que l'utilisateur est connecter
+    return render(request, 'student/student_dashboard.html')
+
 def deconnexion(request):
     logout(request)
     return redirect('connexion')
