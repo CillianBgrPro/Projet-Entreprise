@@ -6,6 +6,10 @@
     --link-blue: #3498db;
 }
 
+::-webkit-scrollbar{
+    display: none;
+}
+
 main{
     display: flex;
     flex-direction: column;
