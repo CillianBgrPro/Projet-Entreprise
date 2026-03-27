@@ -35,8 +35,11 @@ class Training:
         return self.__finished_at
     
     def set_status(self, status):
-        self.__status = status
-    
+        if type(status) == str:
+            self.__status = status
+        else:
+            print("Invalid type for status. Expected boolean value.")
+
     def set_finished_at(self, finished_at):
         if type(finished_at) == str:
             self.__finished_at = datetime.strptime(finished_at, "%Y-%m-%d %H:%M:%S")
