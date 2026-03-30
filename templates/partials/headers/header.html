@@ -1,0 +1,80 @@
+{% load static %}
+<header>
+    <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
+    <nav class="navbar">
+
+        {% if not user.is_authenticated %}
+        <div class="logo">
+            <a href="{% url 'accueil' %}">VirtuORL</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
+            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+        </ul>
+
+        <div class="account">
+            <a href="{% url 'connexion' %}">Mon compte</a>
+            <span class="material-symbols-outlined">person</span>
+        </div>
+
+        {% elif user.is_superuser %}
+        <div class="logo">
+            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge admin">Admin</span></a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="#">Logs</a></li>
+            <li><a href="#">Utilisateurs</a></li>
+            <li><a href="#">Données</a></li>
+            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+        </ul>
+
+        <div class="account">
+            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
+            <span class="material-symbols-outlined">admin_panel_settings</span>
+        </div>
+
+        {% elif user.role == 'teacher' %}
+        <div class="logo">
+            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge teacher">Professeur</span></a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            <li><a href="#">Étudiants</a></li>
+            <li><a href="#">Exporter les données</a></li>
+            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+        </ul>
+
+        <div class="account">
+            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
+            <span class="material-symbols-outlined">school</span>
+        </div>
+
+        {% else %}
+        <div class="logo">
+            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge student">Étudiant</span></a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            <li><a href="#">S'entraîner</a></li>
+            <li><a href="#">Statistiques</a></li>
+            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+        </ul>
+
+        <div class="account">
+            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
+            <span class="material-symbols-outlined">person</span>
+        </div>
+
+        {% endif %}
+
+    </nav>
+    <script src="{% static 'js/profile.js' %}"></script>
+</header>
