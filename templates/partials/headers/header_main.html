@@ -1,19 +1,19 @@
 {% load static %}
 <header>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
     <nav class="navbar">
         <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL</a>
+            <a href="{% url 'accueil' %}">VirtuORL (non connecter)</a>
         </div>
 
         <ul class="nav-links">
             <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+            {% else %}
             <li><a href="{% url 'connexion' %}">Se connecter</a></li>
             <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+            {% endif %}
         </ul>
 
         <div class="account">

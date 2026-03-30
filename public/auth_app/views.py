@@ -1,15 +1,17 @@
 import time
 import random
+import django
 import resend
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.db import IntegrityError
+from django.contrib.auth import logout
 
 def inscription(request):
     if request.method == 'POST':
@@ -51,17 +53,38 @@ def connexion(request):
     
     return render(request, 'connexion/connexion.html')
 
-#@login_required
 def accueil(request):
+    # logout(request)
     return render(request, 'accueil.html')
 
+@login_required
 def compte(request):
-    # verifier que l'utilisateur est connecter
+    """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
+    user = request.user
+    if user.is_superuser:
+        return redirect('admin_dashboard')
+    elif user.role == 'teacher':
+        return redirect('teacher_dashboard')
+    else:
+        return redirect('student_dashboard')
+
+@login_required
+def student_dashboard(request):
     return render(request, 'student/student_dashboard.html')
+
+@login_required
+def teacher_dashboard(request):
+    return render(request, 'teacher/teacher_dashboard.html')
+
+@login_required
+def admin_dashboard(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+    return render(request, 'admin/admin_dashboard.html')
 
 def deconnexion(request):
     logout(request)
-    return redirect('connexion')
+    return redirect('accueil')
 
 def envoyer_code_view(request):
     email = request.GET.get('email', '').strip().lower()
