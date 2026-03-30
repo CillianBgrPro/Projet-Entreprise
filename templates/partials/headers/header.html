@@ -3,77 +3,61 @@
     <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
     <nav class="navbar">
 
-        {% if not user.is_authenticated %}
         <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL</a>
+            <a href="{% url 'accueil' %}">VirtuORL
+                {% if not user.is_authenticated %}
+                <span style="font-size: 0.8em; font-weight: normal;">(non connecté)</span>
+                {% elif user.is_superuser %}
+                <span class="role-badge admin">(admin)</span>
+                {% elif user.role == 'teacher' %}
+                <span class="role-badge teacher">(prof)</span>
+                {% else %}
+                <span class="role-badge student">(étudiant)</span>
+                {% endif %}
+            </a>
         </div>
 
         <ul class="nav-links">
             <li><a href="{% url 'accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
-            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
-        </ul>
 
-        <div class="account">
-            <a href="{% url 'connexion' %}">Mon compte</a>
-            <span class="material-symbols-outlined">person</span>
-        </div>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
 
-        {% elif user.is_superuser %}
-        <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge admin">Admin</span></a>
-        </div>
-
-        <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            {% if user.is_superuser %}
             <li><a href="#">Logs</a></li>
             <li><a href="#">Utilisateurs</a></li>
             <li><a href="#">Données</a></li>
-            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
-        </ul>
-
-        <div class="account">
-            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
-            <span class="material-symbols-outlined">admin_panel_settings</span>
-        </div>
-
-        {% elif user.role == 'teacher' %}
-        <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge teacher">Professeur</span></a>
-        </div>
-
-        <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            {% elif user.role == 'teacher' %}
             <li><a href="#">Étudiants</a></li>
             <li><a href="#">Exporter les données</a></li>
-            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
-        </ul>
-
-        <div class="account">
-            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
-            <span class="material-symbols-outlined">school</span>
-        </div>
-
-        {% else %}
-        <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL <span class="role-badge student">Étudiant</span></a>
-        </div>
-
-        <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            {% else %}
             <li><a href="#">S'entraîner</a></li>
             <li><a href="#">Statistiques</a></li>
+            {% endif %}
+
             <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+
+            {% else %}
+            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
+            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+            {% endif %}
         </ul>
 
         <div class="account">
+            {% if user.is_authenticated %}
             <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
+            {% if user.is_superuser %}
+            <span class="material-symbols-outlined">admin_panel_settings</span>
+            {% elif user.role == 'teacher' %}
+            <span class="material-symbols-outlined">school</span>
+            {% else %}
             <span class="material-symbols-outlined">person</span>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'connexion' %}">Mon compte</a>
+            <span class="material-symbols-outlined">person</span>
+            {% endif %}
         </div>
-
-        {% endif %}
 
     </nav>
     <script src="{% static 'js/profile.js' %}"></script>
