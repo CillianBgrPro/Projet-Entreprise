@@ -16,6 +16,7 @@ urlpatterns = [
     path('dashboard/etudiant/', views.student_dashboard, name='student_dashboard'),
     path('dashboard/professeur/', views.teacher_dashboard, name='teacher_dashboard'),
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('export-students-csv/', views.export_students_csv, name='export_students_csv'),
     path('reinitialisation-mot-de-passe/',
          auth_views.PasswordResetView.as_view(template_name='connexion/password_reset_form.html'),
          name='password_reset'),

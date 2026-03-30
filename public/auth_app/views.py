@@ -9,9 +9,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth import logout
+import csv
 
 def inscription(request):
     if request.method == 'POST':
@@ -144,3 +145,42 @@ def verifier_code(request):
         return JsonResponse({'status': 'error', 'message': "Code de vérification incorrect."})
         
     return JsonResponse({'status': 'ok'})
+
+@login_required
+def export_students_csv(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+        
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="etudiants.csv"'
+    response.write('\ufeff')
+    writer = csv.writer(response, delimiter=';')
+    
+    writer.writerow([
+        'Prénom', 'Nom', 'Email', "Nom d'utilisateur",
+        'INE', 'Âge', 'Genre', 'Niveau de diplôme',
+        "Année d'étude", 'Spécialité', 'Université',
+        'Consentement RGPD', 'Consentement étude scientifique'
+    ])
+    
+    from .models import Student
+    students = Student.objects.select_related('user').all()
+    for student in students:
+        writer.writerow([
+            student.user.first_name,
+            student.user.last_name,
+            student.user.email,
+            student.user.username,
+            student.ine,
+            student.age,
+            student.gender,
+            student.degree_level,
+            student.year_of_study,
+            student.speciality,
+            student.university,
+            'Oui' if student.rgpd_consent else 'Non',
+            'Oui' if student.scientific_study else 'Non'
+        ])
+        
+    return response
+

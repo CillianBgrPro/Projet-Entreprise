@@ -27,6 +27,7 @@
             <li><a href="#">Logs</a></li>
             <li><a href="#">Utilisateurs</a></li>
             <li><a href="#">Données</a></li>
+            <li><a href="{% url 'export_students_csv' %}">Exporter Étudiants (CSV)</a></li>
             {% elif user.role == 'teacher' %}
             <li><a href="#">Étudiants</a></li>
             <li><a href="#">Exporter les données</a></li>

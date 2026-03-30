@@ -27,8 +27,10 @@ class CustomUserCreationForm(UserCreationForm):
         ('MM3', 'MM3'),
     ]
 
-    university = forms.ChoiceField(label="Université", choices=UNIVERSITY_CHOICES, required=False)
-    study_year = forms.ChoiceField(label="Année d'étude", choices=YEAR_CHOICES, required=False)
+    university = forms.ChoiceField(label="Université", choices=UNIVERSITY_CHOICES, required=False, widget= forms.Select(attrs={'tabindex': '3'}))
+    study_year = forms.ChoiceField(label="Année d'étude", choices=YEAR_CHOICES, required=False, widget= forms.Select(attrs={'tabindex': '4'}))
+    consent = forms.BooleanField(required=True)
+    scientific_study = forms.BooleanField(required=False)
 
 
     class Meta(UserCreationForm.Meta):
@@ -85,10 +87,14 @@ class CustomUserCreationForm(UserCreationForm):
             from .models import Student
             university = self.cleaned_data.get('university')
             study_year = self.cleaned_data.get('study_year')
+            consent = self.cleaned_data.get('consent', False)
+            scientific_study = self.cleaned_data.get('scientific_study', False)
             Student.objects.create(
                 user=user,
                 ine=0,  # par defaut
                 university=university if university else "",
-                year_of_study=study_year if study_year else None
+                year_of_study=study_year if study_year else None,
+                rgpd_consent=consent,
+                scientific_study=scientific_study
             )
         return user
