@@ -1,0 +1,172 @@
+{
+    "connexion": {
+        "Mail_label": "Mail",
+        "Password_label": "Mot de Passe",
+        "Register_link": "Pas encore inscrit ?",
+        "Register_button": "S'inscrire"
+
+    },
+    "inscription": {
+        "Name_label": "Nom",
+        "Name_placeholder": "ex : Turing",
+        "FirstName_label": "Prénom",
+        "Firstname_placeholder": "ex: Alan",
+        "Mail_label": "Mail",
+        "Mail_placeholder": "ex: alan.turing@example.com",
+        "Password_label": "Mot de Passe",
+        "Password_placeholder": "ex: @dM1n1$tr&T€ur",
+        "Password_span": "voir",
+        "Univeristy_label": "Université",
+        "University_placeholder": "Lieux ex: Orléans",
+        "Years_label": "Année d'étude",
+        "Years_placeholder": "ex: 3",
+        "Verification_Code_label": "Code de vérification",
+        "Verification_Code_placeholder": "_ _ _ _ _ _",
+        "Time_span": "(valable 10min)",
+        "Send_Code_button": "Envoyer le code",
+        "Confirm_Password_label": "Confirmation de Mot de Passe",
+        "Confirm_Password_placeholder": "ex: @dM1n1$tr&T€ur",
+        "See_span": "voir",
+        "Place_placeholder": "Lieux ex : Orléans",
+        "Consent_label": "J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique menée à l'aide de ce site...",
+        "Register_button": "Enregistrer",
+        "Invalide_email_textContent": "Veuillez saisir un email valide avant d'envoyer le code.",
+        "Send_Text_button": "Envoi...",
+        "Send_Time_text": "Envoi en cours...",
+        "Send_Text_content": "✓ Code envoyé ! Vérifiez votre boîte mail.",
+        "Resend_code_Text": "Renvoyer le code",
+        "Error": "Erreur",
+        "Retry": "Réessayer",
+        "Connection_error": "Erreur réseau. Réessayez."
+
+    },
+
+    "header_admin": {
+        "Logs_link": "Logs",
+        "Users_link": "Utilisateurs",
+        "Data_link": "Données"
+    },
+
+    "header_main": {
+        "Home_text": "Accueil",
+        "Connection_text": "Se connecter",
+        "Create_Account_text": "Créer un compte"
+    },
+
+    "header_student": {
+        "Train_link" : "S'entrainer",
+        "Stats_link" : "Statistiques"
+
+    },
+
+    "header_teacher" : {
+        "Student_link": "Etudiants",
+        "Export_link" : "Exporter les données"
+    },
+    
+    
+
+    "footer": {
+        "footer_Text": "2026 LI2RSO. Tous droits réservés."
+    },
+    
+    "student_dashboard": {
+        "Main_Title": "Tableau de bord étudiant",
+        "Last_Training_Title": "Dernier entraînement",
+        "Case_Name_Label": "Nom du cas",
+        "Success_Aspects_Title": "Aspects réussis",
+        "Improvement_Aspects_Title": "Aspects à améliorer",
+        "Progression_Title": "Progression",
+        "Stats_Title": "Statistiques",
+        "Rank_Label": "Ton rang",
+        "Trophies_Label": "Tes trophées",
+        "Level_Label": "Ton niveau",
+        "Case_Bank_button": "Banque de cas",
+        "Random_Case_button": "Cas aléatoire",
+        "Previous_Training_button": "Entraînements précédents",
+        "Previous_Corrections_button": "Corrections précédentes"
+    },
+        
+        
+    "Case_creation": {
+        "Main_Title": "Création de cas",
+        "AI_Prompt_Title": "Prompt pour l'IA",
+        "AI_Prompt_Placeholder": "Entrez le prompt pour l'IA",
+        "Easy_Button": "Facile",
+        "Medium_Button": "Moyen",
+        "Hard_Button": "Difficile",
+        "Create_Button": "Créer un nouveau cas"
+    },
+    
+    
+    "following_students": {
+        "Main_Title": "Liste des étudiants suivis",
+        "Last_Name_Label": "Nom",
+        "First_Name_Label": "Prénom",
+        "Email_Label": "Email",
+        "Gender_Label": "Genre",
+        "Study_Level_Label": "Niveau d'étude",
+        "Test_Amount_Label": "Nombre de tests",
+        "Study_Year_Label": "Année d'études",
+        "Specialty_Label": "Spécialité",
+        "Age_Label": "Age"
+    },
+
+    "Teacher_dashboard": {
+        "Main_Title": "Tableau de bord Enseignant",
+        "Last_Published_Cases_Title": "Derniers cas publiés",
+        "Last_Student_Trainings_Title": "Derniers entraînements d'élèves",
+        "Student_Name_Label": "Nom de l'élève",
+        "Case_Name_Button": "Nom du cas",
+        "Grade_Label": "Note",
+        "Time_Label": "Temps",
+        "Case_Bank": "Banque de cas",
+        "Student_FollowUp": "Suivi des étudiants",
+        "Export_Data": "Exporter les données",
+        "Create_Case": "Création de cas"
+    },
+    "Accueil": {
+        "Hero_Title": "Plateforme de simulation clinique gamifiée pour la préparation aux ECOS",
+        "Card1_Title": "Patients Virtuels",
+        "Card1_Text": "Patients Virtuels, conversation, visualisation.",
+        "Card2_Title": "Raisonnement Clinique",
+        "Card2_Text": "Met l'élève en condition réel.",
+        "Card3_Title": "Gamification pédagogique",
+        "Card3_Text": "Permet au joueur de s'entrainement de manière ludique.",
+        "Team_Names": "Dr DEMUTH, Dr PERCHE & Pr SERREAU Dr DESGROUAS",
+        "About_Title": "A propos du projet",
+        "Challenge_Title": "Le défi des ECOS",
+        "Challenge_Item1": "Évaluation des compétances cliniques.",
+        "Challenge_Item2": "Besoin d’un Entrainement intensif.",
+        "Challenge_Item3": "Accès limité aux centres de simulation.",
+        "Loop_Title": "La Boucle ECOS Gamifiée",
+        "Loop_Description": "Plateforme de Patients Interactifs",
+        "Study_Title": "Étude Multicentrique",
+        "Study_Item1": "Essai Randomisé (Réseau HUGO)",
+        "Study_Item2": "Objectif: Améliorer les performances aux ECOS",
+        "Study_Item3": "400 Étudiants, Critères cliniques",
+        "Publications_Title": "Publications du projet",
+        "Test1_Title": "Test 1",
+        "Test1_Difficulty": "Difficulté ⭐",
+        "Test1_Subject": "Neurologie",
+        "Test1_Desc": "Ceci est une description test pour voir comment la déscription sera affiché",
+        "Test2_Title": "Test 2",
+        "Test2_Difficulty": "Difficulté ⭐⭐⭐",
+        "Test2_Subject": "Psychologie",
+        "Test2_Desc": "Ceci est une description test pour voir comment la déscription sera affiché",
+        "Test3_Title": "Test 3",
+        "Test3_Difficulty": "Difficulté ⭐⭐⭐⭐⭐",
+        "Test3_Subject": "Neurologie",
+        "Test3_Desc": "Ceci est une description test pour voir comment la déscription sera affiché",
+        "Goal_Title": "Objectif de notre projet"
+    },
+
+    "listing" : {
+        "Search_placeholder" : "Rechercher un ...",
+        "Search_button" : "Rechercher",
+        "Filter_button" : "Filtrer",
+        "Name_p" : "nom de l'item",
+        "desc_p" : "description de l'item",
+        "details_button" : "voir les détails"
+    }
+}
