@@ -4,12 +4,13 @@ import resend
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.db import IntegrityError
+from django.contrib.auth import logout
 
 def inscription(request):
     if request.method == 'POST':
@@ -61,7 +62,7 @@ def compte(request):
 
 def deconnexion(request):
     logout(request)
-    return redirect('connexion')
+    return redirect('accueil')
 
 def envoyer_code_view(request):
     email = request.GET.get('email', '').strip().lower()

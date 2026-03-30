@@ -12,8 +12,12 @@
 
         <ul class="nav-links">
             <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+            {% else %}
             <li><a href="{% url 'connexion' %}">Se connecter</a></li>
             <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+            {% endif %}
         </ul>
 
         <div class="account">
