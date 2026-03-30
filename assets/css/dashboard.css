@@ -1,0 +1,54 @@
+body {
+    background-color: rgb(221, 242, 243);
+    height: 100vh;
+}
+
+.top-infos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.sections {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.section1 {
+    background-color: rgb(119, 174, 207);
+}
+
+.section2 {
+    background-color: white;
+}
+
+.actions {
+    margin-top: 20px;
+
+    justify-self: center;
+    width: 80%;
+    border-radius: 30px;
+
+    padding: 20px;
+    background-color: rgb(119, 174, 207);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(221, 242, 243);
+    color: black;
+    font-size: 16px;
+}

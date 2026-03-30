@@ -4,19 +4,19 @@
         <div>
             <h2>Dernier entraînement</h2>
             <ul>
-                <li>nom du cas</li>
+                <li>{{ last_training.name }}</li>
                 <li>
                     Aspects réussis
                     <ul>
-                        <li>temp</li>
-                        <li>temp</li>
+                        <li>{{ last_training.successful_aspects.0 }}</li>
+                        <li>{{ last_training.successful_aspects.1 }}</li>
                     </ul>
                 </li>
                 <li>
                     Aspects à améliorer
                     <ul>
-                        <li>temp</li>
-                        <li>temp</li>
+                        <li>{{ last_training.improvement_areas.0 }}</li>
+                        <li>{{ last_training.improvement_areas.1 }}</li>
                     </ul>
                 </li>
             </ul>
