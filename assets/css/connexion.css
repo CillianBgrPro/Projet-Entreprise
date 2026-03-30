@@ -195,3 +195,14 @@
     color: #333;
     background-color: #fff;
 }
+
+.input-group input,
+.input-group select {
+    background-color: var(--blue-light);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    font-size: 15px;
+    color: white;
+    width: 100%;
+}

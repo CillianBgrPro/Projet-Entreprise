@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from auth_app import views
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -15,4 +16,16 @@ urlpatterns = [
     path('dashboard/etudiant/', views.student_dashboard, name='student_dashboard'),
     path('dashboard/professeur/', views.teacher_dashboard, name='teacher_dashboard'),
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('reinitialisation-mot-de-passe/',
+         auth_views.PasswordResetView.as_view(template_name='connexion/password_reset_form.html'),
+         name='password_reset'),
+    path('reinitialisation-mot-de-passe/envoye/',
+         auth_views.PasswordResetDoneView.as_view(template_name='connexion/password_reset_done.html'),
+         name='password_reset_done'),
+    path('reinitialisation-mot-de-passe/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='connexion/password_reset_confirm.html'),
+         name='password_reset_confirm'),
+    path('reinitialisation-mot-de-passe/termine/',
+         auth_views.PasswordResetCompleteView.as_view(template_name='connexion/password_reset_complete.html'),
+         name='password_reset_complete'),
 ]
