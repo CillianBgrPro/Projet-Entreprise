@@ -128,3 +128,19 @@ def envoyer_code_view(request):
         return JsonResponse({'status': 'ok'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+
+def verifier_code(request):
+    code_saisi = request.GET.get('code', '').strip()
+    code_attendu = request.session.get('verification_code')
+    code_timestamp = request.session.get('verification_code_time', 0)
+    
+    if not code_attendu:
+        return JsonResponse({'status': 'error', 'message': "Aucun code envoyé. Veuillez cliquer sur \"Envoyer le code\" d'abord."})
+        
+    if time.time() - code_timestamp > 600:
+        return JsonResponse({'status': 'error', 'message': "Le code a expiré. Veuillez en demander un nouveau."})
+        
+    if code_saisi != code_attendu:
+        return JsonResponse({'status': 'error', 'message': "Code de vérification incorrect."})
+        
+    return JsonResponse({'status': 'ok'})

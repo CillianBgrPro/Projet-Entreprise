@@ -55,7 +55,11 @@
     cursor: pointer;
 }
 
-.login-wrapper .eye-icon { color: #333; right: -40px; font-size: 22px; }
+.login-wrapper .eye-icon {
+    color: #333;
+    right: -40px;
+    font-size: 22px;
+}
 
 .btn-submit {
     display: block;
@@ -71,14 +75,20 @@
     transition: opacity 0.3s;
 }
 
-.btn-submit:hover { opacity: 0.9; }
+.btn-submit:hover {
+    opacity: 0.9;
+}
 
 .email-row {
     display: flex;
     align-items: flex-end;
     gap: 15px;
 }
-.email-row .input-group { flex: 1; margin-bottom: 0; }
+
+.email-row .input-group {
+    flex: 1;
+    margin-bottom: 0;
+}
 
 .btn-send-code {
     background-color: var(--blue-dark);
@@ -109,14 +119,35 @@
     padding-top: 50px;
 }
 
-.login-wrapper .container { max-width: 450px; }
+.login-wrapper .container {
+    max-width: 450px;
+}
 
-.actions { text-align: center; margin-top: 40px; }
-.forgot-link { display: block; color: var(--link-blue); text-decoration: none; font-style: italic; margin-bottom: 20px; }
-.register-link { margin-top: 20px; font-size: 14px; }
-.register-link a { color: var(--blue-dark); font-weight: bold; }
+.actions {
+    text-align: center;
+    margin-top: 40px;
+}
 
-.error-list, .error-text {
+.forgot-link {
+    display: block;
+    color: var(--link-blue);
+    text-decoration: none;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: var(--blue-dark);
+    font-weight: bold;
+}
+
+.error-list,
+.error-text {
     color: var(--error-red);
     list-style: none;
     text-align: center;
@@ -125,6 +156,42 @@
 }
 
 @media (max-width: 768px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .login-wrapper .eye-icon { right: 15px; color: white; }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .login-wrapper .eye-icon {
+        right: 15px;
+        color: white;
+    }
+}
+
+.input-group select {
+    width: 100%;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--blue-light);
+    font-size: 15px;
+    color: white;
+    outline: none;
+    box-sizing: border-box;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 16px;
+}
+
+.input-group select:focus {
+    outline: none;
+}
+
+.input-group select option {
+    color: #333;
+    background-color: #fff;
 }

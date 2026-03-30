@@ -4,8 +4,32 @@ from .models import User
 
 class CustomUserCreationForm(UserCreationForm):
     verification_code = forms.CharField(label="Code de vérification", max_length=6, required=True)
-    university = forms.CharField(label="Université", required=False)
-    study_year = forms.IntegerField(label="Année d'étude", required=False)
+
+    def get_universities():
+        try:
+            import json, os
+            from django.conf import settings
+            json_path = os.path.join(settings.BASE_DIR, 'universities.json')
+            with open(json_path, 'r', encoding='utf-8') as f:
+                univs = json.load(f)
+            return [('', '— Sélectionnez votre université —')] + [(u, u) for u in univs]
+        except Exception:
+            return [
+                ('Aucune université trouvée', 'Aucune université trouvée')
+            ]
+
+    UNIVERSITY_CHOICES = get_universities()
+
+    YEAR_CHOICES = [
+        ('', '— Sélectionnez votre année —'),
+        ('MM1', 'MM1'),
+        ('MM2', 'MM2'),
+        ('MM3', 'MM3'),
+    ]
+
+    university = forms.ChoiceField(label="Université", choices=UNIVERSITY_CHOICES, required=False)
+    study_year = forms.ChoiceField(label="Année d'étude", choices=YEAR_CHOICES, required=False)
+
 
     class Meta(UserCreationForm.Meta):
         model = User
