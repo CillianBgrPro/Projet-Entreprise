@@ -1,5 +1,10 @@
-<link rel="stylesheet" href="../../assets/css/dashboard.css" />
-{% extends 'index.html' %} {% block title %}Tableau de bord professeur - DR. VIRTUORL{% endblock %} {% block content %}
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Tableau de bord professeur - DR. VIRTUORL{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+{% block content %}
 <section>
     <div class="top-infos">
         <div class="section1 sections">

@@ -1,5 +1,9 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block title %}Administration - DR. VIRTUORL{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
 {% block content %}
 <section>
     <h1>Admin Dashboard</h1>

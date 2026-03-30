@@ -1,5 +1,9 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block title %}Mon tableau de bord - DR. VIRTUORL{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
 {% block content %}
 <section>
     <h1>Student Dashboard</h1>
