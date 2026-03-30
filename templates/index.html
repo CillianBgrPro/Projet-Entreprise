@@ -11,13 +11,20 @@
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
-    {% include 'partials/headers/header_main.html' %}
+    {% if not user.is_authenticated %}
+        {% include 'partials/headers/header_main.html' %}
+    {% elif user.is_superuser %}
+        {% include 'partials/headers/header_admin.html' %}
+    {% elif user.role == 'teacher' %}
+        {% include 'partials/headers/header_teacher.html' %}
+    {% else %}
+        {% include 'partials/headers/header_student.html' %}
+    {% endif %}
+
     <div id="app-content">
         {% block content %}{% endblock %}
         {% block extra_script %}{% endblock %}
     </div>
-
-    <script src="{% static 'js/router.js' %}"></script>
 </body>
 
 </html>
