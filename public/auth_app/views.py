@@ -60,21 +60,28 @@ def accueil(request):
 
 @login_required
 def compte(request):
-    return redirect('dashbord.html')
+    """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
+    user = request.user
+    if user.is_superuser:
+        return redirect('admin_dashboard')
+    elif user.role == 'teacher':
+        return redirect('teacher_dashboard')
+    else:
+        return redirect('student_dashboard')
 
 @login_required
 def student_dashboard(request):
-    return render(request, 'student/student_dashboard.html')
+    return render(request, 'dashboard.html')
 
 @login_required
 def teacher_dashboard(request):
-    return render(request, 'teacher/teacher_dashboard.html')
+    return render(request, 'dashboard.html')
 
 @login_required
 def admin_dashboard(request):
     if not request.user.is_superuser:
         return redirect('accueil')
-    return render(request, 'admin/admin_dashboard.html')
+    return render(request, 'dashboard.html')
 
 def deconnexion(request):
     logout(request)

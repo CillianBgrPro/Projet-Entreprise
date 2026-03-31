@@ -44,9 +44,10 @@
             {% endif %}
         </ul>
 
-        <div class="account">
+        <a href={% if user.is_authenticated %}{% url 'compte' %}{% else %}{% url 'connexion' %}{% endif %}>
+            <div class="account">
             {% if user.is_authenticated %}
-            <a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a>
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
             {% if user.is_superuser %}
             <span class="material-symbols-outlined">admin_panel_settings</span>
             {% elif user.role == 'teacher' %}
@@ -55,10 +56,13 @@
             <span class="material-symbols-outlined">person</span>
             {% endif %}
             {% else %}
-            <a href="{% url 'connexion' %}">Mon compte</a>
+            <p>Mon compte</p>
             <span class="material-symbols-outlined">person</span>
             {% endif %}
         </div>
+        </a>
+
+        
 
     </nav>
     <script src="{% static 'js/profile.js' %}"></script>
