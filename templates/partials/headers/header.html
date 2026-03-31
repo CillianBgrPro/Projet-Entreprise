@@ -24,9 +24,9 @@
             <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
 
             {% if user.is_superuser %}
-            <li><a href="#">Logs</a></li>
-            <li><a href="#">Utilisateurs</a></li>
-            <li><a href="#">Données</a></li>
+            <li><a href="{% url 'logs' %}">Logs</a></li>
+            <li><a href="{% url 'users' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'data' %}">Données</a></li>
             <li><a href="{% url 'export_students_csv' %}">Exporter Étudiants (CSV)</a></li>
             {% elif user.role == 'teacher' %}
             <li><a href="#">Étudiants</a></li>

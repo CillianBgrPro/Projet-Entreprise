@@ -87,6 +87,26 @@ def deconnexion(request):
     logout(request)
     return redirect('accueil')
 
+def users(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+    
+    from .models import User
+    users = User.objects.all()
+    return render(request, 'administrater/users.html', {'users': users})
+
+def logs(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+    
+    return render(request, 'administrater/logs.html')
+
+def data(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+    
+    return render(request, 'administrater/data.html')
+
 def envoyer_code_view(request):
     email = request.GET.get('email', '').strip().lower()
     if not email:
@@ -183,4 +203,3 @@ def export_students_csv(request):
         ])
         
     return response
-
