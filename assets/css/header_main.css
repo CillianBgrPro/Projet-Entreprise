@@ -41,6 +41,10 @@ header>nav.navbar>div.account {
     align-items: center;
 }
 
+header>nav.navbar>div.account:hover{
+    cursor: pointer;
+}
+
 header>nav.navbar>div.account>span {
     font-size: 3rem;
     padding: 0.5%;
