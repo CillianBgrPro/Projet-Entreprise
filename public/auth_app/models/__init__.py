@@ -6,7 +6,7 @@ from .GroupModel import Group
 from .ClinicalCaseModel import ClinicalCase
 from .TrainingModel import Training
 from .StudentPerformanceModel import StudentPerformance
-from .TicketModel import Ticket
+from .TicketModel import Ticket, TicketReply
 
 __all__ = [
     'User',
@@ -17,5 +17,6 @@ __all__ = [
     'ClinicalCase',
     'Training',
     'StudentPerformance',
-    'Ticket'
+    'Ticket',
+    'TicketReply'
 ]

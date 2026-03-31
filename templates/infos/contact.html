@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Contact - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-wrapper">
+    <div class="container contact-container">
+        <h2>Contact / Signaler un problème</h2>
+
+        {% if messages %}
+        <ul class="messages-list">
+            {% for message in messages %}
+            <li class="message {{ message.tags }}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="POST" action="{% url 'contact' %}" class="contact-form">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="subject">Sujet</label>
+                <input type="text" id="subject" name="subject" required
+                    placeholder="Ex: Problème de connexion, Bug d'affichage...">
+            </div>
+
+            <div class="input-group textarea-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required
+                    placeholder="Décrivez votre problème en détail..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-submit">Envoyer le ticket</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

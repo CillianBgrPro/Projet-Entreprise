@@ -3,7 +3,7 @@ import random
 import django
 import resend
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
@@ -203,3 +203,150 @@ def export_students_csv(request):
         ])
         
     return response
+
+def mentions_legales(request):
+    return render(request, 'infos/mentions_legales.html')
+
+def politiques_confidentialite(request):
+    return render(request, 'infos/politiques_confidentialite.html')
+
+@login_required
+def ouvrir_ticket(request):
+    return render(request, 'infos/ouvrir_ticket.html')
+
+@login_required
+def contact(request):
+    if request.method == 'POST':
+        sujet = request.POST.get('subject', '').strip()
+        message = request.POST.get('message', '').strip()
+        
+        if sujet and message:
+            from .models import Ticket
+            Ticket.objects.create(
+                user=request.user,
+                subject=sujet,
+                message=message,
+                status='Ouvert'
+            )
+            
+
+            try:
+                if resend.api_key:
+                    resend.Emails.send({
+                        "from": "mail@mailentreprise.carodavid2026.fr",
+                        "to": [request.user.email],
+                        "subject": "Confirmation de création de ticket — DR. VIRTUORL",
+                        "html": f"""
+                            <div style="font-family: Arial, sans-serif; max-width: 480px; margin: auto; padding: 32px; border: 1px solid #e5e7eb; border-radius: 12px;">
+                                <h2 style="color: #111827; margin-bottom: 8px;">Votre ticket a bien été créé</h2>
+                                <p style="color: #6b7280; margin-bottom: 24px;">Bonjour {request.user.first_name},</p>
+                                <p style="color: #6b7280; margin-bottom: 24px;">
+                                    Nous avons bien reçu votre demande concernant le sujet suivant : <strong>{sujet}</strong>.
+                                    <br>
+                                    {message}
+                                </p>
+                                <p style="color: #6b7280; margin-bottom: 24px;">
+                                    Notre équipe va le traiter dans les plus brefs délais. Vous pouvez suivre l'état de votre ticket depuis votre tableau de bord.
+                                </p>
+                                <p style="color: #6b7280; margin-bottom: 24px;">
+                                    Cordialement,
+                                    <br>
+                                    L'équipe DR. VIRTUORL
+                                </p>
+                            </div>
+                        """,
+                    })
+            except Exception as e:
+                pass
+                
+            messages.success(request, "Votre ticket a bien été créé. Vous allez recevoir un email de confirmation.")
+            return redirect('ticket')
+        else:
+            messages.error(request, "Veuillez remplir tous les champs.")
+
+    return render(request, 'infos/contact.html')
+
+@login_required
+def ticket(request):
+    from .models import Ticket
+    tickets = Ticket.objects.filter(user=request.user)
+    return render(request, 'infos/dashboard_ticket.html', {'tickets': tickets})
+
+def details_etude(request):
+    return render(request, 'infos/details_etude.html')
+
+def ticket_admin(request):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+    from .models import Ticket
+    tickets = Ticket.objects.all().order_by('-created_at')
+    return render(request, 'administrater/ticket_admin.html', {'tickets': tickets})
+
+@login_required
+def ticket_detail(request, ticket_id):
+    from .models import Ticket, TicketReply
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    
+    # Check permissions
+    if not request.user.is_superuser and ticket.user != request.user:
+        messages.error(request, "Accès refusé.")
+        return redirect('accueil')
+        
+    if request.method == 'POST':
+        message = request.POST.get('reply_message', '').strip()
+        if message and ticket.status.lower() != 'clos':
+            reply = TicketReply.objects.create(
+                ticket=ticket,
+                user=request.user,
+                message=message
+            )
+            # Envoyer un e-mail à l'auteur si la réponse vient de l'administrateur
+            if request.user.is_superuser:
+                try:
+                    import resend
+                    if resend.api_key:
+                        resend.Emails.send({
+                            "from": "mail@mailentreprise.carodavid2026.fr",
+                            "to": [ticket.user.email],
+                            "subject": f"Nouvelle réponse à votre ticket #{ticket.id} — DR. VIRTUORL",
+                            "html": f"""
+                                <div style="font-family: Arial, sans-serif; max-width: 480px; margin: auto; padding: 32px; border: 1px solid #e5e7eb; border-radius: 12px;">
+                                    <h2 style="color: #111827; margin-bottom: 8px;">Nouvelle réponse sur votre ticket</h2>
+                                    <p style="color: #6b7280; margin-bottom: 24px;">Bonjour {ticket.user.first_name},</p>
+                                    <p style="color: #6b7280; margin-bottom: 24px;">
+                                        Une nouvelle réponse a été apportée à votre ticket concernant : <strong>{ticket.subject}</strong>.<br><br>
+                                        <strong>Statut actuel du ticket :</strong> {ticket.status}
+                                    </p>
+                                    <div style="background-color: #f8f9fa; padding: 15px; border-left: 4px solid #5ba2cf; margin-bottom: 24px;">
+                                        <p style="margin: 0; color: #333;"><strong>Dernier message :</strong></p>
+                                        <p style="margin-top: 5px; color: #555;">{message}</p>
+                                    </div>
+                                    <p style="color: #6b7280; margin-bottom: 24px;">
+                                        Vous pouvez consulter la discussion complète depuis votre tableau de bord.
+                                    </p>
+                                </div>
+                            """,
+                        })
+                except Exception as e:
+                    pass
+            messages.success(request, "Votre réponse a été ajoutée.")
+            return redirect('ticket_detail', ticket_id=ticket.id)
+            
+    replies = ticket.replies.all()
+    return render(request, 'infos/ticket_detail.html', {'ticket': ticket, 'replies': replies})
+
+@login_required
+def ticket_change_status(request, ticket_id):
+    if not request.user.is_superuser:
+        return redirect('accueil')
+        
+    if request.method == 'POST':
+        from .models import Ticket
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        new_status = request.POST.get('status')
+        if new_status in ['Ouvert', 'En cours', 'Résolu', 'Clos']:
+            ticket.status = new_status
+            ticket.save()
+            messages.success(request, f"Le statut du ticket a été mis à jour sur '{new_status}'.")
+            
+    return redirect('ticket_detail', ticket_id=ticket_id)

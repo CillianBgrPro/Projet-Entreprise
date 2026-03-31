@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Mes Tickets - Virtuorl{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_ticket.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ticket-container">
+    <h1 class="dashboard-title">Mes Tickets</h1>
+
+    {% if messages %}
+        <ul class="messages-list">
+            {% for message in messages %}
+                <li class="message-item {% if message.tags == 'success' %}message-success{% else %}message-error{% endif %}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="action-buttons">
+        <a href="{% url 'contact' %}" class="btn-new-ticket">
+            + Nouveau Ticket
+        </a>
+        <a href="{% url 'compte' %}" class="btn-dashboard">
+            Retour au Dashboard
+        </a>
+    </div>
+
+    {% if tickets %}
+        <div class="table-wrapper">
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Sujet</th>
+                        <th>Statut</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr onclick="window.location.href='{% url 'ticket_detail' ticket.id %}'">
+                            <td class="td-date">{{ ticket.created_at|date:"d/m/Y H:i" }}</td>
+                            <td class="td-subject">{{ ticket.subject }}</td>
+                            <td>
+                                <span class="ticket-status {% if ticket.status == 'Ouvert' %}status-ouvert{% elif ticket.status == 'En cours' %}status-encours{% elif ticket.status == 'Résolu' or ticket.status == 'Resolue' %}status-resolu{% else %}status-default{% endif %}">
+                                    {{ ticket.status }}
+                                </span>
+                            </td>
+                            <td class="td-message">
+                                {{ ticket.message }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>Vous n'avez créé aucun ticket pour le moment.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

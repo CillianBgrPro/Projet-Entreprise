@@ -1,3 +1,12 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
 <footer>
-    <p>&copy; 2026 Mon Application. Tous droits réservés.</p>
+    <div class="footer-content">
+        <ul class="footer-links">
+            <li><a href="/mentions-legales">Mentions légales</a></li>
+            <li><a href="/politiques-confidentialite">Politiques de confidentialité</a></li>
+            <li><a href="/details-etude">Détails de l'étude scientifique</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </div>
 </footer>

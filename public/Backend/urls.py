@@ -32,4 +32,12 @@ urlpatterns = [
      path('administrater/', views.users, name='users'),
      path('administrater/', views.logs, name='logs'),
      path('administrater/', views.data, name='data'),
+     path('mentions-legales/', views.mentions_legales, name='mentions_legales'),
+     path('politiques-confidentialite/', views.politiques_confidentialite, name='politiques_confidentialite'),
+     path('details-etude/', views.details_etude, name='details_etude'),
+     path('contact/', views.contact, name='contact'),
+     path('ticket/', views.ticket, name='ticket'),
+     path('ticket-admin/', views.ticket_admin, name='ticket_admin'),
+     path('ticket/<int:ticket_id>/', views.ticket_detail, name='ticket_detail'),
+     path('ticket/<int:ticket_id>/status/', views.ticket_change_status, name='ticket_change_status'),
 ]

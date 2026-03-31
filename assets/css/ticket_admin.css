@@ -1,0 +1,165 @@
+/* assets/css/ticket_admin.css */
+:root {
+    --blue-dark: #2c4471;
+    --blue-light: #5ba2cf;
+    --status-open: #004085;
+    --status-open-bg: #cce5ff;
+    --status-progress: #856404;
+    --status-progress-bg: #fff3cd;
+    --status-resolved: #155724;
+    --status-resolved-bg: #d4edda;
+    --status-closed: #383d41;
+    --status-closed-bg: #e2e3e5;
+}
+
+.ticket-wrapper {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.ticket-wrapper h2 {
+    color: var(--blue-dark);
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-align: center;
+}
+
+.ticket-table-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Forcer le wrapping */
+}
+
+.ticket-table th, .ticket-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    word-wrap: break-word; /* Wrapping du texte long */
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.ticket-table th {
+    background-color: var(--blue-dark);
+    color: white;
+    font-weight: 600;
+}
+
+.ticket-table tbody tr {
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.ticket-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Discussion / Thread */
+.thread-container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.message-bubble {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--blue-light);
+}
+
+.message-bubble.admin {
+    background-color: #eef2f5;
+    border-left: 4px solid var(--blue-dark);
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.message-content {
+    font-size: 16px;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+/* Formulaires */
+.reply-form {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: var(--blue-dark);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.admin-controls {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}

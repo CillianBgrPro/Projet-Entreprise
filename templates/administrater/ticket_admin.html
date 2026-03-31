@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Gestion des Tickets - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/ticket_admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ticket-wrapper">
+    <a href="{% url 'admin_dashboard' %}" class="btn-secondary">Retour au Dashboard</a>
+    <h2>Tous les tickets utilisateurs</h2>
+    
+    <div class="ticket-table-container">
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Date</th>
+                    <th style="width: 25%;">Utilisateur / Rôle</th>
+                    <th style="width: 30%;">Sujet</th>
+                    <th style="width: 15%;">Statut</th>
+                    <th style="width: 15%;">Réponses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tickets %}
+                <tr onclick="window.location.href='{% url 'ticket_detail' t.id %}'">
+                    <td>{{ t.created_at|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <strong>{{ t.user.first_name }} {{ t.user.last_name }}</strong><br>
+                        <span style="font-size: 12px; color: #666;">({{ t.user.get_role_display|default:t.user.role }})</span>
+                    </td>
+                    <td>{{ t.subject }}</td>
+                    <td>
+                        <span class="status-badge" style=" 
+                            {% if t.status|lower == 'ouvert' %}background-color: var(--status-open-bg); color: var(--status-open);
+                            {% elif t.status|lower == 'résolu' or t.status|lower == 'resolu' %}background-color: var(--status-resolved-bg); color: var(--status-resolved);
+                            {% elif t.status|lower == 'clos' %}background-color: var(--status-closed-bg); color: var(--status-closed);
+                            {% else %}background-color: var(--status-progress-bg); color: var(--status-progress);{% endif %}">
+                            {{ t.status }}
+                        </span>
+                    </td>
+                    <td>{{ t.replies.count }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 30px;">Aucun ticket existant.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

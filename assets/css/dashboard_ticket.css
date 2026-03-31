@@ -1,0 +1,155 @@
+.ticket-container {
+    max-width: 800px;
+    margin: 50px auto;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.messages-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.message-item {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.action-buttons {
+    margin-bottom: 20px;
+}
+
+.btn-new-ticket {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn-dashboard {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.table-wrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ticket-table thead {
+    background-color: #f8f9fa;
+}
+
+.ticket-table th {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+}
+
+.ticket-table tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ticket-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.ticket-table td {
+    padding: 15px;
+}
+
+.td-date {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.td-subject {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.ticket-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-ouvert {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-encours {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-resolu {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-default {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.td-message {
+    color: #495057;
+    font-size: 14px;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty-state {
+    padding: 40px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border: 1px dashed #ced4da;
+    border-radius: 8px;
+}
+
+.empty-state p {
+    color: #6c757d;
+    font-size: 18px;
+    margin: 0;
+}

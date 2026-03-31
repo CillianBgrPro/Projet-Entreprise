@@ -17,3 +17,18 @@ class Ticket(models.Model):
     class Meta:
         verbose_name = "Ticket"
         verbose_name_plural = "Tickets"
+
+class TicketReply(models.Model):
+    """Réponse à un ticket."""
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='replies', verbose_name="Ticket")
+    user = models.ForeignKey('auth_app.User', on_delete=models.CASCADE, related_name='ticket_replies', verbose_name="Auteur de la réponse")
+    message = models.TextField(verbose_name="Message")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date de réponse")
+
+    def __str__(self):
+        return f"Réponse au ticket {self.ticket.id} par {self.user.username}"
+
+    class Meta:
+        verbose_name = "Réponse de Ticket"
+        verbose_name_plural = "Réponses de Tickets"
+        ordering = ['created_at']

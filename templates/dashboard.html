@@ -27,7 +27,7 @@
         <a href="#" class="action-btn"><button>Gestion des utilisateurs</button></a>
         <a href="#" class="action-btn"><button>Gestion des données</button></a>
         <a href="#" class="action-btn"><button>Options du système</button></a>
-        <a href="#" class="action-btn"><button>Tickets utilisateurs</button></a>
+        <a href="{% url 'ticket_admin' %}" class="action-btn"><button>Tickets utilisateurs</button></a>
     </div>
 </section>
 
@@ -67,6 +67,7 @@
         <a href="#"><button class="action-btn">Suivi des étudiants</button></a>
         <a href="#"><button class="action-btn">Exporter les données</button></a>
         <a href="#"><button class="action-btn">Création de cas</button></a>
+        <a href="{% url 'ticket' %}"><button class="action-btn">Mes Tickets</button></a>
     </div>
 </section>
 
@@ -112,6 +113,7 @@
         <a href="#" class="action-btn"><button>Cas aléatoire</button></a>
         <a href="#" class="action-btn"><button>Entrainements précédents</button></a>
         <a href="#" class="action-btn"><button>Corrections précédentes</button></a>
+        <a href="{% url 'ticket' %}" class="action-btn"><button>Mes Tickets</button></a>
     </div>
 </section>
 {% endif %} {% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Détail du Ticket - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/ticket_admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ticket-wrapper">
+    {% if user.is_superuser %}
+    <a href="{% url 'ticket_admin' %}" class="btn-secondary">Retour aux tickets (Admin)</a>
+    {% else %}
+    <a href="{% url 'ticket' %}" class="btn-secondary">Retour à mes tickets</a>
+    {% endif %}
+
+    <div class="thread-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin: 0; color: var(--blue-dark);">{{ ticket.subject }}</h2>
+            <span class="status-badge" style=" 
+                {% if ticket.status|lower == 'ouvert' %}background-color: var(--status-open-bg); color: var(--status-open);
+                {% elif ticket.status|lower == 'résolu' or ticket.status|lower == 'resolu' %}background-color: var(--status-resolved-bg); color: var(--status-resolved);
+                {% elif ticket.status|lower == 'clos' %}background-color: var(--status-closed-bg); color: var(--status-closed);
+                {% else %}background-color: var(--status-progress-bg); color: var(--status-progress);{% endif %}">
+                Statut : {{ ticket.status }}
+            </span>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div
+            style="padding: 10px; margin-bottom: 20px; border-radius: 5px; {% if message.tags == 'success' %}background-color: #d4edda; color: #155724;{% else %}background-color: #f8d7da; color: #721c24;{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if user.is_superuser %}
+        <div class="admin-controls">
+            <strong>Panneau Admin :</strong> Modifier le statut du ticket
+            <form method="POST" action="{% url 'ticket_change_status' ticket.id %}"
+                style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
+                {% csrf_token %}
+                <select name="status" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                    <option value="Ouvert" {% if ticket.status == 'Ouvert' %}selected{% endif %}>Ouvert</option>
+                    <option value="En cours" {% if ticket.status == 'En cours' %}selected{% endif %}>En cours</option>
+                    <option value="Résolu" {% if ticket.status == 'Résolu' %}selected{% endif %}>Résolu</option>
+                    <option value="Clos" {% if ticket.status == 'Clos' %}selected{% endif %}>Clos</option>
+                </select>
+                <button type="submit" class="btn-primary" style="padding: 8px 15px;">Mettre à jour</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <div class="message-bubble">
+            <div class="message-header">
+                <span>{{ ticket.user.first_name }} {{ ticket.user.last_name }} ({% if ticket.user.is_superuser %}Admin{% else %}Auteur{% endif %})</span>
+                <span>{{ ticket.created_at|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="message-content">{{ ticket.message }}</div>
+        </div>
+
+        {% for reply in replies %}
+        <div class="message-bubble {% if reply.user.is_superuser %}admin{% endif %}">
+            <div class="message-header">
+                <span>{{ reply.user.first_name }} {{ reply.user.last_name }} {% if reply.user.is_superuser %}(Admin){% endif %}</span>
+                <span>{{ reply.created_at|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="message-content">{{ reply.message }}</div>
+        </div>
+        {% endfor %}
+
+        {% if ticket.status|lower != 'clos' %}
+        <div class="reply-form">
+            <form method="POST" action="{% url 'ticket_detail' ticket.id %}">
+                {% csrf_token %}
+                <label for="reply_message" style="font-weight: bold; margin-bottom: 10px; display: block;">Nouvelle
+                    réponse :</label>
+                <textarea id="reply_message" name="reply_message" rows="4" required
+                    placeholder="Tapez votre réponse ici..."></textarea>
+                <button type="submit" class="btn-primary">Envoyer la réponse</button>
+            </form>
+        </div>
+        {% else %}
+        <div
+            style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 5px; text-align: center; color: #495057;">
+            Ce ticket est clos. Vous ne pouvez plus y ajouter de réponse.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
