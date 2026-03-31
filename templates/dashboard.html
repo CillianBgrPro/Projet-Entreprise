@@ -1,0 +1,112 @@
+{% extends 'index.html' %} {% load static %} {% block title %}Tableau de bord - DR. VIRTUORL{% endblock %} {% block
+extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+{% endblock %} {% block content %} {% if user.is_superuser %}
+<section>
+    <h1>Admin Dashboard</h1>
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>logs</h2>
+            <canvas id="logsChart"></canvas>
+        </div>
+
+        <div class="section2 sections">
+            <h2>Vue globale</h2>
+            <p>Nombre total d'utilisateurs</p>
+            <p>activité récente</p>
+            <p>autres statistiques pertinentes</p>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#"><button>Gestion des utilisateurs</button></a>
+        <a href="#"><button>Gestion des données</button></a>
+        <a href="#"><button>Options du système</button></a>
+        <a href="#"><button>Tickets utilisateurs</button></a>
+    </div>
+</section>
+
+{% elif user.role == 'teacher' %}
+<section>
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>Derniers cas publiés</h2>
+            <ul>
+                {% for case in cases %}
+                <li>
+                    <button>{{ case.name }}</button>
+                    <p>{{ case.specialty }}</p>
+                    <p>{{ case.level }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section2 sections">
+            <h2>Derniers entrainements d'élèves</h2>
+            <ul>
+                {% for training in trainings %}
+                <li>
+                    <p>nom de l'élève</p>
+                    <button>nom du cas</button>
+                    <p>note</p>
+                    <p>temps</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#"><button class="action-btn">Banque de cas</button></a>
+        <a href="#"><button class="action-btn">Suivi des étudiants</button></a>
+        <a href="#"><button class="action-btn">Exporter les données</button></a>
+        <a href="#"><button class="action-btn">Création de cas</button></a>
+    </div>
+</section>
+
+{% else %}
+<section>
+    <h1>Student Dashboard</h1>
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>Dernier entraînement</h2>
+            <ul>
+                <li>{{ last_training.name }}</li>
+                <li>
+                    Aspects réussis
+                    <ul>
+                        <li>{{ last_training.successful_aspects.0 }}</li>
+                        <li>{{ last_training.successful_aspects.1 }}</li>
+                    </ul>
+                </li>
+                <li>
+                    Aspects à améliorer
+                    <ul>
+                        <li>{{ last_training.improvement_areas.0 }}</li>
+                        <li>{{ last_training.improvement_areas.1 }}</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section2 sections">
+            <h2>Progression</h2>
+            <canvas id="progressChart"></canvas>
+            <div>
+                <h3>Stats</h3>
+                <p>Ton rang</p>
+                <p>Tes trophés</p>
+                <p>Ton niveau</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#"><button>Banque de cas</button></a>
+        <a href="#"><button>Cas aléatoire</button></a>
+        <a href="#"><button>Entrainements précédents</button></a>
+        <a href="#"><button>Corrections précédentes</button></a>
+    </div>
+</section>
+{% endif %} {% endblock %}
