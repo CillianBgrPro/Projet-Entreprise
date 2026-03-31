@@ -60,14 +60,7 @@ def accueil(request):
 
 @login_required
 def compte(request):
-    """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
-    user = request.user
-    if user.is_superuser:
-        return redirect('admin_dashboard')
-    elif user.role == 'teacher':
-        return redirect('teacher_dashboard')
-    else:
-        return redirect('student_dashboard')
+    return redirect('dashbord.html')
 
 @login_required
 def student_dashboard(request):
