@@ -7,12 +7,12 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'accueil' %}">{{t.header_main.Home_text}}</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+            <li><a href="{% url 'deconnexion' %}">{{t.header_main.Deconnection_button}}</a></li>
             {% else %}
-            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
-            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+            <li><a href="{% url 'connexion' %}">{{t.header_main.Connection_text}}</a></li>
+            <li><a href="{% url 'inscription' %}">{{t.header_main.Create_Account_text}}</a></li>
             {% endif %}
         </ul>
 

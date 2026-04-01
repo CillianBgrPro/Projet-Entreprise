@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Tableau de bord professeur - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.teacher_dashboard.Title }} - DR. VIRTUORL{% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 {% endblock %}
@@ -8,7 +8,7 @@
 <section>
     <div class="top-infos">
         <div class="section1 sections">
-            <h2>Derniers cas publiés</h2>
+            <h2>{{ t.teacher_dashboard.Last_cases_title }}</h2>
             <ul>
                 {% for case in cases %}
                 <li>
@@ -16,30 +16,34 @@
                     <p>{{ case.specialty }}</p>
                     <p>{{ case.level }}</p>
                 </li>
+                {% empty %}
+                <li><p>Aucun cas publié.</p></li>
                 {% endfor %}
             </ul>
         </div>
 
         <div class="section2 sections">
-            <h2>Derniers entrainements d'élèves</h2>
+            <h2>{{ t.teacher_dashboard.Last_trainings_title }}</h2>
             <ul>
                 {% for training in trainings %}
                 <li>
-                    <p>nom de l'élève</p>
-                    <button>nom du cas</button>
-                    <p>note</p>
-                    <p>temps</p>
+                    <p>{{ training.student_name|default:t.teacher_dashboard.Student_name_placeholder }}</p>
+                    <button>{{ training.case_name|default:t.teacher_dashboard.Case_name_placeholder }}</button>
+                    <p><strong>{{ t.teacher_dashboard.Score_label }} :</strong> {{ training.score }}</p>
+                    <p><strong>{{ t.teacher_dashboard.Time_label }} :</strong> {{ training.duration }}</p>
                 </li>
+                {% empty %}
+                <li><p>Aucun entraînement récent.</p></li>
                 {% endfor %}
             </ul>
         </div>
     </div>
 
     <div class="actions">
-        <a href="#"><button class="action-btn">Banque de cas</button></a>
-        <a href="#"><button class="action-btn">Suivi des étudiants</button></a>
-        <a href="#"><button class="action-btn">Exporter les données</button></a>
-        <a href="#"><button class="action-btn">Création de cas</button></a>
+        <a href="#"><button class="action-btn">{{ t.teacher_dashboard.Case_bank_btn }}</button></a>
+        <a href="{% url 'suivi_etudiants' %}"><button class="action-btn">{{ t.teacher_dashboard.Student_tracking_btn }}</button></a>
+        <a href="#"><button class="action-btn">{{ t.teacher_dashboard.Export_data_btn }}</button></a>
+        <a href="{% url 'creation_cas' %}"><button class="action-btn">{{ t.teacher_dashboard.Create_case_btn }}</button></a>
     </div>
 </section>
 {% endblock %}

@@ -47,87 +47,108 @@
     "header_admin": {
         "Logs_link": "Logs",
         "Users_link": "Utilisateurs",
-        "Data_link": "Données"
+        "Data_link": "Données",
+        "Deconnection_button": "Se déconnecter"
     },
 
     "header_main": {
         "Home_text": "Accueil",
+        "Deconnection_button": "Se déconnecter",
         "Connection_text": "Se connecter",
         "Create_Account_text": "Créer un compte"
     },
 
     "header_student": {
         "Train_link" : "S'entrainer",
-        "Stats_link" : "Statistiques"
+        "Stats_link" : "Statistiques",
+        "Deconnection_button": "Se déconnecter"
 
     },
 
     "header_teacher" : {
         "Student_link": "Etudiants",
-        "Export_link" : "Exporter les données"
+        "Export_link" : "Exporter les données",
+        "Deconnection_button": "Se déconnecter"
     },
     
-    
+    "header": {
+        "Not_connected": "(non connecté)",
+        "Admin_badge": "(admin)",
+        "Teacher_badge": "(prof)",
+        "Student_badge": "(étudiant)",
+        "Home": "Accueil",
+        "Logs": "Logs",
+        "Users": "Utilisateurs",
+        "Data": "Données",
+        "Export_students_csv": "Exporter Étudiants (CSV)",
+        "Students": "Étudiants",
+        "Export_data": "Exporter les données",
+        "Train": "S'entraîner",
+        "Statistics": "Statistiques",
+        "Disconnect": "Se déconnecter",
+        "Connect": "Se connecter",
+        "Create_account": "Créer un compte",
+        "My_account": "Mon compte"
+    },
 
     "footer": {
         "footer_Text": "2026 LI2RSO. Tous droits réservés."
     },
     
     "student_dashboard": {
-        "Main_Title": "Tableau de bord étudiant",
-        "Last_Training_Title": "Dernier entraînement",
-        "Case_Name_Label": "Nom du cas",
-        "Success_Aspects_Title": "Aspects réussis",
-        "Improvement_Aspects_Title": "Aspects à améliorer",
-        "Progression_Title": "Progression",
-        "Stats_Title": "Statistiques",
-        "Rank_Label": "Ton rang",
-        "Trophies_Label": "Tes trophées",
-        "Level_Label": "Ton niveau",
-        "Case_Bank_button": "Banque de cas",
-        "Random_Case_button": "Cas aléatoire",
-        "Previous_Training_button": "Entraînements précédents",
-        "Previous_Corrections_button": "Corrections précédentes"
+        "Title": "Tableau de bord étudiant",
+        "Last_training_title": "Dernier entraînement",
+        "Successful_aspects": "Aspects réussis",
+        "Improvement_areas": "Aspects à améliorer",
+        "Progression_title": "Progression",
+        "Stats_title": "Stats",
+        "Rank_label": "Ton rang",
+        "Trophies_label": "Tes trophées",
+        "Level_label": "Ton niveau",
+        "Case_bank_btn": "Banque de cas",
+        "Random_case_btn": "Cas aléatoire",
+        "Previous_trainings_btn": "Entraînements précédents",
+        "Previous_corrections_btn": "Corrections précédentes"
     },
         
-        
-    "Case_creation": {
-        "Main_Title": "Création de cas",
-        "AI_Prompt_Title": "Prompt pour l'IA",
-        "AI_Prompt_Placeholder": "Entrez le prompt pour l'IA",
-        "Easy_Button": "Facile",
-        "Medium_Button": "Moyen",
-        "Hard_Button": "Difficile",
-        "Create_Button": "Créer un nouveau cas"
+    "case_creation": {
+        "Page_title": "Création de cas",
+        "IA_prompt_title": "Prompt pour l'IA",
+        "IA_prompt_placeholder": "Entrez le prompt pour l'IA",
+        "Difficulty_easy": "Facile",
+        "Difficulty_medium": "Moyen",
+        "Difficulty_hard": "Difficile",
+        "Create_button": "Créer un nouveau cas"
     },
-    
     
     "following_students": {
-        "Main_Title": "Liste des étudiants suivis",
-        "Last_Name_Label": "Nom",
-        "First_Name_Label": "Prénom",
-        "Email_Label": "Email",
-        "Gender_Label": "Genre",
-        "Study_Level_Label": "Niveau d'étude",
-        "Test_Amount_Label": "Nombre de tests",
-        "Study_Year_Label": "Année d'études",
-        "Specialty_Label": "Spécialité",
-        "Age_Label": "Age"
+        "Page_title": "Suivi des étudiants",
+        "Heading": "Liste des étudiants suivis",
+        "Lastname_label": "Nom",
+        "Firstname_label": "Prénom",
+        "Email_label": "Email",
+        "Gender_label": "Genre",
+        "Study_level_label": "Niveau d'étude",
+        "Test_count_label": "Nombre de tests",
+        "Study_year_label": "Année d'études",
+        "Specialty_label": "Spécialité",
+        "Age_label": "Âge"
     },
 
-    "Teacher_dashboard": {
-        "Main_Title": "Tableau de bord Enseignant",
-        "Last_Published_Cases_Title": "Derniers cas publiés",
-        "Last_Student_Trainings_Title": "Derniers entraînements d'élèves",
-        "Student_Name_Label": "Nom de l'élève",
-        "Case_Name_Button": "Nom du cas",
-        "Grade_Label": "Note",
-        "Time_Label": "Temps",
-        "Case_Bank": "Banque de cas",
-        "Student_FollowUp": "Suivi des étudiants",
-        "Export_Data": "Exporter les données",
-        "Create_Case": "Création de cas"
+    "teacher_dashboard": {
+        "Title": "Tableau de bord professeur",
+        "Last_cases_title": "Derniers cas publiés",
+        "Last_trainings_title": "Derniers entraînements d'élèves",
+        "Student_name_placeholder": "Nom de l'élève",
+        "Case_name_placeholder": "Nom du cas",
+        "Score_label": "Note",
+        "Time_label": "Temps",
+        "Case_bank_btn": "Banque de cas",
+        "Student_tracking_btn": "Suivi des étudiants",
+        "Export_data_btn": "Exporter les données",
+        "Create_case_btn": "Création de cas"
     },
+
     "Accueil": {
         "Hero_Title": "Plateforme de simulation clinique gamifiée pour la préparation aux ECOS",
         "Card1_Title": "Patients Virtuels",

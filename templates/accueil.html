@@ -7,7 +7,7 @@
 {% block content %}
 <main>
     <div id="background">
-        <h2>Plateforme de simulation clinique gamifiée pour la préparation aux ECOS</h2>
+        <h2>{{ t.Accueil.Hero_Title }}</h2>
     </div>
     <div id="container">
         <div class="card">
@@ -15,8 +15,8 @@
                 <span class="material-symbols-outlined">personal_injury</span>
             </div>
             <div id="container-descritpion">
-                <h3>Patients Virtuels</h3>
-                <p>Patients Virtuels, conversation, visualisation.</p>
+                <h3>{{ t.Accueil.Card1_Title }}</h3>
+                <p>{{ t.Accueil.Card1_Text }}</p>
             </div>
         </div>
         <div class="card">
@@ -24,8 +24,8 @@
                 <span class="material-symbols-outlined">psychology</span>
             </div>
             <div id="container-descritpion">
-                <h3>Raisonnement Clinique</h3>
-                <p>Met l'élève en condition réel.</p>
+                <h3>{{ t.Accueil.Card2_Title }}</h3>
+                <p>{{ t.Accueil.Card2_Text }}</p>
             </div>
         </div>
         <div class="card">
@@ -33,79 +33,76 @@
                 <span class="material-symbols-outlined">joystick</span>
             </div>
             <div id="container-descritpion">
-                <h3>Gamification pédagogique</h3>
-                <p>Permet au joueur de s'entrainement de manière ludique.</p>
+                <h3>{{ t.Accueil.Card3_Title }}</h3>
+                <p>{{ t.Accueil.Card3_Text }}</p>
             </div>
         </div>
     </div>
     <div id="container">
-        <h2>Dr DEMUTH, Dr PERCHE & Pr SERREAU Dr DESGROUAS</h2>
+        <h2>{{ t.Accueil.Team_Names }}</h2>
     </div>
     <div id="about">
-        <h3>A propos du projet</h3>
+        <h3>{{ t.Accueil.About_Title }}</h3>
         <div>
             <div class="card-type-one">
                 <div>
                     <span class="material-symbols-outlined">medical_services</span>
                 </div>
                 <div>
-                    <h4>Le défi des ECOS</h4>
+                    <h4>{{ t.Accueil.Challenge_Title }}</h4>
                     <ul>
-                        <li>Évaluation des compétances cliniques.</li>
-                        <li>Besoin d’un Entrainement intensif.</li>
-                        <li>Accès limité aux centres de simulation.</li>
+                        <li>{{ t.Accueil.Challenge_Item1 }}</li>
+                        <li>{{ t.Accueil.Challenge_Item2 }}</li>
+                        <li>{{ t.Accueil.Challenge_Item3 }}</li>
                     </ul>
                 </div>
             </div>
             <div class="card-type-two">
-                <h4>La Boucle ECOS Gamifiée</h4>
+                <h4>{{ t.Accueil.Loop_Title }}</h4>
                 <span class="material-symbols-outlined">conditions</span>
-                <p>Plateforme de Patients Interactifs</p>
+                <p>{{ t.Accueil.Loop_Description }}</p>
             </div>
             <div class="card-type-one">
                 <div>
                     <span class="material-symbols-outlined">cycle</span>
                 </div>
                 <div>
-                    <h4>Étude Multicentrique</h4>
+                    <h4>{{ t.Accueil.Study_Title }}</h4>
                     <ul>
-                        <li>Essai Randomisé (Réseau HUGO)</li>
-                        <li>Objectif: Améliorer les performances aux ECOS</li>
-                        <li>400 Étudiants, Critères cliniques</li>
+                        <li>{{ t.Accueil.Study_Item1 }}</li>
+                        <li>{{ t.Accueil.Study_Item2 }}</li>
+                        <li>{{ t.Accueil.Study_Item3 }}</li>
                     </ul>
                 </div>
             </div>
             <div class="card-type-two">
-                <h4>La Boucle ECOS Gamifiée</h4>
+                <h4>{{ t.Accueil.Loop_Title }}</h4>
                 <span class="material-symbols-outlined">map_pin_review</span>
             </div>
         </div>
     </div>
     <div id="publication">
         <div id="container">
-            <h3>Publications du projet</h3>
+            <h3>{{ t.Accueil.Publications_Title }}</h3>
         </div>
         <div id="list-ex">
             <div class="row">
-                <div class="title-line">Test 1</div>
-                <div class="difficult-line">Difficulté ⭐</div>
-                <div class="matiere-line">Neurologie</div>
-                <div class="description-line">Ceci est une description test pour voir comment la déscription sera
-                    affiché</div>
+                <div class="title-line">{{ t.Accueil.Test1_Title }}</div>
+                <div class="difficult-line">{{ t.Accueil.Test1_Difficulty }}</div>
+                <div class="matiere-line">{{ t.Accueil.Test1_Subject }}</div>
+                <div class="description-line">{{ t.Accueil.Test1_Desc }}</div>
             </div>
             <div class="row">
-                <div class="title-line">Test 2</div>
-                <div class="difficult-line">Difficulté ⭐⭐⭐</div>
-                <div class="matiere-line">Psychologie</div>
-                <div class="description-line">Ceci est une description test pour voir comment la déscription sera
-                    affiché</div>
+                <div class="title-line">{{ t.Accueil.Test2_Title }}</div>
+                <div class="difficult-line">{{ t.Accueil.Test2_Difficulty }}</div>
+                <div class="matiere-line">{{ t.Accueil.Test2_Subject }}</div>
+                <div class="description-line">{{ t.Accueil.Test2_Desc }}</div>
             </div>
             <div class="row">
-                <div class="title-line">Test 3</div>
-                <div class="difficult-line">Difficulté ⭐⭐⭐⭐⭐</div>
-                <div class="matiere-line">Neurologie</div>
-                <div class="description-line">Ceci est une description test pour voir comment la déscription sera
-                    affiché</div>
+                <div class="title-line">{{ t.Accueil.Test3_Title }}</div>
+                <div class="difficult-line">{{ t.Accueil.Test3_Difficulty }}</div>
+                <div class="matiere-line">{{ t.Accueil.Test3_Subject }}</div>
+                <div class="description-line">{{ t.Accueil.Test3_Desc }}</div>
             </div>
         </div>
     </div>
@@ -113,7 +110,7 @@
 
     </div>
     <div id="goal">
-        <h3>Objectif de notre projet</h3>
+        <h3>{{ t.Accueil.Goal_Title }}</h3>
         <img src="" alt="">
     </div>
 </main>

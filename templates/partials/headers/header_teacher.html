@@ -12,9 +12,9 @@
                     Mon compte
                 {% endif %}
             </a></li>
-            <li><a href="#">Etudiants</a></li>
-            <li><a href="#">Exporter les données</a></li>
-            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+            <li><a href="#">{{t.header_teacher.Student_link}}</a></li>
+            <li><a href="#">{{t.header_teacher.Export_link}}</a></li>
+            <li><a href="{% url 'deconnexion' %}">{{t.header_teacher.Deconnection_button}}</a></li>
         </ul>
     </nav>
 </header>

@@ -1,26 +1,26 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Mon tableau de bord - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.student_dashboard.Title }} - DR. VIRTUORL{% endblock %}
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
 {% endblock %}
 {% block content %}
 <section>
-    <h1>Student Dashboard</h1>
+    <h1>{{ t.student_dashboard.Title }}</h1>
     <div>
         <div>
-            <h2>Dernier entraînement</h2>
+            <h2>{{ t.student_dashboard.Last_training_title }}</h2>
             <ul>
                 <li>{{ last_training.name }}</li>
                 <li>
-                    Aspects réussis
+                    {{ t.student_dashboard.Successful_aspects }}
                     <ul>
                         <li>{{ last_training.successful_aspects.0 }}</li>
                         <li>{{ last_training.successful_aspects.1 }}</li>
                     </ul>
                 </li>
                 <li>
-                    Aspects à améliorer
+                    {{ t.student_dashboard.Improvement_areas }}
                     <ul>
                         <li>{{ last_training.improvement_areas.0 }}</li>
                         <li>{{ last_training.improvement_areas.1 }}</li>
@@ -30,22 +30,22 @@
         </div>
 
         <div>
-            <h2>Progression</h2>
+            <h2>{{ t.student_dashboard.Progression_title }}</h2>
             <canvas id="progressChart"></canvas>
             <div>
-                <h3>Stats</h3>
-                <p>Ton rang</p>
-                <p>Tes trophés</p>
-                <p>Ton niveau</p>
+                <h3>{{ t.student_dashboard.Stats_title }}</h3>
+                <p>{{ t.student_dashboard.Rank_label }}</p>
+                <p>{{ t.student_dashboard.Trophies_label }}</p>
+                <p>{{ t.student_dashboard.Level_label }}</p>
             </div>
         </div>
     </div>
 
-    <div>
-        <a href="#"><button>Banque de cas</button></a>
-        <a href="#"><button>Cas aléatoire</button></a>
-        <a href="#"><button>Entrainements précédents</button></a>
-        <a href="#"><button>Corrections précédentes</button></a>
+    <div class="student_dashboard-actions">
+        <a href="#"><button>{{ t.student_dashboard.Case_bank_btn }}</button></a>
+        <a href="#"><button>{{ t.student_dashboard.Random_case_btn }}</button></a>
+        <a href="#"><button>{{ t.student_dashboard.Previous_trainings_btn }}</button></a>
+        <a href="#"><button>{{ t.student_dashboard.Previous_corrections_btn }}</button></a>
     </div>
 </section>
 {% endblock %}
