@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import StudentPerformanceManager
 
 class StudentPerformance(models.Model):
-    """Performance d'un étudiant sur un cas clinique."""
     realization_date = models.DateTimeField(verbose_name="Date de réalisation")
     student = models.ForeignKey('auth_app.Student', on_delete=models.CASCADE, related_name='performances', verbose_name="Étudiant")
     case = models.ForeignKey('auth_app.ClinicalCase', on_delete=models.CASCADE, related_name='performances', verbose_name="Cas clinique")

@@ -1,13 +1,16 @@
-const emailInput = document.getElementById('user-email');
-const usernameInput = document.getElementById('id_username');
-const sendCodeBtn = document.getElementById('send-code-btn');
+const emailInput = document.getElementById("user-email");
+const usernameInput = document.getElementById("id_username");
+const sendCodeBtn = document.getElementById("send-code-btn");
 const codeInput = document.querySelector('input[name="verification_code"]');
-const statusEl = document.getElementById('code-status');
+const statusEl = document.getElementById("code-status");
 
 let codeSent = false;
 let codeValidated = false;
 
-emailInput.addEventListener('input', () => { usernameInput.value = emailInput.value; });
+// Synchronise email text with username text
+emailInput.addEventListener("input", () => {
+    usernameInput.value = emailInput.value;
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('select option[value=""]').forEach(opt => {
@@ -21,38 +24,40 @@ function togglePass(id) {
     input.type = input.type === "password" ? "text" : "password";
 }
 
-codeInput.addEventListener('input', () => {
+// event listener for code input to change button text
+codeInput.addEventListener("input", () => {
     if (codeValidated) return;
     if (codeInput.value.length > 0) {
-        sendCodeBtn.innerText = 'Valider le code';
+        sendCodeBtn.innerText = "Valider le code";
     } else if (codeSent) {
-        sendCodeBtn.innerText = 'Renvoyer le code';
+        sendCodeBtn.innerText = "Renvoyer le code";
     } else {
-        sendCodeBtn.innerText = 'Envoyer le code';
+        sendCodeBtn.innerText = "Envoyer le code";
     }
 });
 
-sendCodeBtn.addEventListener('click', function () {
-    if (sendCodeBtn.innerText === 'Valider le code') {
+// event listener for send code button
+sendCodeBtn.addEventListener("click", function () {
+    if (sendCodeBtn.innerText === "Valider le code") {
         const code = codeInput.value;
         fetch(`/verifier-code/?code=${encodeURIComponent(code)}`)
             .then(res => res.json())
             .then(data => {
-                if (data.status === 'ok') {
-                    statusEl.style.color = '#16a34a';
-                    statusEl.textContent = '✓ Code validé !';
+                if (data.status === "ok") {
+                    statusEl.style.color = "#16a34a";
+                    statusEl.textContent = "✓ Code validé !";
                     codeValidated = true;
-                    sendCodeBtn.innerText = 'Code validé';
+                    sendCodeBtn.innerText = "Code validé";
                     sendCodeBtn.disabled = true;
                     codeInput.readOnly = true;
                 } else {
-                    statusEl.style.color = '#dc2626';
-                    statusEl.textContent = 'Erreur : ' + data.message;
+                    statusEl.style.color = "#dc2626";
+                    statusEl.textContent = "Erreur : " + data.message;
                 }
             })
             .catch(() => {
-                statusEl.style.color = '#dc2626';
-                statusEl.textContent = 'Erreur réseau. Réessayez.';
+                statusEl.style.color = "#dc2626";
+                statusEl.textContent = "Erreur réseau. Réessayez.";
             });
         return;
     }
@@ -63,37 +68,37 @@ sendCodeBtn.addEventListener('click', function () {
     const studyYear = document.querySelector('select[name="study_year"]').value;
 
     if (!lastName || !firstName || !university || !studyYear || !emailInput.value || !emailInput.checkValidity()) {
-        statusEl.style.color = '#dc2626';
-        statusEl.textContent = 'Veuillez remplir toutes les informations (sauf mot de passe) avant d\'envoyer le code.';
+        statusEl.style.color = "#dc2626";
+        statusEl.textContent = "Veuillez remplir toutes les informations (sauf mot de passe) avant d'envoyer le code.";
         return;
     }
 
     const email = emailInput.value;
     const btn = this;
-    btn.innerText = 'Envoi...';
+    btn.innerText = "Envoi...";
     btn.disabled = true;
-    statusEl.style.color = '#6b7280';
-    statusEl.textContent = 'Envoi en cours...';
+    statusEl.style.color = "#6b7280";
+    statusEl.textContent = "Envoi en cours...";
 
     fetch(`/envoyer-code/?email=${encodeURIComponent(email)}`)
         .then(res => res.json())
         .then(data => {
-            if (data.status === 'ok') {
-                statusEl.style.color = '#16a34a';
-                statusEl.textContent = '✓ Code envoyé ! Vérifiez votre boîte mail.';
-                btn.innerText = 'Renvoyer le code';
+            if (data.status === "ok") {
+                statusEl.style.color = "#16a34a";
+                statusEl.textContent = "✓ Code envoyé ! Vérifiez votre boîte mail.";
+                btn.innerText = "Renvoyer le code";
                 codeSent = true;
             } else {
-                statusEl.style.color = '#dc2626';
-                statusEl.textContent = 'Erreur : ' + data.message;
-                btn.innerText = 'Réessayer';
+                statusEl.style.color = "#dc2626";
+                statusEl.textContent = "Erreur : " + data.message;
+                btn.innerText = "Réessayer";
             }
             btn.disabled = false;
         })
         .catch(() => {
-            statusEl.style.color = '#dc2626';
-            statusEl.textContent = 'Erreur réseau. Réessayez.';
-            btn.innerText = 'Réessayer';
+            statusEl.style.color = "#dc2626";
+            statusEl.textContent = "Erreur réseau. Réessayez.";
+            btn.innerText = "Réessayer";
             btn.disabled = false;
         });
 });

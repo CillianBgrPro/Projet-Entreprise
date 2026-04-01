@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import ProfessorManager
 
 class Professor(models.Model):
-    """Enseignant."""
     user = models.OneToOneField('auth_app.User', on_delete=models.CASCADE, related_name='professor_profile')
     speciality = models.CharField(max_length=50, blank=True, verbose_name="Spécialité")
     university = models.CharField(max_length=255, blank=True, verbose_name="Université")

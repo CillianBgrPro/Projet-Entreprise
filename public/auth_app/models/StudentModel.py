@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import StudentManager
 
 class Student(models.Model):
-    """Étudiant."""
 
     YEAR_CHOICES = [
         ('MM1', 'MM1'),

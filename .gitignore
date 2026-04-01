@@ -1,19 +1,14 @@
-# Dossiers virtuels Python (si tu en utilises un hors Docker)
+# in case of outside docker
 venv/
 env/
 
-# Fichiers compilés Python
+# Python compilation files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Fichiers de configuration locaux et variables d'environnement
 .env
 
-# Anciennes bases de données locales SQLite (au cas où)
-*.sqlite3
-db.sqlite3
-
-# Fichiers systèmes OS
+# OS files
 .DS_Store
 Thumbs.db

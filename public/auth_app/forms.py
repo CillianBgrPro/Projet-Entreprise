@@ -43,15 +43,6 @@ class CustomUserCreationForm(UserCreationForm):
         if 'username' in self.fields:
             self.fields['username'].required = False
 
-
-    # def clean_verification_code(self):
-    #     code_saisi = self.cleaned_data.get('verification_code')
-    #     code_attendu = self.request.session.get('verification_code')
-        
-    #     if not code_attendu or code_saisi != code_attendu:
-    #         raise forms.ValidationError("Le code de vérification est incorrect ou a expiré.")
-    #     return code_saisi
-
     def clean_verification_code(self):
         import time
         code_saisi = self.cleaned_data.get('verification_code', '').strip()

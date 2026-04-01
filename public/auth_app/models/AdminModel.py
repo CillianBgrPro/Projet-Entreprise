@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import AdminManager
 
 class Admin(models.Model):
-    """Administrateur."""
     user = models.OneToOneField('auth_app.User', on_delete=models.CASCADE, related_name='admin_profile')
 
     objects = AdminManager()

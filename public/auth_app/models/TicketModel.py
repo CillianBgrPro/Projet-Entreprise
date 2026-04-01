@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import TicketManager
 
 class Ticket(models.Model):
-    """Ticket de support."""
     user = models.ForeignKey('auth_app.User', on_delete=models.CASCADE, related_name='tickets', verbose_name="Utilisateur")
     subject = models.CharField(max_length=150, verbose_name="Sujet")
     message = models.TextField(verbose_name="Message")

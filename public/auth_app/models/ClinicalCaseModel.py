@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import ClinicalCaseManager
 
 class ClinicalCase(models.Model):
-    """Cas clinique ECOS."""
     creator_professor = models.ForeignKey(
         'auth_app.Professor', on_delete=models.CASCADE, related_name='clinical_cases',
         verbose_name="Enseignant créateur"

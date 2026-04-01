@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import TrainingManager
 
 class Training(models.Model):
-    """Entraînement (session de cas clinique pour un groupe)."""
     group = models.ForeignKey('auth_app.Group', on_delete=models.CASCADE, related_name='trainings', verbose_name="Groupe")
     case = models.ForeignKey('auth_app.ClinicalCase', on_delete=models.CASCADE, related_name='trainings', verbose_name="Cas clinique")
     professor = models.ForeignKey('auth_app.Professor', on_delete=models.CASCADE, related_name='trainings', verbose_name="Enseignant")

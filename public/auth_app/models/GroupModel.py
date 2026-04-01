@@ -2,7 +2,6 @@ from django.db import models
 from auth_app.managers import GroupManager
 
 class Group(models.Model):
-    """Groupe d'utilisateurs."""
     name = models.CharField(max_length=100, verbose_name="Nom du groupe")
     students = models.ManyToManyField('auth_app.Student', blank=True, related_name='groups', verbose_name="Étudiants")
     professors = models.ManyToManyField('auth_app.Professor', blank=True, related_name='groups', verbose_name="Enseignants")
