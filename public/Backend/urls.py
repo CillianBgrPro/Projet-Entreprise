@@ -29,6 +29,8 @@ urlpatterns = [
     path('reinitialisation-mot-de-passe/termine/',
          auth_views.PasswordResetCompleteView.as_view(template_name='connexion/password_reset_complete.html'),
          name='password_reset_complete'),
+     
+     path('select-lang/<str:lang>/', views.set_language, name='set_language'),
      path('administrater/', views.users, name='users'),
      path('administrater/', views.logs, name='logs'),
      path('administrater/', views.data, name='data'),

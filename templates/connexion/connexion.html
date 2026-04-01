@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends "index.html" %}
 {% load static %}
 {% block title %}Connexion - DR. VIRTUORL{% endblock %}
 {% block extra_head %}
@@ -11,17 +11,16 @@
     <div class="container">
         <form method="post" action="{% url 'login_view' %}">
             {% csrf_token %}
-
             <div class="input-group">
-                <label>Mail</label>
+                <label>{{t.connexion.Mail_label}}</label>
                 <input type="text" name="username" required>
             </div>
 
             <div class="input-group">
-                <label>Mot de passe</label>
+                <label>t.connexion.Password_label</label>
                 <input type="password" name="password" id="id_password" placeholder="----------------------------"
                     required>
-                <span class="eye-icon" onclick="togglePassword()">voir</span>
+                <span !class="eye-icon" onclick="togglePassword()">{{t.connexion.See_button}}</span>
 
                 {% if messages %}
                 {% for message in messages %}
@@ -31,9 +30,9 @@
             </div>
 
             <div class="actions">
-                <button type="submit" class="btn-submit">Connexion</button>
-                <a href="{% url 'password_reset' %}" class="forgot-link">Mot de passe oublié ?</a>
-                <p class="register-link">Pas encore inscrit ? <a href="{% url 'register' %}">S'inscrire</a></p>
+                <button type="submit" class="btn-submit">{{t.connexion.Connexion_button}}</button>
+                <a href="#" class="forgot-link">{{t.connexion.Forget_Password_link}}</a>
+                <p class="register-link">{{t.connexion.Register_link}}<a href="{% url 'register' %}">{{t.connexion.Register_button}}</a></p>
             </div>
         </form>
     </div>
