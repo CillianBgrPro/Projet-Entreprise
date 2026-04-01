@@ -4,7 +4,7 @@
     <nav class="navbar">
 
         <div class="logo">
-            <a href="{% url 'accueil' %}">VirtuORL
+            <a href="{% url 'home' %}">VirtuORL
                 {% if not user.is_authenticated %}
                 <span style="font-size: 0.8em; font-weight: normal;">(non connecté)</span>
                 {% elif user.is_superuser %}
@@ -18,10 +18,10 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'home' %}">Accueil</a></li>
 
             {% if user.is_authenticated %}
-            <li><a href="{% url 'compte' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            <li><a href="{% url 'account' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
 
             {% if user.is_superuser %}
             <li><a href="{% url 'logs' %}">Logs</a></li>
@@ -36,15 +36,15 @@
             <li><a href="#">Statistiques</a></li>
             {% endif %}
 
-            <li><a href="{% url 'deconnexion' %}">Se déconnecter</a></li>
+            <li><a href="{% url 'logout_view' %}">Se déconnecter</a></li>
 
             {% else %}
-            <li><a href="{% url 'connexion' %}">Se connecter</a></li>
-            <li><a href="{% url 'inscription' %}">Créer un compte</a></li>
+            <li><a href="{% url 'login_view' %}">Se connecter</a></li>
+            <li><a href="{% url 'register' %}">Créer un compte</a></li>
             {% endif %}
         </ul>
 
-        <a href={% if user.is_authenticated %}{% url 'compte' %}{% else %}{% url 'connexion' %}{% endif %}>
+        <a href={% if user.is_authenticated %}{% url 'account' %}{% else %}{% url 'login_view' %}{% endif %}>
             <div class="account">
             {% if user.is_authenticated %}
             <p>{{ user.first_name }} {{ user.last_name }}</p>

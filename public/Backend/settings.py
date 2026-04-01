@@ -123,7 +123,7 @@ AUTH_USER_MODEL = 'auth_app.User'
 # clé api chargé depuis .env
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 
-LOGIN_URL = 'connexion'
+LOGIN_URL = 'login_view'
 
 
 STATIC_URL = '/static/'

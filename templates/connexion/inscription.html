@@ -23,7 +23,7 @@
     </ul>
     {% endif %}
 
-    <form method="post" action="{% url 'inscription' %}" id="register-form">
+    <form method="post" action="{% url 'register' %}" id="register-form">
         {% csrf_token %}
         <input type="hidden" name="username" id="id_username">
 

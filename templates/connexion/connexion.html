@@ -9,7 +9,7 @@
 
 <div class="login-wrapper">
     <div class="container">
-        <form method="post" action="{% url 'connexion' %}">
+        <form method="post" action="{% url 'login_view' %}">
             {% csrf_token %}
 
             <div class="input-group">
@@ -33,7 +33,7 @@
             <div class="actions">
                 <button type="submit" class="btn-submit">Connexion</button>
                 <a href="{% url 'password_reset' %}" class="forgot-link">Mot de passe oublié ?</a>
-                <p class="register-link">Pas encore inscrit ? <a href="{% url 'inscription' %}">S'inscrire</a></p>
+                <p class="register-link">Pas encore inscrit ? <a href="{% url 'register' %}">S'inscrire</a></p>
             </div>
         </form>
     </div>

@@ -14,7 +14,7 @@ from django.db import IntegrityError
 from django.contrib.auth import logout
 import csv
 
-def inscription(request):
+def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request=request)
         if form.is_valid():
@@ -23,7 +23,7 @@ def inscription(request):
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 request.session.pop('verification_code', None)
                 request.session.pop('verification_code_time', None)
-                return redirect('accueil')
+                return redirect('home')
             except IntegrityError:
                 form.add_error(None, "Une erreur est survenue : cet utilisateur existe probablement déjà.")
     else:
@@ -31,7 +31,7 @@ def inscription(request):
     
     return render(request, 'connexion/inscription.html', {'form': form})
 
-def connexion(request):
+def login_view(request):
     if request.method == 'POST':
         u_name = request.POST.get('username')
         p_word = request.POST.get('password')
@@ -54,12 +54,12 @@ def connexion(request):
     
     return render(request, 'connexion/connexion.html')
 
-def accueil(request):
+def home(request):
     # logout(request)
     return render(request, 'accueil.html')
 
 @login_required
-def compte(request):
+def account(request):
     """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
     user = request.user
     if user.is_superuser:
@@ -83,7 +83,7 @@ def admin_dashboard(request):
         return redirect('accueil')
     return render(request, 'dashboard.html')
 
-def deconnexion(request):
+def logout_view(request):
     logout(request)
     return redirect('accueil')
 
@@ -107,7 +107,7 @@ def data(request):
     
     return render(request, 'administrater/data.html')
 
-def envoyer_code_view(request):
+def send_code_view(request):
     email = request.GET.get('email', '').strip().lower()
     if not email:
         return JsonResponse({'status': 'error', 'message': 'Email manquant'})
@@ -150,7 +150,7 @@ def envoyer_code_view(request):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
-def verifier_code(request):
+def verify_code(request):
     code_saisi = request.GET.get('code', '').strip()
     code_attendu = request.session.get('verification_code')
     code_timestamp = request.session.get('verification_code_time', 0)
@@ -204,14 +204,14 @@ def export_students_csv(request):
         
     return response
 
-def mentions_legales(request):
+def legal_notices(request):
     return render(request, 'infos/mentions_legales.html')
 
-def politiques_confidentialite(request):
+def privacy_policies(request):
     return render(request, 'infos/politiques_confidentialite.html')
 
 @login_required
-def ouvrir_ticket(request):
+def open_ticket(request):
     return render(request, 'infos/ouvrir_ticket.html')
 
 @login_required
@@ -272,7 +272,7 @@ def ticket(request):
     tickets = Ticket.objects.filter(user=request.user)
     return render(request, 'infos/dashboard_ticket.html', {'tickets': tickets})
 
-def details_etude(request):
+def study_details(request):
     return render(request, 'infos/details_etude.html')
 
 def ticket_admin(request):
