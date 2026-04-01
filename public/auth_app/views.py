@@ -184,3 +184,8 @@ def export_students_csv(request):
         
     return response
 
+def set_language(request, lang):
+    if lang in ['fr', 'en']:
+        request.session['lang'] = lang
+    return redirect(request.META.get('HTTP_REFERER', 'accueil'))
+

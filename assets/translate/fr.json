@@ -2,6 +2,9 @@
     "connexion": {
         "Mail_label": "Mail",
         "Password_label": "Mot de Passe",
+        "See_button": "Voir",
+        "Connexion_button": "Connexion",
+        "Forget_Password_link" : "Mot de passe oublié ?",
         "Register_link": "Pas encore inscrit ?",
         "Register_button": "S'inscrire"
 
@@ -16,10 +19,10 @@
         "Password_label": "Mot de Passe",
         "Password_placeholder": "ex: @dM1n1$tr&T€ur",
         "Password_span": "voir",
-        "Univeristy_label": "Université",
+        "University_label": "Université",
         "University_placeholder": "Lieux ex: Orléans",
         "Years_label": "Année d'étude",
-        "Years_placeholder": "ex: 3",
+        "Years_placeholder": "ex: MM1",
         "Verification_Code_label": "Code de vérification",
         "Verification_Code_placeholder": "_ _ _ _ _ _",
         "Time_span": "(valable 10min)",
