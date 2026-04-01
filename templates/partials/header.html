@@ -18,7 +18,7 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="{% url 'accueil' %}">{{ t.header.Home }}</a></li>
+            <li><a href="{% url 'home' %}">{{ t.header.Home }}</a></li>
 
             {% if user.is_authenticated %}
             <li><a href="{% url 'account' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
@@ -36,11 +36,11 @@
             <li><a href="#">{{ t.header.Statistics }}</a></li>
             {% endif %}
 
-            <li><a href="{% url 'deconnexion' %}">{{ t.header.Disconnect }}</a></li>
+            <li><a href="{% url 'logout_view' %}">{{ t.header.Disconnect }}</a></li>
 
             {% else %}
-            <li><a href="{% url 'connexion' %}">{{ t.header.Connect }}</a></li>
-            <li><a href="{% url 'inscription' %}">{{ t.header.Create_account }}</a></li>
+            <li><a href="{% url 'login_view' %}">{{ t.header.Connect }}</a></li>
+            <li><a href="{% url 'register' %}">{{ t.header.Create_account }}</a></li>
             {% endif %}
         </ul>
 
@@ -56,7 +56,7 @@
             <span class="material-symbols-outlined">person</span>
             {% endif %}
             {% else %}
-            <a href="{% url 'connexion' %}">{{ t.header.My_account }}</a>
+            <a href="{% url 'login_view' %}">{{ t.header.My_account }}</a>
             <span class="material-symbols-outlined">person</span>
             {% endif %}
         </div>

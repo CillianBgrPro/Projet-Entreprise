@@ -43,7 +43,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('accueil')
+            return redirect('home')
         else:
             from .models import User
             user_exists = User.objects.filter(username=u_name).exists()
@@ -80,16 +80,16 @@ def teacher_dashboard(request):
 @login_required
 def admin_dashboard(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
     return render(request, 'dashboard.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('accueil')
+    return redirect('home')
 
 def users(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
     
     from .models import User
     users = User.objects.all()
@@ -97,13 +97,13 @@ def users(request):
 
 def logs(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
     
     return render(request, 'administrater/logs.html')
 
 def data(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
     
     return render(request, 'administrater/data.html')
 
@@ -169,7 +169,7 @@ def verify_code(request):
 @login_required
 def export_students_csv(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
         
     response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="etudiants.csv"'
@@ -207,7 +207,7 @@ def export_students_csv(request):
 def set_language(request, lang):
     if lang in ['fr', 'en']:
         request.session['lang'] = lang
-    return redirect(request.META.get('HTTP_REFERER', 'accueil'))
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 def legal_notices(request):
     return render(request, 'infos/mentions_legales.html')
@@ -282,7 +282,7 @@ def study_details(request):
 
 def ticket_admin(request):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
     from .models import Ticket
     tickets = Ticket.objects.all().order_by('-created_at')
     return render(request, 'administrater/ticket_admin.html', {'tickets': tickets})
@@ -295,7 +295,7 @@ def ticket_detail(request, ticket_id):
     # Check permissions
     if not request.user.is_superuser and ticket.user != request.user:
         messages.error(request, "Accès refusé.")
-        return redirect('accueil')
+        return redirect('home')
         
     if request.method == 'POST':
         message = request.POST.get('reply_message', '').strip()
@@ -343,7 +343,7 @@ def ticket_detail(request, ticket_id):
 @login_required
 def ticket_change_status(request, ticket_id):
     if not request.user.is_superuser:
-        return redirect('accueil')
+        return redirect('home')
         
     if request.method == 'POST':
         from .models import Ticket
