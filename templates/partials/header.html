@@ -1,46 +1,46 @@
 {% load static %}
 <header>
-    <link rel="stylesheet" href="{% static 'css/header_main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <nav class="navbar">
 
         <div class="logo">
             <a href="{% url 'home' %}">VirtuORL
                 {% if not user.is_authenticated %}
-                <span style="font-size: 0.8em; font-weight: normal;">(non connecté)</span>
+                <span style="font-size: 0.8em; font-weight: normal;">{{ t.header.Not_connected }}</span>
                 {% elif user.is_superuser %}
-                <span class="role-badge admin">(admin)</span>
+                <span class="role-badge admin">{{ t.header.Admin_badge }}</span>
                 {% elif user.role == 'teacher' %}
-                <span class="role-badge teacher">(prof)</span>
+                <span class="role-badge teacher">{{ t.header.Teacher_badge }}</span>
                 {% else %}
-                <span class="role-badge student">(étudiant)</span>
+                <span class="role-badge student">{{ t.header.Student_badge }}</span>
                 {% endif %}
             </a>
         </div>
 
         <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Accueil</a></li>
+            <li><a href="{% url 'accueil' %}">{{ t.header.Home }}</a></li>
 
             {% if user.is_authenticated %}
             <li><a href="{% url 'account' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
 
             {% if user.is_superuser %}
-            <li><a href="{% url 'logs' %}">Logs</a></li>
-            <li><a href="{% url 'users' %}">Utilisateurs</a></li>
-            <li><a href="{% url 'data' %}">Données</a></li>
-            <li><a href="{% url 'export_students_csv' %}">Exporter Étudiants (CSV)</a></li>
+            <li><a href="#">{{ t.header.Logs }}</a></li>
+            <li><a href="#">{{ t.header.Users }}</a></li>
+            <li><a href="#">{{ t.header.Data }}</a></li>
+            <li><a href="{% url 'export_students_csv' %}">{{ t.header.Export_students_csv }}</a></li>
             {% elif user.role == 'teacher' %}
-            <li><a href="#">Étudiants</a></li>
-            <li><a href="#">Exporter les données</a></li>
+            <li><a href="#">{{ t.header.Students }}</a></li>
+            <li><a href="#">{{ t.header.Export_data }}</a></li>
             {% else %}
-            <li><a href="#">S'entraîner</a></li>
-            <li><a href="#">Statistiques</a></li>
+            <li><a href="#">{{ t.header.Train }}</a></li>
+            <li><a href="#">{{ t.header.Statistics }}</a></li>
             {% endif %}
 
-            <li><a href="{% url 'logout_view' %}">Se déconnecter</a></li>
+            <li><a href="{% url 'deconnexion' %}">{{ t.header.Disconnect }}</a></li>
 
             {% else %}
-            <li><a href="{% url 'login_view' %}">Se connecter</a></li>
-            <li><a href="{% url 'register' %}">Créer un compte</a></li>
+            <li><a href="{% url 'connexion' %}">{{ t.header.Connect }}</a></li>
+            <li><a href="{% url 'inscription' %}">{{ t.header.Create_account }}</a></li>
             {% endif %}
         </ul>
 
@@ -56,7 +56,7 @@
             <span class="material-symbols-outlined">person</span>
             {% endif %}
             {% else %}
-            <p>Mon compte</p>
+            <a href="{% url 'connexion' %}">{{ t.header.My_account }}</a>
             <span class="material-symbols-outlined">person</span>
             {% endif %}
         </div>

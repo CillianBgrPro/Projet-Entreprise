@@ -1,22 +1,26 @@
 {% extends 'index.html' %}
-{% block title %}Création de cas - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
 {% block content %}
-<h2>Création de cas</h2>
-<div>
-    <h3>prompt pour l'ia</h3>
-    <input type="text" class="form-control" id="prompt" placeholder="Entrez le prompt pour l'IA" />
+<h2>{{ t.case_creation.Page_title }}</h2>
+
+<div class="prompt-section">
+    <h3>{{ t.case_creation.IA_prompt_title }}</h3>
+    <input type="text" class="form-control" id="prompt" placeholder="{{ t.case_creation.IA_prompt_placeholder }}" />
 </div>
-<div>
+
+<div class="options-section">
     <menu>
         {% for specialty in specialties %}
         <li><button id="{{ specialty.id }}">{{ specialty.name }}</button></li>
         {% endfor %}
     </menu>
+
     <menu>
-        <li><button id="1">Facile</button></li>
-        <li><button id="2">Moyen</button></li>
-        <li><button id="3">Difficile</button></li>
+        <li><button id="1">{{ t.case_creation.Difficulty_easy }}</button></li>
+        <li><button id="2">{{ t.case_creation.Difficulty_medium }}</button></li>
+        <li><button id="3">{{ t.case_creation.Difficulty_hard }}</button></li>
     </menu>
 </div>
-<button>Créer un nouveau cas</button>
+
+<button class="btn-create">{{ t.case_creation.Create_button }}</button>
 {% endblock %}

@@ -1,0 +1,193 @@
+{
+    "connexion": {
+        "Mail_label": "Email",
+        "Password_label": "Password",
+        "See_button": "Show",
+        "Connexion_button": "Login",
+        "Forget_Password_link": "Forgot password?",
+        "Register_link": "Not registered yet?",
+        "Register_button": "Sign up"
+    },
+    "inscription": {
+        "Name_label": "Last Name",
+        "Name_placeholder": "e.g.: Turing",
+        "FirstName_label": "First Name",
+        "Firstname_placeholder": "e.g.: Alan",
+        "Mail_label": "Email",
+        "Mail_placeholder": "e.g.: alan.turing@example.com",
+        "Password_label": "Password",
+        "Password_placeholder": "e.g.: @dM1n1$tr&T€ur",
+        "Password_span": "show",
+        "University_label": "University",
+        "University_placeholder": "Location e.g.: Orleans",
+        "Years_label": "Year of study",
+        "Years_placeholder": "e.g.: MS1",
+        "Verification_Code_label": "Verification Code",
+        "Verification_Code_placeholder": "_ _ _ _ _ _",
+        "Time_span": "(valid for 10 min)",
+        "Send_Code_button": "Send code",
+        "Confirm_Password_label": "Confirm Password",
+        "Confirm_Password_placeholder": "e.g.: @dM1n1$tr&T€ur",
+        "See_span": "show",
+        "Place_placeholder": "Location e.g.: Orleans",
+        "Consent_label": "I agree to my data being collected in order to contribute to the scientific study conducted via this site...",
+        "Register_button": "Register",
+        "Invalide_email_textContent": "Please enter a valid email before sending the code.",
+        "Send_Text_button": "Sending...",
+        "Send_Time_text": "Sending in progress...",
+        "Send_Text_content": "✓ Code sent! Please check your inbox.",
+        "Resend_code_Text": "Resend code",
+        "Error": "Error",
+        "Retry": "Retry",
+        "Connection_error": "Network error. Please try again."
+    },
+
+    "header_admin": {
+        "Logs_link": "Logs",
+        "Users_link": "Users",
+        "Data_link": "Data",
+        "Deconnection_button": "Logout"
+    },
+
+    "header_main": {
+        "Home_text": "Home",
+        "Deconnection_button": "Logout",
+        "Connection_text": "Login",
+        "Create_Account_text": "Create an account"
+    },
+
+    "header_student": {
+        "Train_link": "Practice",
+        "Stats_link": "Statistics",
+        "Deconnection_button": "Logout"
+    },
+
+    "header_teacher": {
+        "Student_link": "Students",
+        "Export_link": "Export data",
+        "Deconnection_button": "Logout"
+    },
+    
+    "header": {
+        "Not_connected": "(not connected)",
+        "Admin_badge": "(admin)",
+        "Teacher_badge": "(teacher)",
+        "Student_badge": "(student)",
+        "Home": "Home",
+        "Logs": "Logs",
+        "Users": "Users",
+        "Data": "Data",
+        "Export_students_csv": "Export Students (CSV)",
+        "Students": "Students",
+        "Export_data": "Export data",
+        "Train": "Practice",
+        "Statistics": "Statistics",
+        "Disconnect": "Logout",
+        "Connect": "Login",
+        "Create_account": "Create an account",
+        "My_account": "My account"
+    },
+
+    "footer": {
+        "footer_Text": "2026 LI2RSO. All rights reserved."
+    },
+    
+    "student_dashboard": {
+        "Title": "Student Dashboard",
+        "Last_training_title": "Last training session",
+        "Successful_aspects": "Successful aspects",
+        "Improvement_areas": "Areas for improvement",
+        "Progression_title": "Progression",
+        "Stats_title": "Stats",
+        "Rank_label": "Your rank",
+        "Trophies_label": "Your trophies",
+        "Level_label": "Your level",
+        "Case_bank_btn": "Case bank",
+        "Random_case_btn": "Random case",
+        "Previous_trainings_btn": "Previous sessions",
+        "Previous_corrections_btn": "Previous corrections"
+    },
+        
+    "case_creation": {
+        "Page_title": "Case Creation",
+        "IA_prompt_title": "AI Prompt",
+        "IA_prompt_placeholder": "Enter the prompt for the AI",
+        "Difficulty_easy": "Easy",
+        "Difficulty_medium": "Medium",
+        "Difficulty_hard": "Hard",
+        "Create_button": "Create a new case"
+    },
+    
+    "following_students": {
+        "Page_title": "Student Tracking",
+        "Heading": "List of tracked students",
+        "Lastname_label": "Last Name",
+        "Firstname_label": "First Name",
+        "Email_label": "Email",
+        "Gender_label": "Gender",
+        "Study_level_label": "Study level",
+        "Test_count_label": "Number of tests",
+        "Study_year_label": "Year of study",
+        "Specialty_label": "Specialty",
+        "Age_label": "Age"
+    },
+
+    "teacher_dashboard": {
+        "Title": "Teacher Dashboard",
+        "Last_cases_title": "Last published cases",
+        "Last_trainings_title": "Last student training sessions",
+        "Student_name_placeholder": "Student name",
+        "Case_name_placeholder": "Case name",
+        "Score_label": "Score",
+        "Time_label": "Time",
+        "Case_bank_btn": "Case bank",
+        "Student_tracking_btn": "Student tracking",
+        "Export_data_btn": "Export data",
+        "Create_case_btn": "Create case"
+    },
+
+    "Accueil": {
+        "Hero_Title": "Gamified clinical simulation platform for OSCE preparation",
+        "Card1_Title": "Virtual Patients",
+        "Card1_Text": "Virtual patients, conversation, visualization.",
+        "Card2_Title": "Clinical Reasoning",
+        "Card2_Text": "Places the student in real-life conditions.",
+        "Card3_Title": "Educational Gamification",
+        "Card3_Text": "Allows the player to train in a fun and engaging way.",
+        "Team_Names": "Dr DEMUTH, Dr PERCHE & Pr SERREAU, Dr DESGROUAS",
+        "About_Title": "About the project",
+        "Challenge_Title": "The OSCE Challenge",
+        "Challenge_Item1": "Assessment of clinical skills.",
+        "Challenge_Item2": "Need for intensive training.",
+        "Challenge_Item3": "Limited access to simulation centers.",
+        "Loop_Title": "The Gamified OSCE Loop",
+        "Loop_Description": "Interactive Patient Platform",
+        "Study_Title": "Multicenter Study",
+        "Study_Item1": "Randomized Trial (HUGO Network)",
+        "Study_Item2": "Objective: Improve performance in OSCEs",
+        "Study_Item3": "400 Students, Clinical criteria",
+        "Publications_Title": "Project publications",
+        "Test1_Title": "Test 1",
+        "Test1_Difficulty": "Difficulty ⭐",
+        "Test1_Subject": "Neurology",
+        "Test1_Desc": "This is a test description to see how the description will be displayed",
+        "Test2_Title": "Test 2",
+        "Test2_Difficulty": "Difficulty ⭐⭐⭐",
+        "Test2_Subject": "Psychology",
+        "Test2_Desc": "This is a test description to see how the description will be displayed",
+        "Test3_Title": "Test 3",
+        "Test3_Difficulty": "Difficulty ⭐⭐⭐⭐⭐",
+        "Test3_Subject": "Neurology",
+        "Test3_Desc": "This is a test description to see how the description will be displayed",
+        "Goal_Title": "Our project objective"
+    },
+
+    "listing" : {
+        "Search_placeholder" : "Search for a...",
+        "Search_button" : "Search",
+        "Filter_button" : "Filter",
+        "Name_p" : "item name",
+        "desc_p" : "item description",
+        "details_button" : "view details"
+    }
+}

@@ -1,14 +1,14 @@
 <div>
-    <input type="text" placeholder="Rechercher un ..." />
-    <button>Rechercher</button>
-    <button>Filtrer</button>
+    <input type="text" placeholder={{t.listing.Search_placeholder}} />
+    <button>{{t.listing.Search_button}}</button>
+    <button>{{t.listing.Filter_button}}</button>
 </div>
 <ul>
     {% for item in items %}
     <li>
-        <p>nom de l'item</p>
-        <p>description de l'item</p>
-        <button>Voir les détails</button>
+        <p>{{t.listing.Name_p}}</p>
+        <p>{{t.listing.desc_p}}</p>
+        <button>{{t.listing.details_button}}</button>
     </li>
     {% endfor %}
 </ul>
