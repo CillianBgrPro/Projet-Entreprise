@@ -4,12 +4,12 @@
         "Password_label": "Mot de Passe",
         "See_button": "Voir",
         "Connexion_button": "Connexion",
-        "Forget_Password_link" : "Mot de passe oublié ?",
+        "Forget_Password_link": "Mot de passe oublié ?",
         "Register_link": "Pas encore inscrit ?",
         "Register_button": "S'inscrire"
-
     },
     "inscription": {
+        "Title_header": "Inscription - DR.VIRTUORL",
         "Name_label": "Nom",
         "Name_placeholder": "ex : Turing",
         "FirstName_label": "Prénom",
@@ -31,6 +31,7 @@
         "Confirm_Password_placeholder": "ex: @dM1n1$tr&T€ur",
         "See_span": "voir",
         "Place_placeholder": "Lieux ex : Orléans",
+        "Consent_RGPD": "En utilisant ce site je consens au rgpd etc...",
         "Consent_label": "J'accepte que mes données soient collectées afin de contribuer à l'étude scientifique menée à l'aide de ce site...",
         "Register_button": "Enregistrer",
         "Invalide_email_textContent": "Veuillez saisir un email valide avant d'envoyer le code.",
@@ -41,36 +42,29 @@
         "Error": "Erreur",
         "Retry": "Réessayer",
         "Connection_error": "Erreur réseau. Réessayez."
-
     },
-
     "header_admin": {
         "Logs_link": "Logs",
         "Users_link": "Utilisateurs",
         "Data_link": "Données",
         "Deconnection_button": "Se déconnecter"
     },
-
     "header_main": {
         "Home_text": "Accueil",
         "Deconnection_button": "Se déconnecter",
         "Connection_text": "Se connecter",
         "Create_Account_text": "Créer un compte"
     },
-
     "header_student": {
-        "Train_link" : "S'entrainer",
-        "Stats_link" : "Statistiques",
+        "Train_link": "S'entrainer",
+        "Stats_link": "Statistiques",
         "Deconnection_button": "Se déconnecter"
-
     },
-
-    "header_teacher" : {
+    "header_teacher": {
         "Student_link": "Etudiants",
-        "Export_link" : "Exporter les données",
+        "Export_link": "Exporter les données",
         "Deconnection_button": "Se déconnecter"
     },
-    
     "header": {
         "Not_connected": "(non connecté)",
         "Admin_badge": "(admin)",
@@ -90,27 +84,9 @@
         "Create_account": "Créer un compte",
         "My_account": "Mon compte"
     },
-
     "footer": {
         "footer_Text": "2026 LI2RSO. Tous droits réservés."
     },
-    
-    "student_dashboard": {
-        "Title": "Tableau de bord étudiant",
-        "Last_training_title": "Dernier entraînement",
-        "Successful_aspects": "Aspects réussis",
-        "Improvement_areas": "Aspects à améliorer",
-        "Progression_title": "Progression",
-        "Stats_title": "Stats",
-        "Rank_label": "Ton rang",
-        "Trophies_label": "Tes trophées",
-        "Level_label": "Ton niveau",
-        "Case_bank_btn": "Banque de cas",
-        "Random_case_btn": "Cas aléatoire",
-        "Previous_trainings_btn": "Entraînements précédents",
-        "Previous_corrections_btn": "Corrections précédentes"
-    },
-        
     "case_creation": {
         "Page_title": "Création de cas",
         "IA_prompt_title": "Prompt pour l'IA",
@@ -120,7 +96,6 @@
         "Difficulty_hard": "Difficile",
         "Create_button": "Créer un nouveau cas"
     },
-    
     "following_students": {
         "Page_title": "Suivi des étudiants",
         "Heading": "Liste des étudiants suivis",
@@ -134,21 +109,6 @@
         "Specialty_label": "Spécialité",
         "Age_label": "Âge"
     },
-
-    "teacher_dashboard": {
-        "Title": "Tableau de bord professeur",
-        "Last_cases_title": "Derniers cas publiés",
-        "Last_trainings_title": "Derniers entraînements d'élèves",
-        "Student_name_placeholder": "Nom de l'élève",
-        "Case_name_placeholder": "Nom du cas",
-        "Score_label": "Note",
-        "Time_label": "Temps",
-        "Case_bank_btn": "Banque de cas",
-        "Student_tracking_btn": "Suivi des étudiants",
-        "Export_data_btn": "Exporter les données",
-        "Create_case_btn": "Création de cas"
-    },
-
     "Accueil": {
         "Hero_Title": "Plateforme de simulation clinique gamifiée pour la préparation aux ECOS",
         "Card1_Title": "Patients Virtuels",
@@ -184,13 +144,118 @@
         "Test3_Desc": "Ceci est une description test pour voir comment la déscription sera affiché",
         "Goal_Title": "Objectif de notre projet"
     },
-
-    "listing" : {
-        "Search_placeholder" : "Rechercher un ...",
-        "Search_button" : "Rechercher",
-        "Filter_button" : "Filtrer",
-        "Name_p" : "nom de l'item",
-        "desc_p" : "description de l'item",
-        "details_button" : "voir les détails"
+    "listing": {
+        "Search_placeholder": "Rechercher un ...",
+        "Search_button": "Rechercher",
+        "Filter_button": "Filtrer",
+        "Name_p": "nom de l'item",
+        "desc_p": "description de l'item",
+        "details_button": "voir les détails"
+    },
+    "password_resest_complete": {
+        "Title_header": "Succès - DR. VIRTUORL",
+        "Text": "Votre mot de passe a été réinitialisé avec succès.",
+        "Button": "Se connecter"
+    },
+    "password_reset_confirm": {
+        "Title_header": "Nouveau mot de passe - DR. VIRTUORL",
+        "Text_new_mdp": "Nouveau mot de passe",
+        "Button_submit": "Changer mon mot de passe"
+    },
+    "password_reset_done": {
+        "Title_header": "E-mail envoyé - DR. VIRTUORL",
+        "email_send": "E-mail envoyé",
+        "Text_email": "Si vous avez un compte avec {{email}} comme mail vous recevrez un e-mail contenant des instructions pour réinitialiser votre mot de passe.",
+        "Text_spam": "Si vous ne le recevez pas d'ici quelques minutes, vérifiez vos courriers indésirables (spams).",
+        "Button_return": "Retour à la connexion"
+    },
+    "password_reset_form": {
+        "Title_header": "Mot de passe oublié- DR. VIRTUORL",
+        "text_title": "Réinitialisation",
+        "text_description": "Saisissez votre adresse e-mail pour recevoir un lien de réinitialisation.",
+        "Button_submit": "Envoyer le lien",
+        "Button_return": "Retour à la connexion"
+    },
+    "ticket_details": {
+        "Title_header": "Détail du ticket - DR. VIRTUORL",
+        "returnboutonadmin": "Retour à la liste des tickets (admin)",
+        "returnboutonuser": "Retour à la liste des tickets",
+        "status": "Statut : ",
+        "admin_panel": "Panneau Admin :",
+        "update_status": "Modifier le statut du ticket",
+        "update_button": "Mettre à jour",
+        "new_reply": "Nouvelle réponse :",
+        "reply_placeholder": "Tapez votre réponse ici...",
+        "reply_button": "Envoyer la réponse",
+        "ticket_closed": "Ce ticket est clos. Vous ne pouvez plus y ajouter de réponse.",
+        "status_open": "Ouvert",
+        "status_progress": "En cours",
+        "status_resolved": "Résolu",
+        "status_closed": "Clos"
+    },
+    "contact": {
+        "Title_header": "Contact - DR. VIRTUORL",
+        "Title": "Contact / Signaler un problème",
+        "Subject_label": "Sujet",
+        "Subject_placeholder": "Ex: Problème de connexion, Bug d'affichage...",
+        "Message_placeholder": "Décrivez votre problème en détail...",
+        "Submit_button": "Envoyer le ticket"
+    },
+    "dashboard_ticket": {
+        "header_title": "Mes Tickets - DR. VIRTUORL",
+        "Title": "Mes Tickets",
+        "btn_new_ticket": "+ Nouveau Ticket",
+        "btn_dashboard": "Retour au Dashboard",
+        "empty_state": "Vous n'avez créé aucun ticket pour le moment.",
+        "table_headers": {
+            "date": "Date",
+            "subject": "Sujet",
+            "status": "Statut",
+            "message": "Message"
+        }
+    },
+    "global_dashboard": {
+        "header_title": "Tableau de bord - DR. VIRTUORL",
+        "teacher_dashboard": {
+            "Title": "Tableau de bord professeur",
+            "Last_cases_title": "Derniers cas publiés",
+            "Last_trainings_title": "Derniers entraînements d'élèves",
+            "Student_name_placeholder": "Nom de l'élève",
+            "Case_name_placeholder": "Nom du cas",
+            "Score_label": "Note",
+            "Time_label": "Temps",
+            "Case_bank_btn": "Banque de cas",
+            "Student_tracking_btn": "Suivi des étudiants",
+            "Export_data_btn": "Exporter les données",
+            "Create_case_btn": "Création de cas"
+        },
+        "student_dashboard": {
+            "Title": "Tableau de bord étudiant",
+            "Last_training_title": "Dernier entraînement",
+            "Successful_aspects": "Aspects réussis",
+            "Improvement_areas": "Aspects à améliorer",
+            "Progression_title": "Progression",
+            "Stats_title": "Stats",
+            "Rank_label": "Ton rang",
+            "Trophies_label": "Tes trophées",
+            "Level_label": "Ton niveau",
+            "Case_bank_btn": "Banque de cas",
+            "Random_case_btn": "Cas aléatoire",
+            "Previous_trainings_btn": "Entraînements précédents",
+            "Previous_corrections_btn": "Corrections précédentes",
+            "Tickets": "Mes Tickets"
+        },
+        "admin_dashboard": {
+            "Title": "Tableau de bord admin",
+            "logs": "Logs",
+            "global_view": "Vue Globale",
+            "total_user": "Nombre total d'utilisateurs",
+            "recent_activity": "Activité récente",
+            "other_stat": "Autres Statistiques pertinentes",
+            "user_management": "Gestion des utilisateurs",
+            "data_management": "Gestion des données",
+            "system_options": "Options du système",
+            "tickets": "Tickets utilisateurs"
+        }
     }
 }

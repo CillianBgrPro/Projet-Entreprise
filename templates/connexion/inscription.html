@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Inscription - DR. VIRTUORL{% endblock %}
+{% block title %}{{t.inscription.Title_header}}{% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
 {% endblock %}
@@ -79,7 +79,7 @@
 
         <div class="consent-container">
             <input type="checkbox" name="consent" id="consent" required tabindex="9">
-            <label for="consent">En utilisant ce site je consens au rgpd etc</label>
+            <label for="consent">{{ t.inscription.Consent_RGPD }}</label>
         </div>
         <div class="consent-container">
             <input type="checkbox" name="scientific_study" id="scientific_study" tabindex="9">

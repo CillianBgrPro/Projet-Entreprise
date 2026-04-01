@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Tableau de bord - DR. VIRTUORL
+{% block title %}{{t.global_dashboard.header_title}}
 {% endblock %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
@@ -8,34 +8,35 @@
 {% block content %}
 {% if user.is_superuser %}
 <section>
-    <h1>Admin Dashboard</h1>
+    <h1>{{t.global_dashboard.admin_dashboard.Title}}</h1>
     <div class="top-infos">
         <div class="section1 sections">
-            <h2>logs</h2>
+            <h2>{{t.global_dashboard.admin_dashboard.logs}}</h2>
             <canvas id="logsChart"></canvas>
         </div>
 
         <div class="section2 sections">
-            <h2>Vue globale</h2>
-            <p>Nombre total d'utilisateurs</p>
-            <p>activité récente</p>
-            <p>autres statistiques pertinentes</p>
+            <h2>{{t.global_dashboard.admin_dashboard.global_view}}</h2>
+            <p>{{t.global_dashboard.admin_dashboard.total_user}}</p>
+            <p>{{t.global_dashboard.admin_dashboard.recent_activity}}</p>
+            <p>{{t.global_dashboard.admin_dashboard.other_stat}}</p>
         </div>
     </div>
 
     <div class="actions">
-        <a href="#" class="action-btn"><button>Gestion des utilisateurs</button></a>
-        <a href="#" class="action-btn"><button>Gestion des données</button></a>
-        <a href="#" class="action-btn"><button>Options du système</button></a>
-        <a href="{% url 'ticket_admin' %}" class="action-btn"><button>Tickets utilisateurs</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.user_management}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.data_management}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.system_options}}</button></a>
+        <a href="{% url 'ticket_admin' %}" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.tickets}}</button></a>
     </div>
 </section>
 
 {% elif user.role == 'teacher' %}
 <section>
+    <h1>{{t.global_dashboard.teacher_dashboard.Title}}</h1>
     <div class="top-infos">
         <div class="section1 sections">
-            <h2>Derniers cas publiés</h2>
+            <h2>{{t.global_dashboard.teacher_dashboard.Last_cases_title}}</h2>
             <ul>
                 {% for case in cases %}
                 <li>
@@ -48,14 +49,14 @@
         </div>
 
         <div class="section2 sections">
-            <h2>Derniers entrainements d'élèves</h2>
+            <h2>{{t.global_dashboard.teacher_dashboard.Last_trainings_title}}</h2>
             <ul>
                 {% for training in trainings %}
                 <li>
-                    <p>nom de l'élève</p>
-                    <button>nom du cas</button>
-                    <p>note</p>
-                    <p>temps</p>
+                    <p>{{t.global_dashboard.teacher_dashboard.Student_name_placeholder}}</p>
+                    <button>{{t.global_dashboard.teacher_dashboard.Case_name_placeholder}}</button>
+                    <p>{{t.global_dashboard.teacher_dashboard.Score_label}}</p>
+                    <p>{{t.global_dashboard.teacher_dashboard.Time_label}}</p>
                 </li>
                 {% endfor %}
             </ul>
@@ -63,31 +64,31 @@
     </div>
 
     <div class="actions">
-        <a href="#"><button class="action-btn">Banque de cas</button></a>
-        <a href="#"><button class="action-btn">Suivi des étudiants</button></a>
-        <a href="#"><button class="action-btn">Exporter les données</button></a>
-        <a href="#"><button class="action-btn">Création de cas</button></a>
-        <a href="{% url 'ticket' %}"><button class="action-btn">Mes Tickets</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Student_tracking_btn}}</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
     </div>
 </section>
 
 {% else %}
 <section>
-    <h1>Student Dashboard</h1>
+    <h1>{{t.global_dashboard.student_dashboard.Title}}</h1>
     <div class="top-infos">
         <div class="section1 sections">
-            <h2>Dernier entraînement</h2>
+            <h2>{{t.global_dashboard.student_dashboard.Last_training_title}}</h2>
             <ul>
                 <li>{{ last_training.name }}</li>
                 <li>
-                    Aspects réussis
+                    {{t.global_dashboard.student_dashboard.Successful_aspects}}
                     <ul>
                         <li>{{ last_training.successful_aspects.0 }}</li>
                         <li>{{ last_training.successful_aspects.1 }}</li>
                     </ul>
                 </li>
                 <li>
-                    Aspects à améliorer
+                    {{t.global_dashboard.student_dashboard.Improvement_areas}}
                     <ul>
                         <li>{{ last_training.improvement_areas.0 }}</li>
                         <li>{{ last_training.improvement_areas.1 }}</li>
@@ -97,23 +98,23 @@
         </div>
 
         <div class="section2 sections">
-            <h2>Progression</h2>
+            <h2>{{t.global_dashboard.student_dashboard.Progression_title}}</h2>
             <canvas id="progressChart"></canvas>
             <div>
-                <h3>Stats</h3>
-                <p>Ton rang</p>
-                <p>Tes trophés</p>
-                <p>Ton niveau</p>
+                <h3>{{t.global_dashboard.student_dashboard.Stats_title}}</h3>
+                <p>{{t.global_dashboard.student_dashboard.Rank_label}}</p>
+                <p>{{t.global_dashboard.student_dashboard.Trophies_label}}</p>
+                <p>{{t.global_dashboard.student_dashboard.Level_label}}</p>
             </div>
         </div>
     </div>
 
     <div class="actions">
-        <a href="#" class="action-btn"><button>Banque de cas</button></a>
-        <a href="#" class="action-btn"><button>Cas aléatoire</button></a>
-        <a href="#" class="action-btn"><button>Entrainements précédents</button></a>
-        <a href="#" class="action-btn"><button>Corrections précédentes</button></a>
-        <a href="{% url 'ticket' %}" class="action-btn"><button>Mes Tickets</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Case_bank_btn}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_trainings_btn}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_corrections_btn}}</button></a>
+        <a href="{% url 'ticket' %}" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Tickets}}</button></a>
     </div>
 </section>
 {% endif %} {% endblock %}

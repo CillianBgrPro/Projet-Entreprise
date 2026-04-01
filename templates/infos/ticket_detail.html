@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Détail du Ticket - DR. VIRTUORL{% endblock %}
+{% block title %}{{t.ticket_details.Title_header}}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/ticket_admin.css' %}">
@@ -10,9 +10,9 @@
 {% block content %}
 <div class="ticket-wrapper">
     {% if user.is_superuser %}
-    <a href="{% url 'ticket_admin' %}" class="btn-secondary">Retour aux tickets (Admin)</a>
+    <a href="{% url 'ticket_admin' %}" class="btn-secondary">{{t.ticket_details.returnboutonadmin}}</a>
     {% else %}
-    <a href="{% url 'ticket' %}" class="btn-secondary">Retour à mes tickets</a>
+    <a href="{% url 'ticket' %}" class="btn-secondary">{{t.ticket_details.returnboutonuser}}</a>
     {% endif %}
 
     <div class="thread-container">
@@ -38,17 +38,17 @@
 
         {% if user.is_superuser %}
         <div class="admin-controls">
-            <strong>Panneau Admin :</strong> Modifier le statut du ticket
+            <strong>{{t.ticket_details.admin_panel}}</strong> {{t.ticket_details.update_status}}
             <form method="POST" action="{% url 'ticket_change_status' ticket.id %}"
                 style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
                 {% csrf_token %}
                 <select name="status" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                    <option value="Ouvert" {% if ticket.status == 'Ouvert' %}selected{% endif %}>Ouvert</option>
-                    <option value="En cours" {% if ticket.status == 'En cours' %}selected{% endif %}>En cours</option>
-                    <option value="Résolu" {% if ticket.status == 'Résolu' %}selected{% endif %}>Résolu</option>
-                    <option value="Clos" {% if ticket.status == 'Clos' %}selected{% endif %}>Clos</option>
+                    <option value="Ouvert" {% if ticket.status == 'Ouvert' %}selected{% endif %}>{{t.ticket_details.status_open}}</option>
+                    <option value="En cours" {% if ticket.status == 'En cours' %}selected{% endif %}>{{t.ticket_details.status_progress}}</option>
+                    <option value="Résolu" {% if ticket.status == 'Résolu' %}selected{% endif %}>{{t.ticket_details.status_resolved}}</option>
+                    <option value="Clos" {% if ticket.status == 'Clos' %}selected{% endif %}>{{t.ticket_details.status_closed}}</option>
                 </select>
-                <button type="submit" class="btn-primary" style="padding: 8px 15px;">Mettre à jour</button>
+                <button type="submit" class="btn-primary" style="padding: 8px 15px;">{{t.ticket_details.update_button}}</button>
             </form>
         </div>
         {% endif %}
@@ -75,17 +75,16 @@
         <div class="reply-form">
             <form method="POST" action="{% url 'ticket_detail' ticket.id %}">
                 {% csrf_token %}
-                <label for="reply_message" style="font-weight: bold; margin-bottom: 10px; display: block;">Nouvelle
-                    réponse :</label>
+                <label for="reply_message" style="font-weight: bold; margin-bottom: 10px; display: block;">{{t.ticket_details.new_reply}}</label>
                 <textarea id="reply_message" name="reply_message" rows="4" required
-                    placeholder="Tapez votre réponse ici..."></textarea>
-                <button type="submit" class="btn-primary">Envoyer la réponse</button>
+                    placeholder="{{t.ticket_details.reply_placeholder}}"></textarea>
+                <button type="submit" class="btn-primary">{{t.ticket_details.reply_button}}</button>
             </form>
         </div>
         {% else %}
         <div
             style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 5px; text-align: center; color: #495057;">
-            Ce ticket est clos. Vous ne pouvez plus y ajouter de réponse.
+            {{t.ticket_details.ticket_closed}}
         </div>
         {% endif %}
     </div>

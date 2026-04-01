@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Mes Tickets - Virtuorl{% endblock %}
+{% block title %}{{t.dashboard_ticket.header_title}}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/dashboard_ticket.css' %}">
@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="ticket-container">
-    <h1 class="dashboard-title">Mes Tickets</h1>
+    <h1 class="dashboard-title">{{t.dashboard_ticket.Title}}</h1>
 
     {% if messages %}
         <ul class="messages-list">
@@ -23,10 +23,10 @@
 
     <div class="action-buttons">
         <a href="{% url 'contact' %}" class="btn-new-ticket">
-            + Nouveau Ticket
+            {{t.dashboard_ticket.btn_new_ticket}}
         </a>
         <a href="{% url 'account' %}" class="btn-dashboard">
-            Retour au Dashboard
+            {{t.dashboard_ticket.btn_dashboard}}
         </a>
     </div>
 
@@ -35,10 +35,10 @@
             <table class="ticket-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Sujet</th>
-                        <th>Statut</th>
-                        <th>Message</th>
+                        <th>{{t.dashboard_ticket.table_headers.date}}</th>
+                        <th>{{t.dashboard_ticket.table_headers.subject}}</th>
+                        <th>{{t.dashboard_ticket.table_headers.status}}</th>
+                        <th>{{t.dashboard_ticket.table_headers.message}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@
         </div>
     {% else %}
         <div class="empty-state">
-            <p>Vous n'avez créé aucun ticket pour le moment.</p>
+            <p>{{t.dashboard_ticket.empty_state}}</p>
         </div>
     {% endif %}
 </div>

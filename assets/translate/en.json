@@ -2,72 +2,69 @@
     "connexion": {
         "Mail_label": "Email",
         "Password_label": "Password",
-        "See_button": "Show",
-        "Connexion_button": "Login",
-        "Forget_Password_link": "Forgot password?",
+        "See_button": "See",
+        "Connexion_button": "Connection",
+        "Forget_Password_link": "Forgot Password?",
         "Register_link": "Not registered yet?",
-        "Register_button": "Sign up"
+        "Register_button": "Register"
     },
     "inscription": {
-        "Name_label": "Last Name",
-        "Name_placeholder": "e.g.: Turing",
+        "Title_header": "Registration - DR.VIRTUORL",
+        "Name_label": "Name",
+        "Name_placeholder": "ex: Turing",
         "FirstName_label": "First Name",
-        "Firstname_placeholder": "e.g.: Alan",
+        "Firstname_placeholder": "ex: Alan",
         "Mail_label": "Email",
-        "Mail_placeholder": "e.g.: alan.turing@example.com",
+        "Mail_placeholder": "ex: alan.turing@example.com",
         "Password_label": "Password",
-        "Password_placeholder": "e.g.: @dM1n1$tr&T€ur",
-        "Password_span": "show",
+        "Password_placeholder": "ex: @dM1n1$tr&T€ur",
+        "Password_span": "see",
         "University_label": "University",
-        "University_placeholder": "Location e.g.: Orleans",
+        "University_placeholder": "Places ex: Orléans",
         "Years_label": "Year of study",
-        "Years_placeholder": "e.g.: MS1",
+        "Years_placeholder": "ex: MM1",
         "Verification_Code_label": "Verification Code",
         "Verification_Code_placeholder": "_ _ _ _ _ _",
-        "Time_span": "(valid for 10 min)",
+        "Time_span": "(valid 10min)",
         "Send_Code_button": "Send code",
-        "Confirm_Password_label": "Confirm Password",
-        "Confirm_Password_placeholder": "e.g.: @dM1n1$tr&T€ur",
-        "See_span": "show",
-        "Place_placeholder": "Location e.g.: Orleans",
-        "Consent_label": "I agree to my data being collected in order to contribute to the scientific study conducted via this site...",
-        "Register_button": "Register",
+        "Confirm_Password_label": "Password Confirmation",
+        "Confirm_Password_placeholder": "ex: @dM1n1$tr&T€ur",
+        "See_span": "see",
+        "Place_placeholder": "Places ex: Orléans",
+        "Consent_RGPD": "By using this site I consent to the GDPR etc...",
+        "Consent_label": "I accept that my data be collected in order to contribute to the scientific study conducted using this site...",
+        "Register_button": "Save",
         "Invalide_email_textContent": "Please enter a valid email before sending the code.",
         "Send_Text_button": "Sending...",
         "Send_Time_text": "Sending in progress...",
-        "Send_Text_content": "✓ Code sent! Please check your inbox.",
+        "Send_Text_content": "✓ Code sent! Check your mailbox.",
         "Resend_code_Text": "Resend code",
         "Error": "Error",
         "Retry": "Retry",
-        "Connection_error": "Network error. Please try again."
+        "Connection_error": "Network error. Retry."
     },
-
     "header_admin": {
         "Logs_link": "Logs",
         "Users_link": "Users",
         "Data_link": "Data",
         "Deconnection_button": "Logout"
     },
-
     "header_main": {
         "Home_text": "Home",
         "Deconnection_button": "Logout",
         "Connection_text": "Login",
         "Create_Account_text": "Create an account"
     },
-
     "header_student": {
-        "Train_link": "Practice",
+        "Train_link": "Train",
         "Stats_link": "Statistics",
         "Deconnection_button": "Logout"
     },
-
     "header_teacher": {
         "Student_link": "Students",
         "Export_link": "Export data",
         "Deconnection_button": "Logout"
     },
-    
     "header": {
         "Not_connected": "(not connected)",
         "Admin_badge": "(admin)",
@@ -80,48 +77,29 @@
         "Export_students_csv": "Export Students (CSV)",
         "Students": "Students",
         "Export_data": "Export data",
-        "Train": "Practice",
+        "Train": "Train",
         "Statistics": "Statistics",
         "Disconnect": "Logout",
         "Connect": "Login",
         "Create_account": "Create an account",
         "My_account": "My account"
     },
-
     "footer": {
         "footer_Text": "2026 LI2RSO. All rights reserved."
     },
-    
-    "student_dashboard": {
-        "Title": "Student Dashboard",
-        "Last_training_title": "Last training session",
-        "Successful_aspects": "Successful aspects",
-        "Improvement_areas": "Areas for improvement",
-        "Progression_title": "Progression",
-        "Stats_title": "Stats",
-        "Rank_label": "Your rank",
-        "Trophies_label": "Your trophies",
-        "Level_label": "Your level",
-        "Case_bank_btn": "Case bank",
-        "Random_case_btn": "Random case",
-        "Previous_trainings_btn": "Previous sessions",
-        "Previous_corrections_btn": "Previous corrections"
-    },
-        
     "case_creation": {
-        "Page_title": "Case Creation",
-        "IA_prompt_title": "AI Prompt",
+        "Page_title": "Case creation",
+        "IA_prompt_title": "Prompt for the AI",
         "IA_prompt_placeholder": "Enter the prompt for the AI",
         "Difficulty_easy": "Easy",
         "Difficulty_medium": "Medium",
         "Difficulty_hard": "Hard",
         "Create_button": "Create a new case"
     },
-    
     "following_students": {
-        "Page_title": "Student Tracking",
+        "Page_title": "Student tracking",
         "Heading": "List of tracked students",
-        "Lastname_label": "Last Name",
+        "Lastname_label": "Name",
         "Firstname_label": "First Name",
         "Email_label": "Email",
         "Gender_label": "Gender",
@@ -131,40 +109,25 @@
         "Specialty_label": "Specialty",
         "Age_label": "Age"
     },
-
-    "teacher_dashboard": {
-        "Title": "Teacher Dashboard",
-        "Last_cases_title": "Last published cases",
-        "Last_trainings_title": "Last student training sessions",
-        "Student_name_placeholder": "Student name",
-        "Case_name_placeholder": "Case name",
-        "Score_label": "Score",
-        "Time_label": "Time",
-        "Case_bank_btn": "Case bank",
-        "Student_tracking_btn": "Student tracking",
-        "Export_data_btn": "Export data",
-        "Create_case_btn": "Create case"
-    },
-
     "Accueil": {
-        "Hero_Title": "Gamified clinical simulation platform for OSCE preparation",
+        "Hero_Title": "Gamified clinical simulation platform for ECOS preparation",
         "Card1_Title": "Virtual Patients",
-        "Card1_Text": "Virtual patients, conversation, visualization.",
+        "Card1_Text": "Virtual Patients, conversation, visualization.",
         "Card2_Title": "Clinical Reasoning",
-        "Card2_Text": "Places the student in real-life conditions.",
-        "Card3_Title": "Educational Gamification",
-        "Card3_Text": "Allows the player to train in a fun and engaging way.",
-        "Team_Names": "Dr DEMUTH, Dr PERCHE & Pr SERREAU, Dr DESGROUAS",
+        "Card2_Text": "Puts the student in real conditions.",
+        "Card3_Title": "Pedagogical gamification",
+        "Card3_Text": "Allows the player to train in a playful way.",
+        "Team_Names": "Dr DEMUTH, Dr PERCHE & Pr SERREAU Dr DESGROUAS",
         "About_Title": "About the project",
-        "Challenge_Title": "The OSCE Challenge",
-        "Challenge_Item1": "Assessment of clinical skills.",
+        "Challenge_Title": "The ECOS challenge",
+        "Challenge_Item1": "Clinical skills assessment.",
         "Challenge_Item2": "Need for intensive training.",
         "Challenge_Item3": "Limited access to simulation centers.",
-        "Loop_Title": "The Gamified OSCE Loop",
-        "Loop_Description": "Interactive Patient Platform",
+        "Loop_Title": "The Gamified ECOS Loop",
+        "Loop_Description": "Interactive Patients Platform",
         "Study_Title": "Multicenter Study",
         "Study_Item1": "Randomized Trial (HUGO Network)",
-        "Study_Item2": "Objective: Improve performance in OSCEs",
+        "Study_Item2": "Objective: Improve performance in ECOS",
         "Study_Item3": "400 Students, Clinical criteria",
         "Publications_Title": "Project publications",
         "Test1_Title": "Test 1",
@@ -179,15 +142,120 @@
         "Test3_Difficulty": "Difficulty ⭐⭐⭐⭐⭐",
         "Test3_Subject": "Neurology",
         "Test3_Desc": "This is a test description to see how the description will be displayed",
-        "Goal_Title": "Our project objective"
+        "Goal_Title": "Objective of our project"
     },
-
-    "listing" : {
-        "Search_placeholder" : "Search for a...",
-        "Search_button" : "Search",
-        "Filter_button" : "Filter",
-        "Name_p" : "item name",
-        "desc_p" : "item description",
-        "details_button" : "view details"
+    "listing": {
+        "Search_placeholder": "Search for a ...",
+        "Search_button": "Search",
+        "Filter_button": "Filter",
+        "Name_p": "item name",
+        "desc_p": "item description",
+        "details_button": "see details"
+    },
+    "password_resest_complete": {
+        "Title_header": "Success - DR. VIRTUORL",
+        "Text": "Your password has been successfully reset.",
+        "Button": "Login"
+    },
+    "password_reset_confirm": {
+        "Title_header": "New password - DR. VIRTUORL",
+        "Text_new_mdp": "New password",
+        "Button_submit": "Change my password"
+    },
+    "password_reset_done": {
+        "Title_header": "Email sent - DR. VIRTUORL",
+        "email_send": "Email sent",
+        "Text_email": "If you have an account with {{email}} as email you will receive an email containing instructions to reset your password.",
+        "Text_spam": "If you do not receive it within a few minutes, check your spam folder.",
+        "Button_return": "Return to login"
+    },
+    "password_reset_form": {
+        "Title_header": "Forgot password - DR. VIRTUORL",
+        "text_title": "Reset",
+        "text_description": "Enter your email address to receive a reset link.",
+        "Button_submit": "Send link",
+        "Button_return": "Return to login"
+    },
+    "ticket_details": {
+        "Title_header": "Ticket detail - DR. VIRTUORL",
+        "returnboutonadmin": "Return to ticket list (admin)",
+        "returnboutonuser": "Return to ticket list",
+        "status": "Status : ",
+        "admin_panel": "Admin Panel:",
+        "update_status": "Modify ticket status",
+        "update_button": "Update",
+        "new_reply": "New reply:",
+        "reply_placeholder": "Type your reply here...",
+        "reply_button": "Send reply",
+        "ticket_closed": "This ticket is closed. You can no longer add a reply.",
+        "status_open": "Open",
+        "status_progress": "In progress",
+        "status_resolved": "Resolved",
+        "status_closed": "Closed"
+    },
+    "contact": {
+        "Title_header": "Contact - DR. VIRTUORL",
+        "Title": "Contact / Report a problem",
+        "Subject_label": "Subject",
+        "Subject_placeholder": "Ex: Connection problem, Display bug...",
+        "Message_placeholder": "Describe your problem in detail...",
+        "Submit_button": "Send ticket"
+    },
+    "dashboard_ticket": {
+        "header_title": "My Tickets - DR. VIRTUORL",
+        "Title": "My Tickets",
+        "btn_new_ticket": "+ New Ticket",
+        "btn_dashboard": "Return to Dashboard",
+        "empty_state": "You have not created any tickets yet.",
+        "table_headers": {
+            "date": "Date",
+            "subject": "Subject",
+            "status": "Status",
+            "message": "Message"
+        }
+    },
+    "global_dashboard": {
+        "header_title": "Dashboard - DR. VIRTUORL",
+        "teacher_dashboard": {
+            "Title": "Teacher dashboard",
+            "Last_cases_title": "Last published cases",
+            "Last_trainings_title": "Last student trainings",
+            "Student_name_placeholder": "Student name",
+            "Case_name_placeholder": "Case name",
+            "Score_label": "Grade",
+            "Time_label": "Time",
+            "Case_bank_btn": "Case bank",
+            "Student_tracking_btn": "Student tracking",
+            "Export_data_btn": "Export data",
+            "Create_case_btn": "Case creation"
+        },
+        "student_dashboard": {
+            "Title": "Student dashboard",
+            "Last_training_title": "Last training",
+            "Successful_aspects": "Successful aspects",
+            "Improvement_areas": "Aspects to improve",
+            "Progression_title": "Progression",
+            "Stats_title": "Stats",
+            "Rank_label": "Your rank",
+            "Trophies_label": "Your trophies",
+            "Level_label": "Your level",
+            "Case_bank_btn": "Case bank",
+            "Random_case_btn": "Random case",
+            "Previous_trainings_btn": "Previous trainings",
+            "Previous_corrections_btn": "Previous corrections",
+            "Tickets": "My Tickets"
+        },
+        "admin_dashboard": {
+            "Title": "Admin dashboard",
+            "logs": "Logs",
+            "global_view": "Global View",
+            "total_user": "Total number of users",
+            "recent_activity": "Recent activity",
+            "other_stat": "Other relevant Statistics",
+            "user_management": "User management",
+            "data_management": "Data management",
+            "system_options": "System options",
+            "tickets": "User tickets"
+        }
     }
 }

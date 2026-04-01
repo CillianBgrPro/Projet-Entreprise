@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Contact - DR. VIRTUORL{% endblock %}
+{% block title %}{{t.contact.Title_header}}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/contact.css' %}">
@@ -10,7 +10,7 @@
 {% block content %}
 <div class="contact-wrapper">
     <div class="container contact-container">
-        <h2>Contact / Signaler un problème</h2>
+        <h2>{{t.contact.Title}}</h2>
 
         {% if messages %}
         <ul class="messages-list">
@@ -26,19 +26,18 @@
             {% csrf_token %}
 
             <div class="input-group">
-                <label for="subject">Sujet</label>
-                <input type="text" id="subject" name="subject" required
-                    placeholder="Ex: Problème de connexion, Bug d'affichage...">
+                <label for="subject">{{t.contact.Subject_label}}</label>
+                <input type="text" id="subject" name="subject" required placeholder="{{t.contact.Subject_placeholder}}">
             </div>
 
             <div class="input-group textarea-group">
-                <label for="message">Message</label>
+                <label for="message">{{t.contact.Message_label}}</label>
                 <textarea id="message" name="message" rows="6" required
-                    placeholder="Décrivez votre problème en détail..."></textarea>
+                    placeholder="{{t.contact.Message_placeholder}}"></textarea>
             </div>
 
             <div class="actions">
-                <button type="submit" class="btn-submit">Envoyer le ticket</button>
+                <button type="submit" class="btn-submit">{{t.contact.Submit_button}}</button>
             </div>
         </form>
     </div>
