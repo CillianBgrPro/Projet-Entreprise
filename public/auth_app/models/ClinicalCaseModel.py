@@ -29,10 +29,11 @@ class ClinicalCase(models.Model):
         max_length=255, blank=True,
         verbose_name="Domaine d'apprentissage secondaire"
     )
-    starting_situation_id = models.CharField(
-        max_length=255, blank=True,
+    starting_situation_id = models.ManyToManyField(
+        'auth_app.StartingSituation',
+        blank=True,
         verbose_name="Situation de départ",
-        help_text="Classement de 1 à 356"
+        help_text="Tableau avec les id des situations de départ"
     )
     speciality = models.CharField(
         max_length=255, blank=True,

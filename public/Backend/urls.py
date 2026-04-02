@@ -45,4 +45,5 @@ urlpatterns = [
      path('ticket/<int:ticket_id>/', views.ticket_detail, name='ticket_detail'),
      path('ticket/<int:ticket_id>/status/', views.ticket_change_status, name='ticket_change_status'),
      path('all-cases/', views.all_cases, name='all_cases'),
+     path('case/<int:case_id>/', views.case_detail, name='case_detail'),
 ]

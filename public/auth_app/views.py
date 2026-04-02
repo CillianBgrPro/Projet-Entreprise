@@ -421,3 +421,9 @@ def all_cases(request):
     from .models import ClinicalCase
     cases = ClinicalCase.objects.all()
     return render(request, 'case/all_case.html', {'cases': cases})
+
+@login_required
+def case_detail(request, case_id):
+    from .models import ClinicalCase
+    case_obj = get_object_or_404(ClinicalCase, id=case_id)
+    return render(request, 'case/case_detail.html', {'case': case_obj})

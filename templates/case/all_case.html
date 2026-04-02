@@ -1,34 +1,36 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block title %}Cas cliniques - Virtuorl{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/all-case.css' %}">
 <div class="container">
-    <h1 style="margin-bottom: 30px;">Tous les cas cliniques</h1>
+    <h1 class="page-title">Tous les cas cliniques</h1>
     
     {% if cases %}
-        <div class="cases-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        <div class="cases-grid">
             {% for case in cases %}
-                <div class="case-card" style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                    <h3 style="margin-top: 0; color: #111827;">{{ case.name }}</h3>
+                <div class="case-card">
+                    <h3 class="case-name">{{ case.name }}</h3>
                     
-                    <div style="color: #4b5563; font-size: 14px; margin-bottom: 15px;">
-                        <p style="margin: 5px 0;"><strong>Spécialité :</strong> {{ case.speciality|default:"Non renseignée" }}</p>
-                        <p style="margin: 5px 0;"><strong>Niveau d'étude :</strong> {{ case.study_level|default:"Non renseigné" }}</p>
-                        <p style="margin: 5px 0;"><strong>Domaine principal :</strong> {{ case.primary_learning_domain|default:"Non renseigné" }}</p>
-                        <p style="margin: 5px 0;"><strong>Auteur :</strong> {{ case.author|default:"Non renseigné" }}</p>
+                    <div class="case-details">
+                        <p><strong>Spécialité :</strong> {{ case.speciality|default:"Non renseignée" }}</p>
+                        <p><strong>Niveau d'étude :</strong> {{ case.study_level|default:"Non renseigné" }}</p>
+                        <p><strong>Domaine principal :</strong> {{ case.primary_learning_domain|default:"Non renseigné" }}</p>
+                        <p><strong>Auteur :</strong> {{ case.author|default:"Non renseigné" }}</p>
                     </div>
                     
-                    <div style="border-top: 1px solid #e5e7eb; padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 12px; color: #9ca3af;">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
-                        <a href="#" class="btn btn-primary" style="background-color: #2563eb; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px;">Voir le cas</a>
+                    <div class="case-footer">
+                        <span class="case-date">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
+                        <a href="{% url 'case_detail' case.id %}" class="btn-view-case">Voir les détails</a>
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <div style="background-color: #f3f4f6; padding: 30px; border-radius: 8px; text-align: center;">
-            <p style="color: #6b7280; font-size: 16px; margin: 0;">Aucun cas clinique n'est disponible pour le moment.</p>
+        <div class="no-cases">
+            <p>Aucun cas clinique n'est disponible pour le moment.</p>
         </div>
     {% endif %}
 </div>

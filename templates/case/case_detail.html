@@ -1,0 +1,139 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Détails du cas - {{ case.name }}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/case-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="case-detail-wrapper">
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'all_cases' %}" class="btn-secondary">← Retour à tous les cas</a>
+    </div>
+
+    <div class="case-header">
+        <h2 class="case-title">{{ case.name }}</h2>
+        <span class="detail-value">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
+    </div>
+
+    <div class="case-grid">
+        <div class="detail-item">
+            <span class="detail-label">Enseignant créateur</span>
+            <span class="detail-value">{{ case.creator_professor }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Auteur</span>
+            <span class="detail-value">{{ case.author|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Relecteur</span>
+            <span class="detail-value">{{ case.reviewer|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">ID Patient Virtuel</span>
+            <span class="detail-value">{{ case.virtual_patient_id|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Année d'étude</span>
+            <span class="detail-value">{{ case.study_level|default:"Non renseignée" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Niveau de connaissance</span>
+            <span class="detail-value">{{ case.knowledge_level|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Spécialité</span>
+            <span class="detail-value">{{ case.speciality|default:"Non renseignée" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Item</span>
+            <span class="detail-value">{{ case.item_id|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Domaine d'apprentissage principal</span>
+            <span class="detail-value">{{ case.primary_learning_domain|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Domaine d'apprentissage secondaire</span>
+            <span class="detail-value">{{ case.secondary_learning_domain|default:"Non renseigné" }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Situation de départ</span>
+            <span class="detail-value">
+                {% for situation in case.starting_situation_id.all %}
+                    {{ situation.text_situation }}{% if not forloop.last %}<br>{% endif %}
+                {% empty %}
+                    Non renseignée
+                {% endfor %}
+            </span>
+        </div>
+
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Options activées</span>
+            <div>
+                {% if case.has_standardized_patient %}<span class="badge">Patient standardisé</span>{% endif %}
+                {% if case.has_standardized_hcp %}<span class="badge">Professionnel de santé standardisé</span>{% endif %}
+                {% if case.has_iconography %}<span class="badge">Iconographie</span>{% endif %}
+                {% if not case.has_standardized_patient and not case.has_standardized_hcp and not case.has_iconography %}
+                    <span class="detail-value">Aucune option</span>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if case.source_file_path %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Fichier source</span>
+            <span class="detail-value">
+                <a href="{{ case.source_file_path }}" target="_blank" style="color: #2563eb; text-decoration: underline;">Voir le document source</a>
+            </span>
+        </div>
+        {% endif %}
+
+        {% if case.objective %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Objectif</span>
+            <span class="detail-value" style="white-space: pre-wrap;">{{ case.objective }}</span>
+        </div>
+        {% endif %}
+
+        {% if case.briefing_text %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Texte de briefing</span>
+            <span class="detail-value" style="white-space: pre-wrap;">{{ case.briefing_text }}</span>
+        </div>
+        {% endif %}
+
+        {% if case.instructions_to_do %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Instructions à réaliser</span>
+            <span class="detail-value" style="white-space: pre-wrap;">{{ case.instructions_to_do }}</span>
+        </div>
+        {% endif %}
+
+        {% if case.instructions_not_to_do %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Instructions hors cadre</span>
+            <span class="detail-value" style="white-space: pre-wrap;">{{ case.instructions_not_to_do }}</span>
+        </div>
+        {% endif %}
+
+        {% if case.evaluation_grid %}
+        <div class="detail-item detail-full-width">
+            <span class="detail-label">Grille d'évaluation</span>
+            <pre class="detail-value" style="background: #f8fafc; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{{ case.evaluation_grid|pprint }}</code></pre>
+        </div>
+        {% endif %}
+
+        <!-- à rajouter pour les enseignants et les admins, voir comment on peut stocker les fichiers -->
+        {% if user.is_superuser or user.role == 'teacher' %}
+        {% if case.source_file_path %}
+            <a href="{{ case.source_file_path }}" class="btn-download" target="_blank" download>
+                📥 Télécharger le fichier source
+            </a>
+        {% endif %}
+    {% endif %}
+    </div>
+</div>
+{% endblock %}
