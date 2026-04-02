@@ -109,6 +109,16 @@ def account(request):
     })
 
 @login_required
+def dashboard_redirect(request):
+    user = request.user
+    if user.is_superuser:
+        return redirect('admin_dashboard')
+    elif user.role == 'teacher':
+        return redirect('teacher_dashboard')
+    else:
+        return redirect('student_dashboard')
+
+@login_required
 def change_avatar(request):
     if request.method == 'POST':
         avatar = request.POST.get('avatar', '').strip()

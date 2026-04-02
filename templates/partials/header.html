@@ -21,7 +21,7 @@
             <li><a href="{% url 'home' %}">{{ t.header.Home }}</a></li>
 
             {% if user.is_authenticated %}
-            <li><a href="{% url 'account' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+            <li><a href="{% url 'dashboard_redirect' %}">Dashboard</a></li>
 
             {% if user.is_superuser %}
             <li><a href="#">{{ t.header.Logs }}</a></li>
