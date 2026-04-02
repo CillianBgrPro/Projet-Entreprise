@@ -3,6 +3,7 @@ const usernameInput = document.getElementById("id_username");
 const sendCodeBtn = document.getElementById("send-code-btn");
 const codeInput = document.querySelector('input[name="verification_code"]');
 const statusEl = document.getElementById("code-status");
+const ineInput = document.querySelector('input[name="ine"]');
 
 let codeSent = false;
 let codeValidated = false;
@@ -73,10 +74,11 @@ sendCodeBtn.addEventListener("click", function () {
     const firstName = document.querySelector('input[name="first_name"]').value;
     const university = document.querySelector('select[name="university"]').value;
     const studyYear = document.querySelector('select[name="study_year"]').value;
+    const ineValue = ineInput ? ineInput.value : "";
 
-    if (!lastName || !firstName || !university || !studyYear || !emailInput.value || !emailInput.checkValidity()) {
+    if (!lastName || !firstName || !university || !studyYear || !ineValue || !ineInput.checkValidity() || !emailInput.value || !emailInput.checkValidity()) {
         statusEl.style.color = "#dc2626";
-        statusEl.textContent = "Veuillez remplir toutes les informations (sauf mot de passe) avant d'envoyer le code.";
+        statusEl.textContent = "Veuillez remplir toutes les informations (dont l'INE) avant d'envoyer le code.";
         return;
     }
 

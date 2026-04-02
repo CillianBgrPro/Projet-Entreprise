@@ -45,6 +45,11 @@
                         required tabindex="5">
                 </div>
                 <div class="input-group">
+                    <label>{{ t.inscription.INE_label }}</label>
+                    <input type="text" name="ine" id="id_ine" placeholder="{{ t.inscription.INE_placeholder }}" required
+                        inputmode="numeric" pattern="[0-9]{10}" autocomplete="off">
+                </div>
+                <div class="input-group">
                     <label>{{ t.inscription.Password_label }}</label>
                     <div class="password-wrapper">
                         <input type="password" id="pass1" name="password1"

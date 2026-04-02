@@ -16,6 +16,8 @@
         "Firstname_placeholder": "ex: Alan",
         "Mail_label": "Email",
         "Mail_placeholder": "ex: alan.turing@example.com",
+        "INE_label": "INE",
+        "INE_placeholder": "e.g. 1234567890",
         "Password_label": "Password",
         "Password_placeholder": "ex: @dM1n1$tr&T€ur",
         "Password_span": "see",
