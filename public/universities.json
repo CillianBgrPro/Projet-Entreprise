@@ -1,6 +1,226 @@
-[
-  "Université d'Orléans",
-  "Polytech Orléans",
-  "Université de Tours",
-  "Université de Blois"
-]
+{
+  "medical_university_france": [
+    {
+      "university_name": "Université d'Orléans",
+      "city": "Orléans",
+      "zip_code": "45000",
+      "designation": "Faculté de Médecine d'Orléans"
+    },
+    {
+      "university_name": "Université Paris Cité",
+      "city": "Paris",
+      "zip_code": "75006",
+      "designation": "Faculté de Santé de Paris Cité"
+    },
+    {
+      "university_name": "Sorbonne Université",
+      "city": "Paris",
+      "zip_code": "75006",
+      "designation": "Faculté de Médecine de Sorbonne Université"
+    },
+    {
+      "university_name": "Université Paris-Saclay",
+      "city": "Le Kremlin-Bicêtre",
+      "zip_code": "94270",
+      "designation": "Faculté de Médecine Paris-Saclay"
+    },
+    {
+      "university_name": "Université de Versailles Saint-Quentin-en-Yvelines (UVSQ)",
+      "city": "Saint-Quentin-en-Yvelines",
+      "zip_code": "78280",
+      "designation": "UFR des Sciences de la Santé Simone Veil"
+    },
+    {
+      "university_name": "Université de Picardie Jules Verne",
+      "city": "Amiens",
+      "zip_code": "80000",
+      "designation": "UFR de Médecine d'Amiens"
+    },
+    {
+      "university_name": "Université d'Angers",
+      "city": "Angers",
+      "zip_code": "49000",
+      "designation": "Faculté en Santé d'Angers"
+    },
+    {
+      "university_name": "Université de Franche-Comté",
+      "city": "Besançon",
+      "zip_code": "25000",
+      "designation": "UFR Santé de Besançon"
+    },
+    {
+      "university_name": "Université de Bordeaux",
+      "city": "Bordeaux",
+      "zip_code": "33000",
+      "designation": "Faculté des Sciences Médicales de Bordeaux"
+    },
+    {
+      "university_name": "Université de Bretagne Occidentale (UBO)",
+      "city": "Brest",
+      "zip_code": "29200",
+      "designation": "Faculté de Médecine de Brest"
+    },
+    {
+      "university_name": "Université Clermont Auvergne",
+      "city": "Clermont-Ferrand",
+      "zip_code": "63000",
+      "designation": "UFR de Médecine de Clermont-Ferrand"
+    },
+    {
+      "university_name": "Université de Bourgogne",
+      "city": "Dijon",
+      "zip_code": "21000",
+      "designation": "UFR des Sciences de Santé de Dijon"
+    },
+    {
+      "university_name": "Université Grenoble Alpes",
+      "city": "Grenoble",
+      "zip_code": "38000",
+      "designation": "Faculté de Médecine de Grenoble"
+    },
+    {
+      "university_name": "Université de Lille",
+      "city": "Lille",
+      "zip_code": "59000",
+      "designation": "Faculté de Médecine de Lille"
+    },
+    {
+      "university_name": "Université de Limoges",
+      "city": "Limoges",
+      "zip_code": "87000",
+      "designation": "Faculté de Médecine de Limoges"
+    },
+    {
+      "university_name": "Université Claude Bernard Lyon 1",
+      "city": "Lyon",
+      "zip_code": "69008",
+      "designation": "Faculté de Médecine Lyon Est"
+    },
+    {
+      "university_name": "Université Claude Bernard Lyon 1 - Campus Charles Mérieux",
+      "city": "Oullins",
+      "zip_code": "69921",
+      "designation": "Faculté de Médecine Lyon Sud - Charles Mérieux"
+    },
+    {
+      "university_name": "Aix-Marseille Université",
+      "city": "Marseille",
+      "zip_code": "13000",
+      "designation": "Faculté des Sciences Médicales de Marseille"
+    },
+    {
+      "university_name": "Université de Montpellier",
+      "city": "Montpellier",
+      "zip_code": "34000",
+      "designation": "Faculté de Médecine de Montpellier"
+    },
+    {
+      "university_name": "Université de Lorraine",
+      "city": "Nancy",
+      "zip_code": "54000",
+      "designation": "Faculté de Médecine de Nancy"
+    },
+    {
+      "university_name": "Nantes Université",
+      "city": "Nantes",
+      "zip_code": "44000",
+      "designation": "Faculté de Médecine de Nantes"
+    },
+    {
+      "university_name": "Université Côte d'Azur",
+      "city": "Nice",
+      "zip_code": "06000",
+      "designation": "Faculté de Médecine de Nice"
+    },
+    {
+      "university_name": "Université de Rennes",
+      "city": "Rennes",
+      "zip_code": "35000",
+      "designation": "Faculté de Médecine de Rennes"
+    },
+    {
+      "university_name": "Université de Rouen Normandie",
+      "city": "Rouen",
+      "zip_code": "76000",
+      "designation": "UFR Santé de Rouen"
+    },
+    {
+      "university_name": "Université Jean Monnet",
+      "city": "Saint-Étienne",
+      "zip_code": "42000",
+      "designation": "Faculté de Médecine de Saint-Étienne"
+    },
+    {
+      "university_name": "Université Toulouse III - Paul Sabatier",
+      "city": "Toulouse",
+      "zip_code": "31000",
+      "designation": "Faculté de Santé de Toulouse"
+    },
+    {
+      "university_name": "Université de Tours",
+      "city": "Tours",
+      "zip_code": "37000",
+      "designation": "Faculté de Médecine de Tours"
+    },
+    {
+      "university_name": "Università di Corsica Pasquale Paoli",
+      "city": "Corte",
+      "zip_code": "20250",
+      "designation": "Faculté de Santé de Corse"
+    },
+    {
+      "university_name": "Université des Antilles",
+      "city": "Pointe-à-Pitre / Fort-de-France",
+      "zip_code": "97110 / 97200",
+      "designation": "UFR Sciences Médicales des Antilles"
+    },
+    {
+      "university_name": "Université de La Réunion",
+      "city": "Saint-Denis",
+      "zip_code": "97400",
+      "designation": "UFR Santé de La Réunion"
+    },
+    {
+      "university_name": "Université de Guyane",
+      "city": "Cayenne",
+      "zip_code": "97300",
+      "designation": "Département de Formation Médicale de Guyane"
+    },
+    {
+      "university_name": "Université Paris-Est Créteil (UPEC)",
+      "city": "Créteil",
+      "zip_code": "94000",
+      "designation": "Faculté de Santé de Créteil"
+    },
+    {
+      "university_name": "Université de Strasbourg",
+      "city": "Strasbourg",
+      "zip_code": "67000",
+      "designation": "Faculté de Médecine de Strasbourg"
+    },
+    {
+      "university_name": "Université de Reims Champagne-Ardenne",
+      "city": "Reims",
+      "zip_code": "51100",
+      "designation": "UFR de Médecine de Reims"
+    },
+    {
+      "university_name": "Université de Caen Normandie",
+      "city": "Caen",
+      "zip_code": "14000",
+      "designation": "UFR Santé de Caen"
+    },
+    {
+      "university_name": "Université Catholique de Lille",
+      "city": "Lille",
+      "zip_code": "59000",
+      "designation": "Faculté de Médecine et Maïeutique (FMM)"
+    },
+    {
+      "university_name": "Université de Poitiers",
+      "city": "Poitiers",
+      "zip_code": "86000",
+      "designation": "Faculté de Médecine et Pharmacie de Poitiers"
+    }
+  ]
+}

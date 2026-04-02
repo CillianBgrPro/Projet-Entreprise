@@ -5,6 +5,7 @@ from .models import User
 class CustomUserCreationForm(UserCreationForm):
     verification_code = forms.CharField(label="Code de vérification", max_length=6, required=True)
 
+    @staticmethod
     def get_universities():
         try:
             import json, os
@@ -12,7 +13,8 @@ class CustomUserCreationForm(UserCreationForm):
             json_path = os.path.join(settings.BASE_DIR, 'universities.json')
             with open(json_path, 'r', encoding='utf-8') as f:
                 univs = json.load(f)
-            return [('', '— Sélectionnez votre université —')] + [(u, u) for u in univs]
+                liste_univeristy = univs.get('medical_university_france', [])
+            return [('', '— Sélectionnez votre université —')] + [(u['university_name'], u['university_name']) for u in liste_univeristy]
         except Exception:
             return [
                 ('Aucune université trouvée', 'Aucune université trouvée')
@@ -22,9 +24,9 @@ class CustomUserCreationForm(UserCreationForm):
 
     YEAR_CHOICES = [
         ('', '— Sélectionnez votre année —'),
-        ('MM1', 'MM1'),
-        ('MM2', 'MM2'),
-        ('MM3', 'MM3'),
+        ('DFASM1', 'DFASM1'),
+        ('DFASM2', 'DFASM2'),
+        ('DFASM3', 'DFASM3'),
     ]
 
     university = forms.ChoiceField(label="Université", choices=UNIVERSITY_CHOICES, required=False, widget= forms.Select(attrs={'tabindex': '3'}))
@@ -42,6 +44,7 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         if 'username' in self.fields:
             self.fields['username'].required = False
+        self.fields['university'].choices = self.get_universities()
 
     def clean_verification_code(self):
         import time

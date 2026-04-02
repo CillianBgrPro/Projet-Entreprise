@@ -355,3 +355,9 @@ def ticket_change_status(request, ticket_id):
             messages.success(request, f"Le statut du ticket a été mis à jour sur '{new_status}'.")
             
     return redirect('ticket_detail', ticket_id=ticket_id)
+
+@login_required
+def all_cases(request):
+    from .models import ClinicalCase
+    cases = ClinicalCase.objects.all()
+    return render(request, 'case/all_case.html', {'cases': cases})
