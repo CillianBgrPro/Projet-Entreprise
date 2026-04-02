@@ -12,3 +12,27 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Python
+*.py[cod]
+*$py.class
+__pycache__/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+.venv/
+.env/
+
+# Environnement et Secrets
+.env
+.env.*
+
+# Environnements de développement
+.idea/
+.vscode/
+*.swp
