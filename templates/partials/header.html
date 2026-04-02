@@ -48,13 +48,7 @@
             <div class="account">
             {% if user.is_authenticated %}
             <p>{{ user.first_name }} {{ user.last_name }}</p>
-            {% if user.is_superuser %}
-            <span class="material-symbols-outlined">admin_panel_settings</span>
-            {% elif user.role == 'teacher' %}
-            <span class="material-symbols-outlined">school</span>
-            {% else %}
-            <span class="material-symbols-outlined">person</span>
-            {% endif %}
+            <span class="material-symbols-outlined">{{ user.avatar }}</span>
             {% else %}
             <a href="{% url 'login_view' %}">{{ t.header.My_account }}</a>
             <span class="material-symbols-outlined">person</span>

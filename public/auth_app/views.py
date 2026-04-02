@@ -4,14 +4,16 @@ import django
 import resend
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm
-from django.contrib.auth import login, authenticate
+from .forms import CustomUserCreationForm, ChangePasswordForm
+from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import JsonResponse, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth import logout
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 import csv
 
 def register(request):
@@ -39,15 +41,21 @@ def login_view(request):
         if u_name:
             u_name = u_name.strip().lower() 
 
-        user = authenticate(request, username=u_name, password=p_word)
+        from django.db.models import Q
+        from .models import User
+        
+        user_obj = User.objects.filter(Q(username=u_name) | Q(email=u_name)).first()
+
+        if user_obj:
+            user = authenticate(request, username=user_obj.username, password=p_word)
+        else:
+            user = None
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            from .models import User
-            user_exists = User.objects.filter(username=u_name).exists()
-            if not user_exists:
+            if not user_obj:
                 messages.error(request, "Ce compte n'existe pas.")
             else:
                 messages.error(request, "Mot de passe incorrect.")
@@ -58,16 +66,58 @@ def home(request):
     # logout(request)
     return render(request, 'accueil.html')
 
+ALLOWED_AVATARS = [
+    'person', 'person_2', 'person_3', 'person_4',
+    'face', 'face_2', 'face_3', 'face_4', 'face_5', 'face_6',
+    'mood', 'sentiment_satisfied', 'emoji_emotions',
+    'school', 'psychology', 'medical_services',
+    'science', 'biotech', 'health_and_safety',
+    'stethoscope', 'vaccines', 'medication',
+    'star', 'favorite', 'diamond',
+]
+
 @login_required
 def account(request):
     """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
     user = request.user
-    if user.is_superuser:
-        return redirect('admin_dashboard')
-    elif user.role == 'teacher':
-        return redirect('teacher_dashboard')
+    password_changed = False
+
+    if request.method == 'POST':
+        form = ChangePasswordForm(user, request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            try:
+                validate_password(new_password, user)
+            except ValidationError as e:
+                for error in e.messages:
+                    form.add_error('new_password', error)
+            
+            if not form.errors:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, "Mot de passe modifié avec succès.")
+                password_changed = True
+                form = ChangePasswordForm(user)
     else:
-        return redirect('student_dashboard')
+        form = ChangePasswordForm(user)
+
+    return render(request, 'account_settings.html', {
+        'form': form,
+        'allowed_avatars': ALLOWED_AVATARS,
+        'password_changed': password_changed,
+    })
+
+@login_required
+def change_avatar(request):
+    if request.method == 'POST':
+        avatar = request.POST.get('avatar', '').strip()
+        if avatar in ALLOWED_AVATARS:
+            request.user.avatar = avatar
+            request.user.save(update_fields=['avatar'])
+            return JsonResponse({'status': 'ok', 'avatar': avatar})
+        return JsonResponse({'status': 'error', 'message': 'Avatar invalide.'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Méthode non autorisée.'}, status=405)
 
 @login_required
 def student_dashboard(request):

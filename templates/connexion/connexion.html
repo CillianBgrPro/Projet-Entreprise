@@ -18,9 +18,13 @@
 
             <div class="input-group">
                 <label>{{t.connexion.Password_label}}</label>
-                <input type="password" name="password" id="id_password" placeholder="----------------------------"
-                    required>
-                <span !class="eye-icon" onclick="togglePassword()">{{t.connexion.See_button}}</span>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="id_password" placeholder="----------------------------"
+                        required>
+                    <button type="button" class="eye-toggle" onclick="togglePassword('id_password', this)">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
 
                 {% if messages %}
                 {% for message in messages %}
@@ -32,7 +36,8 @@
             <div class="actions">
                 <button type="submit" class="btn-submit">{{t.connexion.Connexion_button}}</button>
                 <a href="#" class="forgot-link">{{t.connexion.Forget_Password_link}}</a>
-                <p class="register-link">{{t.connexion.Register_link}}<a href="{% url 'register' %}">{{t.connexion.Register_button}}</a></p>
+                <p class="register-link">{{t.connexion.Register_link}}<a
+                        href="{% url 'register' %}">{{t.connexion.Register_button}}</a></p>
             </div>
         </form>
     </div>
@@ -41,9 +46,16 @@
 {% endblock %}
 {% block extra_script %}
 <script>
-    function togglePassword() {
-        const passInput = document.getElementById('id_password');
-        passInput.type = passInput.type === "password" ? "text" : "password";
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('span');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility';
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility_off';
+        }
     }
 </script>
 {% endblock %}

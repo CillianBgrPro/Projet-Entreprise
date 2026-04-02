@@ -92,3 +92,36 @@ class CustomUserCreationForm(UserCreationForm):
                 scientific_study=scientific_study
             )
         return user
+
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': '••••••••'}),
+        label="ancien mot de pase"
+    )
+    new_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': '••••••••'}),
+        label="new mot de passe"
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': '••••••••'}),
+        label="confirmé le mot de passe"
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get('old_password')
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError("L'ancien mot de passe est incorrect.")
+        return old_password
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if new_password and confirm_password and new_password != confirm_password:
+            self.add_error('confirm_password', "Les deux mots de passe ne correspondent pas.")
+        return cleaned_data

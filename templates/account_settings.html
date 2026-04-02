@@ -1,0 +1,206 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}{{ t.account_settings.Title_header }}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/account_settings.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+
+    <div class="settings-header">
+        <h1>{{ t.account_settings.Title }}</h1>
+        <a href="{% url 'home' %}" class="btn-back">
+            <span class="material-symbols-outlined">arrow_back</span>
+            {{ t.account_settings.Back_dashboard }}
+        </a>
+    </div>
+
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" id="alert-msg">
+            <span class="material-symbols-outlined">
+                {% if message.tags == 'success' %}check_circle{% else %}error{% endif %}
+            </span>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="settings-card" id="avatar-section">
+        <div class="card-header">
+            <span class="material-symbols-outlined card-icon">account_circle</span>
+            <div>
+                <h2>{{ t.account_settings.Avatar_title }}</h2>
+                <p class="card-subtitle">{{ t.account_settings.Avatar_subtitle }}</p>
+            </div>
+        </div>
+
+        <div class="current-avatar-display">
+            <div class="avatar-preview" id="avatar-preview">
+                <span class="material-symbols-outlined">{{ user.avatar }}</span>
+            </div>
+            <div class="avatar-info">
+                <p class="user-name">{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="user-role">
+                    {% if user.is_superuser %}{{ t.header.Admin_badge }}
+                    {% elif user.role == 'teacher' %}{{ t.header.Teacher_badge }}
+                    {% else %}{{ t.header.Student_badge }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="avatar-grid" id="avatar-grid">
+            {% for icon in allowed_avatars %}
+            <button type="button" class="avatar-option {% if user.avatar == icon %}active{% endif %}"
+                data-avatar="{{ icon }}" title="{{ icon }}">
+                <span class="material-symbols-outlined">{{ icon }}</span>
+            </button>
+            {% endfor %}
+        </div>
+
+        <div class="avatar-feedback" id="avatar-feedback"></div>
+    </section>
+
+    <section class="settings-card" id="password-section">
+        <div class="card-header">
+            <span class="material-symbols-outlined card-icon">lock</span>
+            <div>
+                <h2>{{ t.account_settings.Password_title }}</h2>
+                <p class="card-subtitle">{{ t.account_settings.Password_subtitle }}</p>
+            </div>
+        </div>
+
+        <form method="post" action="{% url 'account' %}" class="password-form" id="password-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_old_password">{{ t.account_settings.Old_password }}</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">key</span>
+                    <input type="password" name="old_password" id="id_old_password" placeholder="••••••••" required>
+                    <button type="button" class="toggle-password" data-target="id_old_password">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+                {% if form.old_password.errors %}
+                <div class="field-errors">
+                    {% for error in form.old_password.errors %}<p>{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_new_password">{{ t.account_settings.New_password }}</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">lock_reset</span>
+                    <input type="password" name="new_password" id="id_new_password" placeholder="••••••••" required>
+                    <button type="button" class="toggle-password" data-target="id_new_password">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+                {% if form.new_password.errors %}
+                <div class="field-errors">
+                    {% for error in form.new_password.errors %}<p>{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_confirm_password">{{ t.account_settings.Confirm_password }}</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">lock_reset</span>
+                    <input type="password" name="confirm_password" id="id_confirm_password" placeholder="••••••••"
+                        required>
+                    <button type="button" class="toggle-password" data-target="id_confirm_password">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+                {% if form.confirm_password.errors %}
+                <div class="field-errors">
+                    {% for error in form.confirm_password.errors %}<p>{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn-submit" id="btn-change-password">
+                <span class="material-symbols-outlined">save</span>
+                {{ t.account_settings.Save_password }}
+            </button>
+        </form>
+    </section>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const avatarGrid = document.getElementById('avatar-grid');
+        const avatarPreview = document.getElementById('avatar-preview');
+        const avatarFeedback = document.getElementById('avatar-feedback');
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        avatarGrid.addEventListener('click', function (e) {
+            const btn = e.target.closest('.avatar-option');
+            if (!btn) return;
+
+            const avatar = btn.dataset.avatar;
+
+            document.querySelectorAll('.avatar-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            avatarPreview.querySelector('span').textContent = avatar;
+
+            fetch('{% url "change_avatar" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: 'avatar=' + encodeURIComponent(avatar),
+            })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'ok') {
+                        avatarFeedback.innerHTML = '<span class="feedback-success"><span class="material-symbols-outlined">check_circle</span> Avatar mis à jour !</span>';
+                        const headerIcon = document.querySelector('header .account span.material-symbols-outlined');
+                        if (headerIcon) headerIcon.textContent = avatar;
+                    } else {
+                        avatarFeedback.innerHTML = '<span class="feedback-error"><span class="material-symbols-outlined">error</span> ' + data.message + '</span>';
+                    }
+                    setTimeout(() => { avatarFeedback.innerHTML = ''; }, 3000);
+                })
+                .catch(() => {
+                    avatarFeedback.innerHTML = '<span class="feedback-error"><span class="material-symbols-outlined">error</span> Erreur réseau.</span>';
+                    setTimeout(() => { avatarFeedback.innerHTML = ''; }, 3000);
+                });
+        });
+
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const input = document.getElementById(this.dataset.target);
+                const icon = this.querySelector('span');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.textContent = 'visibility';
+                } else {
+                    input.type = 'password';
+                    icon.textContent = 'visibility_off';
+                }
+            });
+        });
+
+        const alertMsg = document.getElementById('alert-msg');
+        if (alertMsg) {
+            setTimeout(() => {
+                alertMsg.style.opacity = '0';
+                alertMsg.style.transform = 'translateY(-10px)';
+                setTimeout(() => alertMsg.remove(), 400);
+            }, 4000);
+        }
+    });
+</script>
+{% endblock %}

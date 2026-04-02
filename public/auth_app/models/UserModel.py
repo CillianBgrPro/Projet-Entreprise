@@ -6,6 +6,7 @@ class User(AbstractUser):
     role = models.CharField(max_length=20, blank=True, verbose_name="Rôle")
     email_verify = models.BooleanField(default=False, verbose_name="Email vérifié")
     a2f = models.BooleanField(default=False, verbose_name="Authentification à deux facteurs")
+    avatar = models.CharField(max_length=50, default='person', verbose_name="Avatar")
 
     objects = UserManager()
 

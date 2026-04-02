@@ -13,6 +13,7 @@ urlpatterns = [
     path('envoyer-code/', views.send_code_view, name='send_code'),
     path('verifier-code/', views.verify_code, name='verify_code'),
     path('compte/', views.account, name='account'),
+    path('compte/avatar/', views.change_avatar, name='change_avatar'),
     path('dashboard/etudiant/', views.student_dashboard, name='student_dashboard'),
     path('dashboard/professeur/', views.teacher_dashboard, name='teacher_dashboard'),
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),

@@ -1,6 +1,6 @@
 {
     "connexion": {
-        "Mail_label": "Email",
+        "Mail_label": "Email or Username",
         "Password_label": "Password",
         "See_button": "See",
         "Connexion_button": "Connection",
@@ -257,5 +257,18 @@
             "system_options": "System options",
             "tickets": "User tickets"
         }
+    },
+    "account_settings": {
+        "Title_header": "Account Settings - DR. VIRTUORL",
+        "Title": "Account Settings",
+        "Back_dashboard": "Back",
+        "Avatar_title": "Profile Avatar",
+        "Avatar_subtitle": "Choose an icon to personalize your profile",
+        "Password_title": "Password",
+        "Password_subtitle": "Change your login password",
+        "Old_password": "Current password",
+        "New_password": "New password",
+        "Confirm_password": "Confirm new password",
+        "Save_password": "Save password"
     }
 }

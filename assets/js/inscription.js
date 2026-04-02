@@ -19,9 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function togglePass(id) {
+function togglePass(id, btn) {
     const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
+    const icon = btn.querySelector('span');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+    } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
+    }
 }
 
 // event listener for code input to change button text
