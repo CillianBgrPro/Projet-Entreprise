@@ -1,6 +1,6 @@
 {
     "connexion": {
-        "Mail_label": "Mail",
+        "Mail_label": "Mail ou Identifiant",
         "Password_label": "Mot de Passe",
         "See_button": "Voir",
         "Connexion_button": "Connexion",

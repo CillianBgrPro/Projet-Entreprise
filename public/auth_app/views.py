@@ -39,15 +39,21 @@ def login_view(request):
         if u_name:
             u_name = u_name.strip().lower() 
 
-        user = authenticate(request, username=u_name, password=p_word)
+        from django.db.models import Q
+        from .models import User
+        
+        user_obj = User.objects.filter(Q(username=u_name) | Q(email=u_name)).first()
+
+        if user_obj:
+            user = authenticate(request, username=user_obj.username, password=p_word)
+        else:
+            user = None
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            from .models import User
-            user_exists = User.objects.filter(username=u_name).exists()
-            if not user_exists:
+            if not user_obj:
                 messages.error(request, "Ce compte n'existe pas.")
             else:
                 messages.error(request, "Mot de passe incorrect.")
