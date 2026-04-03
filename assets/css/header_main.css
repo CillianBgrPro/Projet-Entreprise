@@ -6,7 +6,14 @@
     --link-blue: #3498db;
 }
 
-header>nav.navbar {
+header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+}
+
+.navbar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,32 +29,30 @@ header>nav.navbar {
     text-decoration: none;
 }
 
-header>nav.navbar>ul.nav-links {
+.nav-links {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 758px;
+    min-width: 768px;
 }
 
-header>nav.navbar>ul.nav-links>li {
+.nav-links > li {
     padding: 0.5% 1%;
     border-radius: 12px;
     border: 2px solid black;
     margin: 0 1%;
 }
 
-header>nav.navbar>div.account {
+.account {
+    min-width: 150px;
+
     display: flex;
+    justify-content: space-around;
     align-items: center;
 }
 
-header>nav.navbar>div.account:hover{
-    cursor: pointer;
-}
-
-header>nav.navbar>div.account>span {
-    font-size: 3rem;
-    padding: 0.5%;
+.account > span {
+    padding: 10px;
     border-radius: 50%;
     border: 2px solid var(--blue-dark);
 }
