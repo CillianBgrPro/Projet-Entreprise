@@ -26,8 +26,7 @@
             {% if user.is_superuser %}
             <li><a href="#">{{ t.header.Logs }}</a></li>
             <li><a href="#">{{ t.header.Users }}</a></li>
-            <li><a href="#">{{ t.header.Data }}</a></li>
-            <li><a href="{% url 'export_students_csv' %}">{{ t.header.Export_students_csv }}</a></li>
+            <li><a href="{% url 'data' %}">{{ t.header.Data }}</a></li>
             {% elif user.role == 'teacher' %}
             <li><a href="#">{{ t.header.Students }}</a></li>
             <li><a href="#">{{ t.header.Export_data }}</a></li>

@@ -1,2 +1,12 @@
+{% extends 'index.html' %}
 {% load static %}
 {% block title %}Données - DR. VIRTUORL{% endblock %}
+
+{% block content %}
+<section style="padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 80vh; flex-direction: column;">
+    <h1 style="margin-bottom: 30px;">Exportation des Données</h1>
+    <a href="{% url 'export_students_csv' %}" style="padding: 15px 30px; background-color: rgb(119, 174, 207); color: white; border-radius: 12px; font-weight: bold; text-decoration: none; display: inline-block;">
+        Exporter les étudiants (CSV)
+    </a>
+</section>
+{% endblock %}
