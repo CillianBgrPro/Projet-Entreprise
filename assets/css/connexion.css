@@ -1,22 +1,48 @@
-:root {
-    --blue-light: #5ba2cf;
-    --blue-dark: #2c4471;
-    --gray-logo: #d3d3d3;
-    --error-red: #d93025;
-    --link-blue: #3498db;
+/* ============================================================
+   CONNEXION & INSCRIPTION – modern light card
+   ============================================================ */
+
+.login-wrapper,
+.inscription-page #app-content {
+    min-height: calc(100vh - var(--header-h) - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #edf2fb 0%, #f4f7fb 60%, #e8f0fe 100%);
 }
 
+/* ---- Auth card ---- */
+.auth-card,
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    padding: 40px 44px;
+    width: 100%;
+    max-width: 480px;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 60px;
+.auth-card h1,
+.auth-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+.auth-card .subtitle {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
 }
 
+/* Login uses .login-wrapper .container – same card, just wider than sign-in */
+.login-wrapper .container {
+    max-width: 420px;
+}
+
+/* ---- Input groups ---- */
 .input-group {
     display: flex;
     flex-direction: column;
@@ -25,184 +51,217 @@
 }
 
 .input-group label {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    margin-left: 25px;
-    color: #333;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: var(--text-primary);
 }
 
-.input-group input {
-    background-color: var(--blue-light);
-    border: none;
-    border-radius: 50px;
-    padding: 15px 25px;
-    font-size: 15px;
-    color: white;
-    outline: none;
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 11px 16px;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(44,95,191,0.12);
+    background: #fff;
 }
 
 .input-group input::placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-muted);
 }
 
-.eye-icon {
+/* Select arrow */
+.input-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235a6a8a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* ---- Password wrapper ---- */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.password-wrapper input {
+    flex: 1;
+    padding-right: 46px;
+}
+.eye-toggle {
     position: absolute;
-    right: 20px;
-    top: 45px;
+    right: 12px;
+    color: var(--text-muted);
     font-size: 20px;
-    color: #fff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
 }
+.eye-toggle:hover { color: var(--accent); }
 
-.login-wrapper .eye-icon {
-    color: #333;
-    right: -40px;
-    font-size: 22px;
-}
-
+/* ---- Submit button ---- */
 .btn-submit {
     display: block;
-    margin: 0 auto;
-    background-color: var(--blue-dark);
+    width: 100%;
+    margin-top: 8px;
+    background: var(--accent);
     color: white;
     border: none;
-    padding: 15px 80px;
-    font-size: 18px;
+    padding: 13px 24px;
+    font-size: 1rem;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: var(--radius-pill);
     cursor: pointer;
-    transition: opacity 0.3s;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
 }
-
 .btn-submit:hover {
-    opacity: 0.9;
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
+/* ---- Actions area ---- */
+.actions {
+    text-align: center;
+    margin-top: 24px;
+}
+.forgot-link {
+    display: block;
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    transition: opacity 0.2s;
+}
+.forgot-link:hover { opacity: 0.75; }
+
+.register-link {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+.register-link a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ---- Error messages ---- */
+.error-list,
+.error-text {
+    background: var(--error-bg);
+    color: var(--error);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    list-style: none;
+}
+
+/* ---- Send code button ---- */
 .email-row {
     display: flex;
     align-items: flex-end;
-    gap: 15px;
+    gap: 12px;
 }
-
 .email-row .input-group {
     flex: 1;
     margin-bottom: 0;
 }
-
 .btn-send-code {
-    background-color: var(--blue-dark);
+    background: var(--accent);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 30px;
+    padding: 11px 16px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-size: 0.83rem;
+    font-weight: 600;
     white-space: nowrap;
+    transition: background 0.2s;
 }
+.btn-send-code:hover { background: var(--accent-hover); }
 
+/* ---- Consent ---- */
 .consent-container {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
-    gap: 15px;
-    margin: 40px auto;
-    max-width: 750px;
+    gap: 12px;
+    margin: 20px 0 10px;
+}
+.consent-container input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    margin-top: 2px;
+}
+.consent-container label {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
-.login-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ---- Inscription-page layout wider card ---- */
+.inscription-page #app-content {
+    align-items: flex-start;
     padding-top: 50px;
 }
-
-.login-wrapper .container {
-    max-width: 450px;
+.inscription-page .container {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.actions {
-    text-align: center;
-    margin-top: 40px;
+/* ---- Form grid (inscription) ---- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
 }
 
-.forgot-link {
-    display: block;
-    color: var(--link-blue);
-    text-decoration: none;
-    font-style: italic;
-    margin-bottom: 20px;
-}
-
-.register-link {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-.register-link a {
-    color: var(--blue-dark);
-    font-weight: bold;
-}
-
-.error-list,
-.error-text {
-    color: var(--error-red);
-    list-style: none;
-    text-align: center;
-    font-style: italic;
-    margin-bottom: 10px;
+/* ---- Section title ---- */
+.form-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
 }
 
 @media (max-width: 768px) {
     .form-grid {
         grid-template-columns: 1fr;
+        gap: 0;
     }
-
-    .login-wrapper .eye-icon {
-        right: 15px;
-        color: white;
+    .auth-card,
+    .login-wrapper .container,
+    .container {
+        padding: 28px 24px;
     }
 }
 
-.input-group select {
-    width: 100%;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 50px;
-    background-color: var(--blue-light);
-    font-size: 15px;
-    color: white;
-    outline: none;
-    box-sizing: border-box;
-
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 16px;
-}
-
-.input-group select:focus {
-    outline: none;
-}
-
-.input-group select option {
-    color: #333;
-    background-color: #fff;
-}
-
-.input-group input,
-.input-group select {
-    background-color: var(--blue-light);
-    border: none;
-    border-radius: 50px;
-    padding: 15px 25px;
-    font-size: 15px;
-    color: white;
-    width: 100%;
+@media (max-width: 480px) {
+    .auth-card,
+    .container {
+        padding: 24px 18px;
+    }
 }

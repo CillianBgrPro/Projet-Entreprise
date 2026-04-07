@@ -1,87 +1,103 @@
+/* ============================================================
+   ALL CASES — Clinical cases grid
+   ============================================================ */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 24px 60px;
 }
 
 .page-title {
-    margin-bottom: 30px;
-    color: #111827;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 32px;
 }
 
+/* ---- Cases grid ---- */
 .cases-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
+/* ---- Case card ---- */
 .case-card {
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.25s, transform 0.25s;
 }
-
 .case-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
 }
 
 .case-name {
-    margin-top: 0;
-    color: #111827;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .case-details {
-    color: #4b5563;
-    font-size: 14px;
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
-
 .case-details p {
-    margin: 5px 0;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+.case-details strong {
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .case-footer {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
 }
 
 .case-date {
-    font-size: 12px;
-    color: #9ca3af;
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
 
 .btn-view-case {
-    background-color: #2563eb;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    background: var(--accent);
+    color: #fff;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
 }
-
 .btn-view-case:hover {
-    background-color: #1d4ed8;
+    background: var(--accent-hover);
+    transform: translateY(-1px);
 }
 
+/* ---- Empty state ---- */
 .no-cases {
-    background-color: #f3f4f6;
-    padding: 30px;
-    border-radius: 8px;
     text-align: center;
+    padding: 80px 24px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
 }
 
-.no-cases p {
-    color: #6b7280;
-    font-size: 16px;
-    margin: 0;
+@media (max-width: 600px) {
+    .container { padding: 24px 16px 40px; }
+    .cases-grid { grid-template-columns: 1fr; }
 }

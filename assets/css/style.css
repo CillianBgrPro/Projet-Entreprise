@@ -1,70 +1,38 @@
-/* 1. Box sizing */
+/* ============================================================
+   RESET CSS
+   ============================================================ */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-}
-
-/* 2. Remove default margin and padding */
-* {
     margin: 0;
     padding: 0;
-}
-
-/* 3. HTML & body defaults */
-html,
-body {
-    margin: 0;
-    height: 100%;
 }
 
 html {
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
-    -moz-tab-size: 4;
-    tab-size: 4;
     scroll-behavior: smooth;
+    font-size: 16px;
 }
 
 body {
     text-rendering: optimizeSpeed;
-    font-family:
-        system-ui,
-        -apple-system,
-        Segoe UI,
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+    font-family: "Poppins", system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
 }
 
-/* 4. Remove list styles */
-ul,
-ol {
-    list-style: none;
-}
+ul, ol { list-style: none; }
+a { text-decoration: none; color: inherit; }
 
-/* 5. Anchor reset */
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* 6. Images & media */
-img,
-picture,
-video,
-canvas,
-svg {
+img, picture, video, canvas, svg {
     display: block;
     max-width: 100%;
 }
 
-/* 7. Forms */
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font: inherit;
     color: inherit;
     border: none;
@@ -72,103 +40,179 @@ select {
     background: none;
 }
 
-/* Remove default button styling */
-button {
-    cursor: pointer;
-}
+button { cursor: pointer; }
+textarea { resize: vertical; }
+table { border-collapse: collapse; border-spacing: 0; }
 
-/* Prevent textarea resize overflow issues */
-textarea {
-    resize: vertical;
-}
-
-/* 8. Tables */
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-/* 9. Headings */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     font-size: inherit;
     font-weight: inherit;
 }
 
-/* 10. Paragraphs */
-p {
-    overflow-wrap: break-word;
-}
+p { overflow-wrap: break-word; }
+fieldset { border: 0; }
 
-/* 11. Remove default fieldset styles */
-fieldset {
-    border: 0;
-}
-
-/* 12. Remove quote styling */
-blockquote,
-q {
-    quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-    content: "";
-}
-
-/* 13. Accessibility: reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
     }
 }
 
-/* 14. Remove default focus outline (replace if needed) */
-:focus {
-    outline: none;
-}
-
-/* Optional: visible focus for accessibility */
+:focus { outline: none; }
 :focus-visible {
-    outline: 2px solid #4d90fe;
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-body {
-    background-color: #fff;
-    min-height: 100vh;
-}
-
-/*
-    Fin du reset CSS
-*/
-
+/* ============================================================
+   DESIGN SYSTEM — Variables
+   ============================================================ */
 :root {
-    --blue-light: #5ba2cf;
-    --blue-dark: #2c4471;
-    --gray-logo: #d3d3d3;
-    --error-red: #d93025;
-    --link-blue: #3498db;
+    /* Colors */
+    --bg-main:        #f4f7fb;
+    --bg-card:        #ffffff;
+    --bg-subtle:      #edf2f9;
+
+    --text-primary:   #1a2744;
+    --text-secondary: #5a6a8a;
+    --text-muted:     #9ba8c0;
+
+    --accent:         #2c5fbf;
+    --accent-light:   #5ba2cf;
+    --accent-hover:   #1e4a9e;
+    --accent-soft:    #e8f0fe;
+
+    --blue-dark:      #2c4471;
+    --blue-light:     #5ba2cf;
+
+    --success:        #16a34a;
+    --success-bg:     #dcfce7;
+    --warning:        #d97706;
+    --warning-bg:     #fef3c7;
+    --error:          #dc2626;
+    --error-bg:       #fee2e2;
+    --info:           #0284c7;
+    --info-bg:        #e0f2fe;
+
+    --border:         #dce3f0;
+    --border-focus:   var(--accent);
+    --shadow-sm:      0 1px 3px rgba(44,95,191,0.08);
+    --shadow-md:      0 4px 16px rgba(44,95,191,0.12);
+    --shadow-lg:      0 8px 32px rgba(44,95,191,0.16);
+
+    /* Status badges */
+    --status-open:          #d97706;
+    --status-open-bg:       #fef3c7;
+    --status-progress:      #0284c7;
+    --status-progress-bg:   #e0f2fe;
+    --status-resolved:      #16a34a;
+    --status-resolved-bg:   #dcfce7;
+    --status-closed:        #6b7280;
+    --status-closed-bg:     #f3f4f6;
+
+    /* Radius & spacing */
+    --radius-sm:    6px;
+    --radius-md:    12px;
+    --radius-lg:    20px;
+    --radius-pill:  999px;
+
+    --header-h:     68px;
 }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+#app-content {
+    min-height: calc(100vh - var(--header-h) - 60px);
+}
+
+/* ============================================================
+   SHARED BUTTON STYLES
+   ============================================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+    padding: 9px 20px;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-secondary:hover {
+    background: var(--border);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   SHARED CARD STYLE
+   ============================================================ */
+.card-modern {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.card-modern:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   SHARED INPUT STYLE
+   ============================================================ */
+.input-modern {
+    width: 100%;
+    padding: 11px 16px;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-modern:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(44,95,191,0.12);
+}
+
+/* ============================================================
+   BADGE STYLES
+   ============================================================ */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-success  { background: var(--success-bg);  color: var(--success); }
+.badge-warning  { background: var(--warning-bg);  color: var(--warning); }
+.badge-error    { background: var(--error-bg);    color: var(--error);   }
+.badge-info     { background: var(--info-bg);     color: var(--info);    }
+.badge-muted    { background: var(--status-closed-bg); color: var(--status-closed); }

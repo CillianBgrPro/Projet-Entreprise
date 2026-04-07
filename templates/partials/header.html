@@ -5,9 +5,8 @@
 
         <div class="logo">
             <a href="{% url 'home' %}">VirtuORL
-                <!-- Remove when done-->
                 {% if not user.is_authenticated %}
-                <span style="font-size: 0.8em; font-weight: normal;">{{ t.header.Not_connected }}</span>
+                <span style="font-size: 0.7em; font-weight: 400; color: var(--text-muted);">{{ t.header.Not_connected }}</span>
                 {% elif user.is_superuser %}
                 <span class="role-badge admin">{{ t.header.Admin_badge }}</span>
                 {% elif user.role == 'teacher' %}
@@ -18,9 +17,7 @@
             </a>
         </div>
 
-        <ul class="nav-links">
-            <!-- <li><a href="{% url 'home' %}">{{ t.header.Home }}</a></li>-->
-
+        <ul class="nav-links" id="nav-links">
             {% if user.is_authenticated %}
             <li><a href="{% url 'dashboard_redirect' %}">Dashboard</a></li>
 
@@ -39,7 +36,7 @@
 
             {% else %}
             <li><a href="#about">A propos</a></li>
-            <li><a href="#publication">publications</a></li>
+            <li><a href="#publication">Publications</a></li>
             <li><a href="#roadMap">Objectifs</a></li>
             <li><a href="{% url 'login_view' %}">{{ t.header.Connect }}</a></li>
             <li><a href="{% url 'register' %}">{{ t.header.Create_account }}</a></li>
@@ -55,14 +52,27 @@
             </div>
             <span class="material-symbols-outlined">{{ user.avatar }}</span>
             {% else %}
-            <a href="{% url 'login_view' %}">{{ t.header.My_account }}</a>
             <span class="material-symbols-outlined">person</span>
             {% endif %}
-        </div>
+            </div>
         </a>
 
-        
+        <button class="burger-btn" id="burger-btn" aria-label="Menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
     </nav>
-    <script src="{% static 'js/profile.js' %}"></script>
+    <script>
+        (function () {
+            const btn = document.getElementById('burger-btn');
+            const links = document.getElementById('nav-links');
+            btn.addEventListener('click', function () {
+                const open = links.classList.toggle('open');
+                btn.classList.toggle('open', open);
+                btn.setAttribute('aria-expanded', open);
+            });
+        })();
+    </script>
 </header>
