@@ -411,8 +411,36 @@ def ticket_admin(request):
     if not request.user.is_superuser:
         return redirect('home')
     from .models import Ticket
-    tickets = Ticket.objects.all().order_by('-created_at')
-    return render(request, 'administrater/ticket_admin.html', {'tickets': tickets})
+
+    status = request.GET.get('status', '').strip()
+    subject = request.GET.get('subject', '').strip()
+    username = request.GET.get('user', '').strip()
+    date_from = request.GET.get('date_from', '').strip()
+    date_to = request.GET.get('date_to', '').strip()
+    zero_replies = request.GET.get('zero_replies', '').strip() == 'true'
+
+    tickets = Ticket.objects.search(
+        subject=subject or None,
+        status=status or None,
+        username=username or None,
+        date_from=date_from or None,
+        date_to=date_to or None,
+        zero_replies=zero_replies
+    ).order_by('-created_at')
+
+    context = {
+        'tickets': tickets,
+        'ticket_count': tickets.count(),
+        'filter_status': status,
+        'filter_subject': subject,
+        'filter_user': username,
+        'filter_date_from': date_from,
+        'filter_date_to': date_to,
+        'filter_zero_replies': 'true' if zero_replies else '',
+        'status_choices': ['Ouvert', 'En cours', 'Résolu', 'Clos'],
+    }
+
+    return render(request, 'administrater/ticket_admin.html', context)
 
 @login_required
 def ticket_detail(request, ticket_id):
