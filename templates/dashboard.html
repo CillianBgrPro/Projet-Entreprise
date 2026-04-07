@@ -9,27 +9,144 @@
 {% if user.is_superuser %}
 <section>
     <h1>{{t.global_dashboard.admin_dashboard.Title}}</h1>
+
+    <div class="cards">
+        <div class="card card-blue">
+            <div class="card-icon"><span class="material-symbols-outlined">group</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_users }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.total_user}}</span>
+            </div>
+            <div class="card-badge">+{{ recent_registrations }} <small>(7j)</small></div>
+        </div>
+        <div class="card card-purple">
+            <div class="card-icon"><span class="material-symbols-outlined">school</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_students }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.students}}</span>
+            </div>
+        </div>
+        <div class="card card-green">
+            <div class="card-icon"><span class="material-symbols-outlined">psychology</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_teachers }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.teachers}}</span>
+            </div>
+        </div>
+        <div class="card card-orange">
+            <div class="card-icon"><span class="material-symbols-outlined">medical_services</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_cases }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.clinical_cases}}</span>
+            </div>
+        </div>
+        <div class="card card-yellow">
+            <div class="card-icon"><span class="material-symbols-outlined">confirmation_number</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_tickets }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.tickets}}</span>
+            </div>
+            <div class="card-badge badge-warning">{{ open_tickets }} {{t.global_dashboard.admin_dashboard.open}}</div>
+        </div>
+        <div class="card card-sky">
+            <div class="card-icon"><span class="material-symbols-outlined">fitness_center</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_trainings }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.trainings}}</span>
+            </div>
+            <div class="card-badge badge-success">{{ finished_trainings }} {{t.global_dashboard.admin_dashboard.finished}}</div>
+        </div>
+    </div>
+
     <div class="top-infos">
         <div class="section1 sections">
-            <h2>{{t.global_dashboard.admin_dashboard.logs}}</h2>
-            <canvas id="logsChart"></canvas>
+            <h2>{{t.global_dashboard.admin_dashboard.global_view}}</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <div>
+                        <strong>{{ verified_emails }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.verified_emails}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">security</span>
+                    <div>
+                        <strong>{{ users_with_a2f }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.a2f_enabled}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">admin_panel_settings</span>
+                    <div>
+                        <strong>{{ total_admins }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.admins}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">pending</span>
+                    <div>
+                        <strong>{{ in_progress_tickets }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.tickets_in_progress}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <div>
+                        <strong>{{ resolved_tickets }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.tickets_resolved}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">done_all</span>
+                    <div>
+                        <strong>{{ finished_trainings }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.trainings_finished}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="section2 sections">
-            <h2>{{t.global_dashboard.admin_dashboard.global_view}}</h2>
-            <p>{{t.global_dashboard.admin_dashboard.total_user}}</p>
-            <p>{{t.global_dashboard.admin_dashboard.recent_activity}}</p>
-            <p>{{t.global_dashboard.admin_dashboard.other_stat}}</p>
+            <h2>{{t.global_dashboard.admin_dashboard.recent_activity}}</h2>
+            <div class="logs-list">
+                {% for log in logs %}
+                <div class="log-item log-{{ log.type }}">
+                    <span class="log-icon material-symbols-outlined">{{ log.icon }}</span>
+                    <div class="log-text">
+                        <span class="log-message">
+                            {% if log.type == 'registration' %}
+                                {{t.global_dashboard.admin_dashboard.log_new_user}} {{ log.message }}
+                            {% elif log.type == 'ticket' %}
+                                <strong>{{ log.user }}</strong> — {{ log.message }}
+                            {% endif %}
+                        </span>
+                        <span class="log-meta">
+                            <span class="log-tag tag-{{ log.type }}">{{ log.detail }}</span>
+                            <span class="log-date">{{ log.date|date:"d/m/Y H:i" }}</span>
+                        </span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="log-item log-empty">
+                    <span class="log-icon material-symbols-outlined">info</span>
+                    <div class="log-text">
+                        <span class="log-message">{{t.global_dashboard.admin_dashboard.no_logs}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
     <div class="actions">
-        <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.user_management}}</button></a>
-        <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.data_management}}</button></a>
+        <a href="{% url 'users' %}" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.user_management}}</button></a>
+        <a href="{% url 'data' %}" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.data_management}}</button></a>
         <a href="#" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.system_options}}</button></a>
         <a href="{% url 'ticket_admin' %}" class="action-btn"><button>{{t.global_dashboard.admin_dashboard.tickets}}</button></a>
     </div>
 </section>
+
 
 {% elif user.role == 'teacher' %}
 <section>

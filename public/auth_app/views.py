@@ -141,7 +141,74 @@ def teacher_dashboard(request):
 def admin_dashboard(request):
     if not request.user.is_superuser:
         return redirect('home')
-    return render(request, 'dashboard.html')
+
+    from .models import User, Student, Professor, Ticket, ClinicalCase, Training
+    from django.utils import timezone
+    from datetime import timedelta
+    total_users = User.objects.get_all().count()
+    total_students = User.objects.get_by_role('student').count()
+    total_teachers = User.objects.get_by_role('teacher').count()
+    total_admins = User.objects.filter(is_superuser=True).count() + User.objects.filter(role='admin').count()
+    verified_emails = User.objects.get_verified().count()
+    users_with_a2f = User.objects.get_with_a2f_enabled().count()
+    total_tickets = Ticket.objects.all().count()
+    open_tickets = Ticket.objects.get_by_status('Ouvert').count()
+    in_progress_tickets = Ticket.objects.get_by_status('En cours').count()
+    resolved_tickets = Ticket.objects.get_by_status('Clos').count()
+    total_cases = ClinicalCase.objects.all().count()
+    total_trainings = Training.objects.all().count()
+    finished_trainings = Training.objects.get_finished_trainings().count()
+    seven_days_ago = timezone.now() - timedelta(days=7)
+    recent_registrations = User.objects.filter(date_joined__gte=seven_days_ago).count()
+    latest_users = User.objects.all().order_by('-date_joined')[:10].values(
+        'id', 'username', 'first_name', 'last_name', 'role', 'date_joined'
+    )
+    latest_tickets = Ticket.objects.all().order_by('-created_at')[:10].values(
+        'id', 'subject', 'status', 'created_at', 'user__username'
+    )
+
+    # Construire les logs combinés
+    logs = []
+    for u in latest_users:
+        logs.append({
+            'type': 'registration',
+            'icon': 'person_add',
+            'message': f"{u['first_name']} {u['last_name']} ({u['username']})",
+            'detail': u['role'] or 'student',
+            'date': u['date_joined'],
+        })
+    for t in latest_tickets:
+        logs.append({
+            'type': 'ticket',
+            'icon': 'confirmation_number',
+            'message': t['subject'],
+            'detail': t['status'],
+            'date': t['created_at'],
+            'user': t['user__username'],
+        })
+    # Trier par date décroissante
+    logs.sort(key=lambda x: x['date'], reverse=True)
+    logs = logs[:15]
+
+    context = {
+        'total_users': total_users,
+        'total_students': total_students,
+        'total_teachers': total_teachers,
+        'total_admins': total_admins,
+        'verified_emails': verified_emails,
+        'users_with_a2f': users_with_a2f,
+        'total_tickets': total_tickets,
+        'open_tickets': open_tickets,
+        'in_progress_tickets': in_progress_tickets,
+        'resolved_tickets': resolved_tickets,
+        'total_cases': total_cases,
+        'total_trainings': total_trainings,
+        'finished_trainings': finished_trainings,
+        'recent_registrations': recent_registrations,
+        'logs': logs,
+    }
+
+    return render(request, 'dashboard.html', context)
 
 def logout_view(request):
     logout(request)
