@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Tous les entraînements - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/admin_users.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <a href="{% url 'admin_dashboard' %}" class="btn-secondary">Retour au Dashboard</a>
+
+    <h2>Supervision de tous les entraînements</h2>
+
+    <div class="list-section">
+        {% if trainings %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cas Clinique</th>
+                        <th>Enseignant (Créateur)</th>
+                        <th>Groupe</th>
+                        <th>Date de création</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for training in trainings %}
+                    <tr>
+                        <td>#{{ training.id }}</td>
+                        <td><strong>{{ training.case.name }}</strong></td>
+                        <td>{{ training.professor.user.first_name }} {{ training.professor.user.last_name }}</td>
+                        <td>{{ training.group.name|default:"-" }}</td>
+                        <td>{{ training.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <span
+                                class="status-badge {% if training.status == 'Terminé' %}status-finished{% else %}status-pending{% endif %}">
+                                {{ training.status|default:"En cours" }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty-state">Aucun entraînement n'a été créé pour le moment.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

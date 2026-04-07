@@ -1,2 +1,110 @@
+{% extends 'index.html' %}
 {% load static %}
-{% block title %}Données - DR. VIRTUORL{% endblock %}
+
+{% block title %}Gestion des Utilisateurs - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/admin_users.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <a href="{% url 'admin_dashboard' %}" class="btn-secondary">Retour au Dashboard</a>
+    
+    <h2>Recherche par Établissement</h2>
+
+    <!-- Filtres Modifiés -->
+    <div class="filters-container" style="background:#f8f9fa; padding:20px; border-radius:12px; margin-bottom:24px; border:1px solid #e5e7eb;">
+        <form method="GET" action="" id="filter-form" style="display:flex; flex-direction:column; gap:16px;">
+            
+            <div class="form-group" style="display:flex; flex-direction:column; gap:8px;">
+                <label for="university-select" style="font-weight:600; color:#374151;"><span class="material-symbols-outlined" style="vertical-align:bottom; font-size:20px;">account_balance</span> 1. Choisissez un établissement :</label>
+                <select name="university" id="university-select" onchange="var p = document.getElementById('prof-select'); if(p) p.value=''; this.form.submit()" style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
+                    <option value="">-- Sélectionnez une université --</option>
+                    {% for uni in universities %}
+                    <option value="{{ uni }}" {% if selected_university == uni %}selected{% endif %}>{{ uni }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% if selected_university %}
+            <div class="form-group" style="display:flex; flex-direction:column; gap:8px;">
+                <label for="prof-select" style="font-weight:600; color:#374151;"><span class="material-symbols-outlined" style="vertical-align:bottom; font-size:20px;">psychology</span> 2. Choisissez un enseignant :</label>
+                <select name="professor_id" id="prof-select" onchange="this.form.submit()" style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
+                    <option value="">-- Sélectionnez un professeur --</option>
+                    {% for prof in professors %}
+                    <option value="{{ prof.id }}" {% if selected_professor_id == prof.id %}selected{% endif %}>{{ prof.user.first_name }} {{ prof.user.last_name }} ({{ prof.speciality }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+        </form>
+    </div>
+
+    <!-- Affichage des Résultats -->
+    {% if selected_university and not selected_professor_id %}
+        {% if professors %}
+        <div class="list-section">
+            <h3>Professeurs à {{ selected_university }} ({{ professors|length }})</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom complet</th>
+                            <th>Email</th>
+                            <th>Spécialité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prof in professors %}
+                        <tr>
+                            <td>{{ prof.user.first_name }} {{ prof.user.last_name }}</td>
+                            <td>{{ prof.user.email }}</td>
+                            <td>{{ prof.speciality|default:"-" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <p class="empty-state">Aucun enseignant inscrit dans cet établissement.</p>
+        {% endif %}
+    {% endif %}
+
+    {% if selected_professor %}
+    <div class="list-section" style="margin-top: 24px;">
+        <h3><span class="material-symbols-outlined" style="color:var(--primary); vertical-align:bottom;">school</span> Étudiants affiliés à {{ selected_professor.user.first_name }} {{ selected_professor.user.last_name }}</h3>
+        
+        {% if students %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom complet</th>
+                        <th>Email</th>
+                        <th>Année d'étude</th>
+                        <th>INE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                        <td>{{ student.user.email }}</td>
+                        <td>{{ student.year_of_study|default:"-" }}</td>
+                        <td>{{ student.ine }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty-state">Aucun étudiant n'est affilié à cet enseignant via ses groupes.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

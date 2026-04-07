@@ -218,9 +218,44 @@ def users(request):
     if not request.user.is_superuser:
         return redirect('home')
     
-    from .models import User
-    users = User.objects.all()
-    return render(request, 'administrater/users.html', {'users': users})
+    from .models import Student, Professor, Group
+    
+    selected_university = request.GET.get('university', '')
+    selected_professor_id = request.GET.get('professor_id', '')
+    
+    # 1. Obtenir toutes les universités distinctes
+    prof_univs = Professor.objects.exclude(university='').values_list('university', flat=True)
+    student_univs = Student.objects.exclude(university='').values_list('university', flat=True)
+    all_universities = sorted(list(set(list(prof_univs) + list(student_univs))))
+    
+    professors = []
+    students = []
+    selected_professor = None
+
+    if selected_university:
+        # 2. Professeurs de l'université
+        professors = Professor.objects.filter(university=selected_university).select_related('user')
+        
+        # 3. Si un professeur est sélectionné
+        if selected_professor_id:
+            try:
+                selected_professor = Professor.objects.get(id=int(selected_professor_id))
+                # Étudiants affiliés à ce prof via le modèle Group
+                students = Student.objects.filter(
+                    groups__professors=selected_professor
+                ).distinct().select_related('user')
+            except (ValueError, Professor.DoesNotExist):
+                selected_professor_id = ''
+
+    context = {
+        'universities': all_universities,
+        'selected_university': selected_university,
+        'professors': professors,
+        'selected_professor_id': int(selected_professor_id) if selected_professor_id else '',
+        'selected_professor': selected_professor,
+        'students': students,
+    }
+    return render(request, 'administrater/users.html', context)
 
 def logs(request):
     if not request.user.is_superuser:
@@ -494,3 +529,21 @@ def case_detail(request, case_id):
     from .models import ClinicalCase
     case_obj = get_object_or_404(ClinicalCase, id=case_id)
     return render(request, 'case/case_detail.html', {'case': case_obj})
+
+
+
+@login_required
+def admin_all_trainings(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+        
+    from .models import Training
+    from django.http import HttpResponse
+    try:
+        # Use select_related to avoid N+1 queries which may cause Server crash
+        trainings = Training.objects.select_related('case', 'professor__user', 'group').all().order_by('-created_at')
+        return render(request, 'administrater/all_trainings.html', {'trainings': trainings})
+    except Exception as e:
+        import traceback
+        error_msg = f"Une erreur s'est produite lors du chargement des entraînements:<br><pre>{traceback.format_exc()}</pre>"
+        return HttpResponse(error_msg, status=500)

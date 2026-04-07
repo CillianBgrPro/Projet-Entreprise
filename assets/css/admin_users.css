@@ -1,0 +1,158 @@
+/* ============================
+   Admin Tables CSS
+   ============================ */
+
+.admin-container {
+    padding: 40px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #eaf2f8;
+    color: var(--blue-dark);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #d4e6f1;
+}
+
+.admin-container h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    background: #ffffff;
+    border: 1px solid rgba(91, 162, 207, 0.3);
+    color: var(--blue-dark);
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(91, 162, 207, 0.1);
+}
+
+.filter-btn.active {
+    background: var(--blue-light);
+    color: white;
+    box-shadow: 0 4px 10px rgba(91, 162, 207, 0.3);
+    border-color: var(--blue-light);
+}
+
+.list-section {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(44, 68, 113, 0.05);
+    border: 1px solid rgba(230, 235, 240, 0.6);
+    margin-bottom: 40px;
+}
+
+.list-section h3 {
+    font-size: 1.4rem;
+    color: var(--blue-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list-section h3 .material-symbols-outlined {
+    color: var(--blue-light);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    padding: 15px;
+    font-weight: 600;
+    color: #7a8a9e;
+    background: rgba(91, 162, 207, 0.05);
+    border-bottom: 2px solid rgba(230, 235, 240, 0.8);
+    font-size: 0.95rem;
+}
+
+td {
+    padding: 16px 15px;
+    border-bottom: 1px solid rgba(230, 235, 240, 0.6);
+    color: var(--blue-dark);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+tr:hover td {
+    background-color: rgba(91, 162, 207, 0.02);
+}
+
+.university-cell {
+    font-weight: 500;
+}
+
+.uni-badge {
+    background: rgba(108, 92, 231, 0.1);
+    color: #6c5ce7;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: rgba(243, 156, 18, 0.1);
+    color: #f39c12;
+}
+
+.status-finished {
+    background: rgba(0, 184, 148, 0.1);
+    color: #00b894;
+}
+
+.empty-state {
+    color: #95a5b6;
+    text-align: center;
+    padding: 40px;
+    font-style: italic;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
