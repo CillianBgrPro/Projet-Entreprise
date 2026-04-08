@@ -36,13 +36,21 @@ class TicketManager(models.Manager):
 
     # dynamic search
 
-    def search(self, user_id=None, subject=None, status=None):
+    def search(self, user_id=None, subject=None, status=None, date_from=None, date_to=None, username=None, zero_replies=False):
         #Dynamic search with optional filters.
         search = self.all()
         if user_id:
             search = search.filter(user_id=user_id)
+        if username:
+            search = search.filter(user__username__icontains=username)
         if subject:
             search = search.filter(subject__icontains=subject)
         if status:
             search = search.filter(status__iexact=status)
+        if date_from:
+            search = search.filter(created_at__date__gte=date_from)
+        if date_to:
+            search = search.filter(created_at__date__lte=date_to)
+        if zero_replies:
+            search = search.filter(replies__isnull=True)
         return search

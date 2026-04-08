@@ -10,43 +10,96 @@
 {% block content %}
 <div class="admin-container">
     <a href="{% url 'admin_dashboard' %}" class="btn-secondary">Retour au Dashboard</a>
-    
+
+    <h2>Recherche Globale</h2>
+
+    <div class="search-bar-container">
+        <form method="GET" action="" class="global-search-form">
+            <div class="search-input-wrapper">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" name="search" placeholder="Rechercher un étudiant ou enseignant par nom, prénom..."
+                    value="{{ search_query|default_if_none:'' }}">
+                {% if search_query %}
+                <a href="?search=" class="clear-search-btn" title="Effacer la recherche">
+                    <span class="material-symbols-outlined">close</span>
+                </a>
+                {% endif %}
+            </div>
+            <button type="submit" class="search-btn">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="section-divider"></div>
+
     <h2>Recherche par Établissement</h2>
 
     <!-- Filtres Modifiés -->
-    <div class="filters-container" style="background:#f8f9fa; padding:20px; border-radius:12px; margin-bottom:24px; border:1px solid #e5e7eb;">
+    <div class="filters-container"
+        style="background:#f8f9fa; padding:20px; border-radius:12px; margin-bottom:24px; border:1px solid #e5e7eb;">
         <form method="GET" action="" id="filter-form" style="display:flex; flex-direction:column; gap:16px;">
-            
+
             <div class="form-group" style="display:flex; flex-direction:column; gap:8px;">
-                <label for="university-select" style="font-weight:600; color:#374151;"><span class="material-symbols-outlined" style="vertical-align:bottom; font-size:20px;">account_balance</span> 1. Choisissez un établissement :</label>
-                <select name="university" id="university-select" onchange="var p = document.getElementById('prof-select'); if(p) p.value=''; this.form.submit()" style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
+                <label for="university-select" style="font-weight:600; color:#374151;"><span
+                        class="material-symbols-outlined"
+                        style="vertical-align:bottom; font-size:20px;">account_balance</span> 1. Choisissez un
+                    établissement :</label>
+                <select name="university" id="university-select"
+                    onchange="var p = document.getElementById('prof-select'); if(p) p.value=''; this.form.submit()"
+                    style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
                     <option value="">-- Sélectionnez une université --</option>
                     {% for uni in universities %}
-                    <option value="{{ uni }}" {% if selected_university == uni %}selected{% endif %}>{{ uni }}</option>
+                    <option value="{{ uni }}">{{ uni }}</option>
                     {% endfor %}
                 </select>
             </div>
 
             {% if selected_university %}
             <div class="form-group" style="display:flex; flex-direction:column; gap:8px;">
-                <label for="prof-select" style="font-weight:600; color:#374151;"><span class="material-symbols-outlined" style="vertical-align:bottom; font-size:20px;">psychology</span> 2. Choisissez un enseignant :</label>
-                <select name="professor_id" id="prof-select" onchange="this.form.submit()" style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
+                <label for="prof-select" style="font-weight:600; color:#374151;"><span class="material-symbols-outlined"
+                        style="vertical-align:bottom; font-size:20px;">psychology</span> 2. Choisissez un enseignant
+                    :</label>
+                <select name="professor_id" id="prof-select" onchange="this.form.submit()"
+                    style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
                     <option value="">-- Sélectionnez un professeur --</option>
                     {% for prof in professors %}
-                    <option value="{{ prof.id }}" {% if selected_professor_id == prof.id %}selected{% endif %}>{{ prof.user.first_name }} {{ prof.user.last_name }} ({{ prof.speciality }})</option>
+                    <option value="{{ prof.id }}">{{ prof.user.first_name }} {{ prof.user.last_name }} ({{
+                        prof.speciality }})</option>
                     {% endfor %}
                 </select>
             </div>
             {% endif %}
 
         </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var selectedUni = "{{ selected_university|escapejs }}";
+                var selectedProf = "{{ selected_professor_id|escapejs }}";
+                if (selectedUni) {
+                    var el = document.getElementById('university-select');
+                    if (el) el.value = selectedUni;
+                }
+                if (selectedProf) {
+                    var el2 = document.getElementById('prof-select');
+                    if (el2) el2.value = selectedProf;
+                }
+            });
+        </script>
     </div>
 
-    <!-- Affichage des Résultats -->
-    {% if selected_university and not selected_professor_id %}
-        {% if professors %}
+    {% if search_query %}
+    <div class="search-results-section">
+        <h3>
+            <span class="material-symbols-outlined"
+                style="vertical-align:bottom; color:var(--blue-light);">search</span>
+            Résultats de recherche pour "{{ search_query }}"
+        </h3>
+
+        {% if search_professors %}
         <div class="list-section">
-            <h3>Professeurs à {{ selected_university }} ({{ professors|length }})</h3>
+            <h4 style="font-size: 1.2rem; color: var(--blue-dark); margin-bottom: 16px;">
+                Enseignants ({{ search_professors|length }})
+            </h4>
             <div class="table-container">
                 <table>
                     <thead>
@@ -54,29 +107,95 @@
                             <th>Nom complet</th>
                             <th>Email</th>
                             <th>Spécialité</th>
+                            <th>Université</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for prof in professors %}
+                        {% for prof in search_professors %}
                         <tr>
                             <td>{{ prof.user.first_name }} {{ prof.user.last_name }}</td>
                             <td>{{ prof.user.email }}</td>
                             <td>{{ prof.speciality|default:"-" }}</td>
+                            <td>{{ prof.university }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
-        {% else %}
-        <p class="empty-state">Aucun enseignant inscrit dans cet établissement.</p>
         {% endif %}
+
+        {% if search_students %}
+        <div class="list-section">
+            <h4 style="font-size: 1.2rem; color: var(--blue-dark); margin-bottom: 16px;">
+                Étudiants ({{ search_students|length }})
+            </h4>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom complet</th>
+                            <th>Email</th>
+                            <th>Année d'étude</th>
+                            <th>INE</th>
+                            <th>Université</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in search_students %}
+                        <tr>
+                            <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                            <td>{{ student.user.email }}</td>
+                            <td>{{ student.year_of_study|default:"-" }}</td>
+                            <td>{{ student.ine }}</td>
+                            <td>{{ student.university }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not search_professors and not search_students %}
+        <p class="empty-state">Aucun résultat trouvé pour "{{ search_query }}".</p>
+        {% endif %}
+    </div>
+    {% elif selected_university and not selected_professor_id %}
+    {% if professors %}
+    <div class="list-section">
+        <h3>Professeurs à {{ selected_university }} ({{ professors|length }})</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom complet</th>
+                        <th>Email</th>
+                        <th>Spécialité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prof in professors %}
+                    <tr>
+                        <td>{{ prof.user.first_name }} {{ prof.user.last_name }}</td>
+                        <td>{{ prof.user.email }}</td>
+                        <td>{{ prof.speciality|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p class="empty-state">Aucun enseignant inscrit dans cet établissement.</p>
+    {% endif %}
     {% endif %}
 
     {% if selected_professor %}
     <div class="list-section" style="margin-top: 24px;">
-        <h3><span class="material-symbols-outlined" style="color:var(--primary); vertical-align:bottom;">school</span> Étudiants affiliés à {{ selected_professor.user.first_name }} {{ selected_professor.user.last_name }}</h3>
-        
+        <h3><span class="material-symbols-outlined" style="color:var(--primary); vertical-align:bottom;">school</span>
+            Étudiants affiliés à {{ selected_professor.user.first_name }} {{ selected_professor.user.last_name }}</h3>
+
         {% if students %}
         <div class="table-container">
             <table>

@@ -1,0 +1,246 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}{{t.global_dashboard.header_title}}
+{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+{% endblock %}
+{% block content %}
+{% if user.is_superuser %}
+<section>
+    <h1>{{t.global_dashboard.admin_dashboard.Title}}</h1>
+
+    <div class="cards">
+        <a href="{% url 'users' %}" class="card card-blue">
+            <div class="card-icon"><span class="material-symbols-outlined">group</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_users }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.total_user}}</span>
+            </div>
+            <div class="card-badge">+{{ recent_registrations }} <small>(7j)</small></div>
+        </a>
+        <a href="{% url 'users' %}" class="card card-purple">
+            <div class="card-icon"><span class="material-symbols-outlined">school</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_students }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.students}}</span>
+            </div>
+        </a>
+        <a href="{% url 'users' %}" class="card card-green">
+            <div class="card-icon"><span class="material-symbols-outlined">psychology</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_teachers }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.teachers}}</span>
+            </div>
+        </a>
+        <a href="{% url 'all_cases' %}" class="card card-orange">
+            <div class="card-icon"><span class="material-symbols-outlined">medical_services</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_cases }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.clinical_cases}}</span>
+            </div>
+        </a>
+        <a href="{% url 'ticket_admin' %}" class="card card-yellow">
+            <div class="card-icon"><span class="material-symbols-outlined">confirmation_number</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_tickets }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.tickets}}</span>
+            </div>
+            <div class="card-badge badge-warning">{{ open_tickets }} {{t.global_dashboard.admin_dashboard.open}}</div>
+        </a>
+        <a href="#" class="card card-sky">
+            <div class="card-icon"><span class="material-symbols-outlined">fitness_center</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_trainings }}</span>
+                <span class="card-label">{{t.global_dashboard.admin_dashboard.trainings}}</span>
+            </div>
+            <div class="card-badge badge-success">{{ finished_trainings }}
+                {{t.global_dashboard.admin_dashboard.finished}}</div>
+        </a>
+    </div>
+
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>{{t.global_dashboard.admin_dashboard.global_view}}</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <div>
+                        <strong>{{ verified_emails }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.verified_emails}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">security</span>
+                    <div>
+                        <strong>{{ users_with_a2f }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.a2f_enabled}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">admin_panel_settings</span>
+                    <div>
+                        <strong>{{ total_admins }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.admins}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">pending</span>
+                    <div>
+                        <strong>{{ in_progress_tickets }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.tickets_in_progress}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <div>
+                        <strong>{{ resolved_tickets }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.tickets_resolved}}</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="material-symbols-outlined">done_all</span>
+                    <div>
+                        <strong>{{ finished_trainings }}</strong>
+                        <span>{{t.global_dashboard.admin_dashboard.trainings_finished}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section2 sections">
+            <h2>{{t.global_dashboard.admin_dashboard.recent_activity}}</h2>
+            <div class="logs-list">
+                {% for log in logs %}
+                <div class="log-item log-{{ log.type }}">
+                    <span class="log-icon material-symbols-outlined">{{ log.icon }}</span>
+                    <div class="log-text">
+                        <span class="log-message">
+                            {% if log.type == 'registration' %}
+                            {{t.global_dashboard.admin_dashboard.log_new_user}} {{ log.message }}
+                            {% elif log.type == 'ticket' %}
+                            <strong>{{ log.user }}</strong> — {{ log.message }}
+                            {% endif %}
+                        </span>
+                        <span class="log-meta">
+                            <span class="log-tag tag-{{ log.type }}">{{ log.detail }}</span>
+                            <span class="log-date">{{ log.date|date:"d/m/Y H:i" }}</span>
+                        </span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="log-item log-empty">
+                    <span class="log-icon material-symbols-outlined">info</span>
+                    <div class="log-text">
+                        <span class="log-message">{{t.global_dashboard.admin_dashboard.no_logs}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'users' %}"
+            class="action-btn"><button>{{t.global_dashboard.admin_dashboard.user_management}}</button></a>
+        <a href="{% url 'data' %}"
+            class="action-btn"><button>{{t.global_dashboard.admin_dashboard.data_management}}</button></a>
+        <a href="{% url 'ticket_admin' %}"
+            class="action-btn"><button>{{t.global_dashboard.admin_dashboard.tickets}}</button></a>
+    </div>
+</section>
+
+
+{% elif user.role == 'teacher' %}
+<section>
+    <h1>{{t.global_dashboard.teacher_dashboard.Title}}</h1>
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>{{t.global_dashboard.teacher_dashboard.Last_cases_title}}</h2>
+            <ul>
+                {% for case in cases %}
+                <li>
+                    <button>{{ case.name }}</button>
+                    <p>{{ case.specialty }}</p>
+                    <p>{{ case.level }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section2 sections">
+            <h2>{{t.global_dashboard.teacher_dashboard.Last_trainings_title}}</h2>
+            <ul>
+                {% for training in trainings %}
+                <li>
+                    <p>{{t.global_dashboard.teacher_dashboard.Student_name_placeholder}}</p>
+                    <button>{{t.global_dashboard.teacher_dashboard.Case_name_placeholder}}</button>
+                    <p>{{t.global_dashboard.teacher_dashboard.Score_label}}</p>
+                    <p>{{t.global_dashboard.teacher_dashboard.Time_label}}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="#"><button
+                class="action-btn">{{t.global_dashboard.teacher_dashboard.Student_tracking_btn}}</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
+        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}"><button
+                class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
+    </div>
+</section>
+
+{% else %}
+<section>
+    <h1>{{t.global_dashboard.student_dashboard.Title}}</h1>
+    <div class="top-infos">
+        <div class="section1 sections">
+            <h2>{{t.global_dashboard.student_dashboard.Last_training_title}}</h2>
+            <ul>
+                <li>{{ last_training.name }}</li>
+                <li>
+                    {{t.global_dashboard.student_dashboard.Successful_aspects}}
+                    <ul>
+                        <li>{{ last_training.successful_aspects.0 }}</li>
+                        <li>{{ last_training.successful_aspects.1 }}</li>
+                    </ul>
+                </li>
+                <li>
+                    {{t.global_dashboard.student_dashboard.Improvement_areas}}
+                    <ul>
+                        <li>{{ last_training.improvement_areas.0 }}</li>
+                        <li>{{ last_training.improvement_areas.1 }}</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section2 sections">
+            <h2>{{t.global_dashboard.student_dashboard.Progression_title}}</h2>
+            <canvas id="progressChart"></canvas>
+            <div>
+                <h3>{{t.global_dashboard.student_dashboard.Stats_title}}</h3>
+                <p>{{t.global_dashboard.student_dashboard.Rank_label}}</p>
+                <p>{{t.global_dashboard.student_dashboard.Trophies_label}}</p>
+                <p>{{t.global_dashboard.student_dashboard.Level_label}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'all_cases' %}"
+            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Case_bank_btn}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
+        <a href="#"
+            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_trainings_btn}}</button></a>
+        <a href="#"
+            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_corrections_btn}}</button></a>
+        <a href="{% url 'ticket' %}"
+            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Tickets}}</button></a>
+    </div>
+</section>
+{% endif %} {% endblock %}

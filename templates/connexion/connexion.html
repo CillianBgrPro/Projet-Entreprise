@@ -35,7 +35,7 @@
 
             <div class="actions">
                 <button type="submit" class="btn-submit">{{t.connexion.Connexion_button}}</button>
-                <a href="#" class="forgot-link">{{t.connexion.Forget_Password_link}}</a>
+                <a href="{% url 'password_reset' %}" class="forgot-link">{{t.connexion.Forget_Password_link}}</a>
                 <p class="register-link">{{t.connexion.Register_link}}<a
                         href="{% url 'register' %}">{{t.connexion.Register_button}}</a></p>
             </div>

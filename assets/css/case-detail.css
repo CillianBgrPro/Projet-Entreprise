@@ -1,77 +1,132 @@
-    .case-detail-wrapper {
-        padding: 40px;
-        max-width: 1000px;
-        margin: 0 auto;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+/* ============================================================
+   CASE DETAIL PAGE
+   ============================================================ */
 
-    .case-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        border-bottom: 2px solid #f1f5f9;
-        padding-bottom: 20px;
-    }
+.case-detail-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
 
-    .case-title {
-        font-size: 24px;
-        color: #1e293b;
-        margin: 0;
-    }
+/* Back button */
+.case-detail-wrapper > div > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 28px;
+}
+.case-detail-wrapper > div > a:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+}
 
-    .case-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-    }
+/* ---- Case header ---- */
+.case-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
 
-    .detail-item {
-        margin-bottom: 15px;
-    }
+.case-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
 
-    .detail-label {
-        font-weight: 600;
-        color: #64748b;
-        font-size: 14px;
-        margin-bottom: 5px;
-        display: block;
-    }
+/* ---- Details grid ---- */
+.case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
 
-    .detail-value {
-        color: #334155;
-        font-size: 16px;
-    }
+.detail-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
 
-    .detail-full-width {
-        grid-column: 1 / -1;
-    }
+.detail-full-width {
+    grid-column: 1 / -1;
+}
 
-    .btn-secondary {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #e2e8f0;
-        color: #475569;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: 500;
-        transition: background-color 0.3s;
-    }
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
 
-    .btn-secondary:hover {
-        background-color: #cbd5e1;
-    }
+.detail-value {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
 
-    .badge {
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        background-color: #e0f2fe;
-        color: #0369a1;
-        font-weight: 600;
-        margin-right: 5px;
-    }
+/* ---- Badges in options ---- */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-right: 8px;
+    margin-bottom: 4px;
+}
+
+/* ---- Download button ---- */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-download:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* ---- Code blocks ---- */
+pre.detail-value {
+    background: var(--bg-subtle);
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 700px) {
+    .case-grid { grid-template-columns: 1fr; }
+    .case-detail-wrapper { padding: 24px 16px 40px; }
+}

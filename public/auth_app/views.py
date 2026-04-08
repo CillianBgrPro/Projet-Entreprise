@@ -219,7 +219,9 @@ def users(request):
         return redirect('home')
     
     from .models import Student, Professor, Group
-    
+    from django.db.models import Q
+
+    search_query = request.GET.get('search', '').strip()
     selected_university = request.GET.get('university', '')
     selected_professor_id = request.GET.get('professor_id', '')
     
@@ -231,12 +233,28 @@ def users(request):
     professors = []
     students = []
     selected_professor = None
+    search_professors = []
+    search_students = []
 
-    if selected_university:
-        # 2. Professeurs de l'université
+    # 2. Recherche globale par nom / prénom
+    if search_query:
+        search_professors = Professor.objects.filter(
+            Q(user__first_name__icontains=search_query) |
+            Q(user__last_name__icontains=search_query) |
+            Q(user__username__icontains=search_query)
+        ).select_related('user')
+
+        search_students = Student.objects.filter(
+            Q(user__first_name__icontains=search_query) |
+            Q(user__last_name__icontains=search_query) |
+            Q(user__username__icontains=search_query)
+        ).select_related('user')
+
+    elif selected_university:
+        # 3. Professeurs de l'université
         professors = Professor.objects.filter(university=selected_university).select_related('user')
         
-        # 3. Si un professeur est sélectionné
+        # 4. Si un professeur est sélectionné
         if selected_professor_id:
             try:
                 selected_professor = Professor.objects.get(id=int(selected_professor_id))
@@ -254,6 +272,9 @@ def users(request):
         'selected_professor_id': int(selected_professor_id) if selected_professor_id else '',
         'selected_professor': selected_professor,
         'students': students,
+        'search_query': search_query,
+        'search_professors': search_professors,
+        'search_students': search_students,
     }
     return render(request, 'administrater/users.html', context)
 
@@ -446,8 +467,36 @@ def ticket_admin(request):
     if not request.user.is_superuser:
         return redirect('home')
     from .models import Ticket
-    tickets = Ticket.objects.all().order_by('-created_at')
-    return render(request, 'administrater/ticket_admin.html', {'tickets': tickets})
+
+    status = request.GET.get('status', '').strip()
+    subject = request.GET.get('subject', '').strip()
+    username = request.GET.get('user', '').strip()
+    date_from = request.GET.get('date_from', '').strip()
+    date_to = request.GET.get('date_to', '').strip()
+    zero_replies = request.GET.get('zero_replies', '').strip() == 'true'
+
+    tickets = Ticket.objects.search(
+        subject=subject or None,
+        status=status or None,
+        username=username or None,
+        date_from=date_from or None,
+        date_to=date_to or None,
+        zero_replies=zero_replies
+    ).order_by('-created_at')
+
+    context = {
+        'tickets': tickets,
+        'ticket_count': tickets.count(),
+        'filter_status': status,
+        'filter_subject': subject,
+        'filter_user': username,
+        'filter_date_from': date_from,
+        'filter_date_to': date_to,
+        'filter_zero_replies': 'true' if zero_replies else '',
+        'status_choices': ['Ouvert', 'En cours', 'Résolu', 'Clos'],
+    }
+
+    return render(request, 'administrater/ticket_admin.html', context)
 
 @login_required
 def ticket_detail(request, ticket_id):
