@@ -1,26 +1,50 @@
-{% extends 'index.html' %}
-{% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
-{% block content %}
-<h2>{{ t.case_creation.Page_title }}</h2>
+{% extends 'index.html' %} {% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %} {% block
+content %}
+<link rel="stylesheet" href="{% static 'css/case_creation.css' %}" />
+<link rel="stylesheet" href="../../assets/css/case_creation.css" />
+<h2>Creation de cas</h2>
+<form>
+    <div class="border text-section">
+        <label for="title">Titre:</label>
+        <input type="text" id="title" name="title" placeholder="Entrez le titre du cas ici" />
+    </div>
 
-<div class="prompt-section">
-    <h3>{{ t.case_creation.IA_prompt_title }}</h3>
-    <input type="text" class="form-control" id="prompt" placeholder="{{ t.case_creation.IA_prompt_placeholder }}" />
-</div>
+    <div class="border text-section" id="prompt">
+        <label for="prompt">Prompt:</label>
+        <textarea id="prompt" name="prompt" placeholder="Entrez votre prompt ici"></textarea>
+    </div>
 
-<div class="options-section">
-    <menu>
-        {% for specialty in specialties %}
-        <li><button id="{{ specialty.id }}">{{ specialty.name }}</button></li>
-        {% endfor %}
-    </menu>
+    <div id="details">
+        <div class="border details selection">
+            <label for="specialty">Spécialité 1:</label>
+            <select>
+                <option value="null" autofocus>Select</option>
+                {% for specialty in specialties %}
+                <option value="{{ specialty.id }}">{{ specialty.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <menu>
-        <li><button id="1">{{ t.case_creation.Difficulty_easy }}</button></li>
-        <li><button id="2">{{ t.case_creation.Difficulty_medium }}</button></li>
-        <li><button id="3">{{ t.case_creation.Difficulty_hard }}</button></li>
-    </menu>
-</div>
+        <div class="border details selection">
+            <label for="specialty">Spécialité 2:</label>
+            <select>
+                <option value="null" autofocus>Select</option>
+                {% for specialty in specialties %}
+                <option value="{{ specialty.id }}">{{ specialty.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-<button class="btn-create">{{ t.case_creation.Create_button }}</button>
+        <div class="border details selection">
+            <label for="difficulty">Difficulté:</label>
+            <select>
+                <option value="1">Facile</option>
+                <option value="2" autofocus>Moyen</option>
+                <option value="3">Difficile</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" value="Submit" class="border" id="submit">Créer le cas</button>
+</form>
 {% endblock %}
