@@ -19,6 +19,11 @@
         </div>
 
         <ul class="nav-links" id="nav-links">
+            <li class="lang-switch">
+                <a href="{% url 'set_language' 'fr' %}" class="{% if request.session.lang == 'fr' or not request.session.lang %}active-lang{% endif %}">FR</a>
+                <span class="lang-separator">|</span>
+                <a href="{% url 'set_language' 'en' %}" class="{% if request.session.lang == 'en' %}active-lang{% endif %}">EN</a>
+            </li>
             {% if user.is_authenticated %}
 
             {% if user.is_superuser %}

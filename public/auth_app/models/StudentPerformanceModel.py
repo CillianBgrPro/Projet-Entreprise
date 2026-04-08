@@ -5,10 +5,10 @@ class StudentPerformance(models.Model):
     realization_date = models.DateTimeField(verbose_name="Date de réalisation")
     student = models.ForeignKey('auth_app.Student', on_delete=models.CASCADE, related_name='performances', verbose_name="Étudiant")
     case = models.ForeignKey('auth_app.ClinicalCase', on_delete=models.CASCADE, related_name='performances', verbose_name="Cas clinique")
-    total_score = models.FloatField(blank=True, null=True, verbose_name="Score total")
-    clinical_skills_score = models.FloatField(blank=True, null=True, verbose_name="Score compétences cliniques")
-    communication_skills_score = models.FloatField(blank=True, null=True, verbose_name="Score communication")
-    completion_time = models.DurationField(blank=True, null=True, verbose_name="Temps de complétion")
+    total_score = models.FloatField(blank=True, null=True, verbose_name="Note totale")
+    clinical_skills_score = models.FloatField(blank=True, null=True, verbose_name="Notes compétences cliniques")
+    communication_skills_score = models.FloatField(blank=True, null=True, verbose_name="Notes communication")
+    completion_time = models.DurationField(blank=True, null=True, verbose_name="Temps de réalisation")
     conversation_log = models.JSONField(
         blank=True, null=True,
         verbose_name="Log de conversation",

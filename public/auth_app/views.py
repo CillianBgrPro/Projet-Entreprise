@@ -1,5 +1,7 @@
 import time
 import random
+import csv
+import json
 import django
 import resend
 from django.conf import settings
@@ -14,7 +16,8 @@ from django.db import IntegrityError
 from django.contrib.auth import logout
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-import csv
+from django.apps import apps
+
 
 def register(request):
     if request.method == 'POST':
@@ -287,8 +290,54 @@ def logs(request):
 def data(request):
     if not request.user.is_superuser:
         return redirect('home')
-    
-    return render(request, 'administrater/data.html')
+
+    # Champs exportables pour les étudiants à voir avec le laboratoire
+    student_fields = [
+        ('user__first_name', 'Prénom'),
+        ('user__last_name', 'Nom'),
+        ('user__email', 'Email'),
+        ('user__username', "Nom d'utilisateur"),
+        ('ine', 'INE'),
+        ('age', 'Âge'),
+        ('gender', 'Genre'),
+        ('degree_level', 'Niveau de diplôme'),
+        ('year_of_study', "Année d'étude"),
+        ('speciality', 'Spécialité'),
+        ('university', 'Université'),
+        ('rgpd_consent', 'Consentement RGPD'),
+        ('scientific_study', 'Consentement étude scientifique'),
+    ]
+
+    # Champs exportables pour les enseignants à voir avec le laboratoire
+    teacher_fields = [
+        ('user__first_name', 'Prénom'),
+        ('user__last_name', 'Nom'),
+        ('user__email', 'Email'),
+        ('user__username', "Nom d'utilisateur"),
+        ('speciality', 'Spécialité'),
+        ('university', 'Université'),
+        ('rgpd_consent', 'Consentement RGPD'),
+    ]
+
+    # Champs exportables pour les entraînements
+    training_fields = [
+        ('id', 'ID Entraînement'),
+        ('case__name', 'Cas Clinique'),
+        ('group__name', 'Groupe'),
+        ('group__students__ine', 'INE Étudiant'),
+        ('professor__user__last_name', 'Nom Enseignant'),
+        ('status', 'Statut'),
+        ('created_at', 'Créé le'),
+        ('finished_at', 'Terminé le'),
+    ]
+
+    context = {
+        'student_fields': student_fields,
+        'teacher_fields': teacher_fields,
+        'training_fields': training_fields,
+    }
+
+    return render(request, 'administrater/data-export.html', context)
 
 def send_code_view(request):
     email = request.GET.get('email', '').strip().lower()
@@ -596,3 +645,93 @@ def admin_all_trainings(request):
         import traceback
         error_msg = f"Une erreur s'est produite lors du chargement des entraînements:<br><pre>{traceback.format_exc()}</pre>"
         return HttpResponse(error_msg, status=500)
+
+
+@login_required
+def dynamic_export_csv(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+
+    if request.method == 'POST':
+        model_name = request.POST.get('model_name')
+        selected_columns = request.POST.getlist('columns')
+
+        if not model_name or not selected_columns:
+            messages.error(request, "Veuillez sélectionner au moins une colonne.")
+            return redirect('data')
+
+        # Mapping des noms de modèles autorisés
+        allowed_models = {
+            'Student': 'Student',
+            'Professor': 'Professor',
+            'Training': 'Training',
+        }
+
+        if model_name not in allowed_models:
+            messages.error(request, "Table invalide.")
+            return redirect('data')
+
+        try:
+            model = apps.get_model('auth_app', allowed_models[model_name])
+        except LookupError:
+            messages.error(request, "Table invalide.")
+            return redirect('data')
+
+        # Labels lisibles pour les colonnes
+        field_labels = {
+            'user__first_name': 'Prénom',
+            'user__last_name': 'Nom',
+            'user__email': 'Email',
+            'user__username': "Nom d'utilisateur",
+            'ine': 'INE',
+            'age': 'Âge',
+            'gender': 'Genre',
+            'degree_level': 'Niveau de diplôme',
+            'year_of_study': "Année d'étude",
+            'speciality': 'Spécialité',
+            'university': 'Université',
+            'rgpd_consent': 'Consentement RGPD',
+            'scientific_study': 'Consentement étude scientifique',
+            'id': 'ID Entraînement',
+            'case__name': 'Cas Clinique',
+            'group__name': 'Groupe',
+            'group__students__ine': 'INE Étudiant',
+            'professor__user__last_name': 'Nom Enseignant',
+            'status': 'Statut',
+            'created_at': 'Créé le',
+            'finished_at': 'Terminé le',
+        }
+
+        # Les champs booléens à convertir en Oui/Non
+        boolean_fields = {'rgpd_consent', 'scientific_study'}
+
+        # Prèp ficher csv 
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = f'attachment; filename="export_{model_name.lower()}.csv"'
+        response.write('\ufeff')
+        writer = csv.writer(response, delimiter=';')
+
+        # En-tête avec les labels lisibles
+        header = [field_labels.get(col, col) for col in selected_columns]
+        writer.writerow(header)
+
+        # Récupération des données
+        if model_name == 'Training':
+            objects = model.objects.values_list(*selected_columns)
+        else:
+            objects = model.objects.select_related('user').values_list(*selected_columns)
+        for obj in objects:
+            row = []
+            for i, val in enumerate(obj):
+                col_name = selected_columns[i]
+                if col_name in boolean_fields:
+                    row.append('Oui' if val else 'Non')
+                elif val is None:
+                    row.append('')
+                else:
+                    row.append(str(val))
+            writer.writerow(row)
+
+        return response
+
+    return redirect('data')

@@ -1,0 +1,164 @@
+/* data-export.css */
+.data-export-container {
+    padding: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 80vh;
+    flex-direction: column;
+}
+
+.data-export-container h1 {
+    margin-bottom: 30px;
+}
+
+.export-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.export-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+.export-icon-student {
+    vertical-align: middle;
+    margin-right: 6px;
+    color: #2563eb;
+}
+
+.export-icon-teacher {
+    vertical-align: middle;
+    margin-right: 6px;
+    color: #10b981;
+}
+
+.export-icon-training {
+    vertical-align: middle;
+    margin-right: 6px;
+    color: #8b5cf6;
+}
+
+.export-desc {
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.export-check-all-container {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.check-all-label-student {
+    cursor: pointer;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.check-all-label-teacher {
+    cursor: pointer;
+    font-weight: bold;
+    color: #10b981;
+}
+
+.check-all-label-training {
+    cursor: pointer;
+    font-weight: bold;
+    color: #8b5cf6;
+}
+
+.check-all-label-student input,
+.check-all-label-teacher input,
+.check-all-label-training input {
+    margin-right: 8px;
+}
+
+.export-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+.checkbox-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #374151;
+}
+
+.checkbox-label input {
+    margin-right: 8px;
+}
+
+.export-btn-student {
+    padding: 14px 24px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.export-btn-student:hover {
+    background-color: #1d4ed8;
+}
+
+.export-btn-teacher {
+    padding: 14px 24px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.export-btn-teacher:hover {
+    background-color: #059669;
+}
+
+.export-btn-training {
+    padding: 14px 24px;
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.export-btn-training:hover {
+    background-color: #7c3aed;
+}
+
+.export-btn-student span,
+.export-btn-teacher span,
+.export-btn-training span {
+    vertical-align: middle;
+    margin-right: 6px;
+    font-size: 18px;
+}

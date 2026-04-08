@@ -1,0 +1,132 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Données - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/data-export.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="data-export-container">
+    <h1>Exportation des Données</h1>
+
+    <!-- ===== étudiants ===== -->
+    <div class="export-card">
+        <h2>
+            <span class="material-symbols-outlined export-icon-student">school</span>
+            Exporter les Étudiants
+        </h2>
+        <p class="export-desc">Sélectionnez les colonnes à inclure dans le fichier CSV.</p>
+
+        <form action="{% url 'dynamic_export_csv' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="model_name" value="Student">
+
+            <div class="export-check-all-container">
+                <label class="check-all-label-student">
+                    <input type="checkbox" class="check-all" data-target="student-col"> Tout cocher / décocher
+                </label>
+            </div>
+
+            <div class="export-checkbox-grid">
+                {% for field_name, field_label in student_fields %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="columns" value="{{ field_name }}" class="student-col">
+                    {{ field_label }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="export-btn-student">
+                <span class="material-symbols-outlined">download</span>
+                Télécharger le CSV des étudiants
+            </button>
+        </form>
+    </div>
+
+    <!-- entrainements-->
+    <div class="export-card">
+        <h2>
+            <span class="material-symbols-outlined export-icon-training">sports_gymnastics</span>
+            Exporter les Entraînements
+        </h2>
+        <p class="export-desc">Sélectionnez les colonnes à inclure dans le fichier CSV.</p>
+
+        <form action="{% url 'dynamic_export_csv' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="model_name" value="Training">
+
+            <div class="export-check-all-container">
+                <label class="check-all-label-training">
+                    <input type="checkbox" class="check-all" data-target="training-col"> Tout cocher / décocher
+                </label>
+            </div>
+
+            <div class="export-checkbox-grid">
+                {% for field_name, field_label in training_fields %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="columns" value="{{ field_name }}" class="training-col">
+                    {{ field_label }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="export-btn-training">
+                <span class="material-symbols-outlined">download</span>
+                Télécharger le CSV des entraînements
+            </button>
+        </form>
+    </div>
+
+    <!-- ===== enseignants ===== -->
+    <div class="export-card">
+        <h2>
+            <span class="material-symbols-outlined export-icon-teacher">person</span>
+            Exporter les Enseignants
+        </h2>
+        <p class="export-desc">Sélectionnez les colonnes à inclure dans le fichier CSV.</p>
+
+        <form action="{% url 'dynamic_export_csv' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="model_name" value="Professor">
+
+            <div class="export-check-all-container">
+                <label class="check-all-label-teacher">
+                    <input type="checkbox" class="check-all" data-target="teacher-col"> Tout cocher / décocher
+                </label>
+            </div>
+
+            <div class="export-checkbox-grid">
+                {% for field_name, field_label in teacher_fields %}
+                <label class="checkbox-label">
+                    <input type="checkbox" name="columns" value="{{ field_name }}" class="teacher-col">
+                    {{ field_label }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="export-btn-teacher">
+                <span class="material-symbols-outlined">download</span>
+                Télécharger le CSV des enseignants
+            </button>
+        </form>
+    </div>
+
+
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Logique "Tout cocher / décocher" pour chaque section
+        document.querySelectorAll('.check-all').forEach(function(checkAll) {
+            checkAll.addEventListener('change', function() {
+                const targetClass = this.getAttribute('data-target');
+                const isChecked = this.checked;
+                document.querySelectorAll('.' + targetClass).forEach(function(cb) {
+                    cb.checked = isChecked;
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -47,4 +47,5 @@ urlpatterns = [
      path('all-cases/', views.all_cases, name='all_cases'),
      path('administrater/trainings/', views.admin_all_trainings, name='admin_all_trainings'),
      path('case/<int:case_id>/', views.case_detail, name='case_detail'),
+     path('administrater/export-dynamique/', views.dynamic_export_csv, name='dynamic_export_csv'),
 ]
