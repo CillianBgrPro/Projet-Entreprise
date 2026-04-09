@@ -1,219 +1,50 @@
-{% extends 'index.html' %}
-{% load static %}
-{% block title %}Création de cas — DR. VIRTUORL{% endblock %}
-
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/case_creation.css' %}">
-{% endblock %}
-
+{% extends 'index.html' %} {% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
 {% block content %}
-<div class="cc-wrapper">
-    <div class="cc-header">
-        <div class="cc-header-icon">
-            <span class="material-symbols-outlined">medical_services</span>
+<link rel="stylesheet" href="{{ 'css/case_creation.css' %}">
+<h2>Creation de cas</h2>
+<form method="POST" action="{% url 'create_case' %}">
+    {% csrf_token %}
+    <div class="border text-section">
+        <label for="title">Titre:</label>
+        <input type="text" id="title" name="title" placeholder="Entrez le titre du cas ici" />
+    </div>
+
+    <div class="border text-section" id="prompt">
+        <label for="prompt">Prompt:</label>
+        <textarea id="prompt" name="prompt" placeholder="Entrez votre prompt ici"></textarea>
+    </div>
+
+    <div id="details">
+        <div class="border details selection">
+            <label for="specialty">Spécialité 1:</label>
+            <select>
+                <option value="null" autofocus>Select</option>
+                {% for specialty in specialties %}
+                <option value="{{ specialty.id }}">{{ specialty.name }}</option>
+                {% endfor %}
+            </select>
         </div>
-        <div>
-            <h1 class="cc-title">Création d'un cas clinique</h1>
-            <p class="cc-subtitle">Renseignez les informations du nouveau cas ci-dessous.</p>
+
+        <div class="border details selection">
+            <label for="specialty">Spécialité 2:</label>
+            <select>
+                <option value="null" autofocus>Select</option>
+                {% for specialty in specialties %}
+                <option value="{{ specialty.id }}">{{ specialty.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="border details selection">
+            <label for="difficulty">Difficulté:</label>
+            <select>
+                <option value="1">Facile</option>
+                <option value="2" autofocus>Moyen</option>
+                <option value="3">Difficile</option>
+            </select>
         </div>
     </div>
 
-    {% if messages %}
-    <div class="cc-messages">
-        {% for message in messages %}
-        <div class="cc-alert cc-alert-{{ message.tags }}">
-            <span class="material-symbols-outlined">
-                {% if message.tags == 'success' %}check_circle{% else %}error{% endif %}
-            </span>
-            <span>{{ message }}</span>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <form method="POST" action="{% url 'create_case' %}" class="cc-form">
-        {% csrf_token %}
-
-        <div class="cc-card">
-            <div class="cc-card-header">
-                <span class="material-symbols-outlined">info</span>
-                <h2>Informations générales</h2>
-            </div>
-            <div class="cc-grid cc-grid-1">
-                <div class="cc-field">
-                    <label for="name">Titre du cas <span class="cc-required">*</span></label>
-                    <input type="text" id="name" name="name" placeholder="Entrez le titre du cas clinique" required />
-                </div>
-            </div>
-            <div class="cc-grid cc-grid-2">
-                <div class="cc-field">
-                    <label for="author">Auteur</label>
-                    <input type="text" id="author" name="author" placeholder="Nom de l'auteur" />
-                </div>
-                <div class="cc-field">
-                    <label for="reviewer">Relecteur</label>
-                    <input type="text" id="reviewer" name="reviewer" placeholder="Nom du relecteur" />
-                </div>
-            </div>
-            <div class="cc-grid cc-grid-1">
-                <div class="cc-field">
-                    <label for="objective">Objectif pédagogique</label>
-                    <textarea id="objective" name="objective" rows="3"
-                        placeholder="Décrivez l'objectif pédagogique de ce cas"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="cc-card">
-            <div class="cc-card-header">
-                <span class="material-symbols-outlined">category</span>
-                <h2>Classification</h2>
-            </div>
-            <div class="cc-grid cc-grid-2">
-                <div class="cc-field">
-                    <label for="primary_learning_domain">Domaine d'apprentissage principal <span
-                            class="cc-required">*</span></label>
-                    <select id="primary_learning_domain" name="primary_learning_domain">
-                        <option value="" disabled selected>Sélectionnez un domaine</option>
-                        {% for specialty in specialties %}
-                        <option value="{{ specialty.id }}">{{ specialty.name }}</option>
-                        {% endfor %}
-                        <option value="Urgence vitale">Urgence vitale</option>
-                        <option value="Examen clinique">Examen clinique</option>
-                        <option value="Raisonnement diagnostique">Raisonnement diagnostique</option>
-                        <option value="Prescription">Prescription</option>
-                        <option value="Communication">Communication</option>
-                        <option value="Gestes techniques">Gestes techniques</option>
-                        <option value="Prévention">Prévention</option>
-                        <option value="Ethique">Éthique</option>
-                    </select>
-                </div>
-                <div class="cc-field">
-                    <label for="secondary_learning_domain">Domaine d'apprentissage secondaire</label>
-                    <select id="secondary_learning_domain" name="secondary_learning_domain">
-                        <option value="">Aucun</option>
-                        {% for specialty in specialties %}
-                        <option value="{{ specialty.id }}">{{ specialty.name }}</option>
-                        {% endfor %}
-                        <option value="Urgence vitale">Urgence vitale</option>
-                        <option value="Examen clinique">Examen clinique</option>
-                        <option value="Raisonnement diagnostique">Raisonnement diagnostique</option>
-                        <option value="Prescription">Prescription</option>
-                        <option value="Communication">Communication</option>
-                        <option value="Gestes techniques">Gestes techniques</option>
-                        <option value="Prévention">Prévention</option>
-                        <option value="Ethique">Éthique</option>
-                    </select>
-                </div>
-            </div>
-            <div class="cc-grid cc-grid-3">
-                <div class="cc-field">
-                    <label for="study_level">Année d'étude <span class="cc-required">*</span></label>
-                    <select id="study_level" name="study_level">
-                        <option value="" disabled selected>Sélectionner</option>
-                        <option value="MM1">MM1</option>
-                        <option value="MM2">MM2</option>
-                        <option value="MM3">MM3</option>
-                    </select>
-                </div>
-                <div class="cc-field">
-                    <label for="knowledge_level">Rang de connaissance <span class="cc-required">*</span></label>
-                    <select id="knowledge_level" name="knowledge_level">
-                        <option value="" disabled selected>Sélectionner</option>
-                        <option value="A">Rang A</option>
-                        <option value="B">Rang B</option>
-                        <option value="AB">Rang A/B</option>
-                    </select>
-                </div>
-                <div class="cc-field">
-                    <label for="speciality">Spécialité</label>
-                    <input type="text" id="speciality" name="speciality" placeholder="Ex : Cardiologie" />
-                </div>
-            </div>
-        </div>
-
-        <div class="cc-card">
-            <div class="cc-card-header">
-                <span class="material-symbols-outlined">description</span>
-                <h2>Contenu clinique</h2>
-            </div>
-            <div class="cc-grid cc-grid-1">
-                <div class="cc-field">
-                    <label for="briefing_text">Texte de départ (briefing)</label>
-                    <textarea id="briefing_text" name="briefing_text" rows="4"
-                        placeholder="Décrivez la situation initiale présentée à l'étudiant"></textarea>
-                </div>
-            </div>
-            <div class="cc-grid cc-grid-2">
-                <div class="cc-field">
-                    <label for="instructions_to_do">Ce qu'il faut faire</label>
-                    <textarea id="instructions_to_do" name="instructions_to_do" rows="3"
-                        placeholder="Listez les actions attendues"></textarea>
-                </div>
-                <div class="cc-field">
-                    <label for="instructions_not_to_do">Ce qu'il ne faut pas faire</label>
-                    <textarea id="instructions_not_to_do" name="instructions_not_to_do" rows="3"
-                        placeholder="Listez les actions à éviter"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="cc-card">
-            <div class="cc-card-header">
-                <span class="material-symbols-outlined">tune</span>
-                <h2>Options du cas</h2>
-            </div>
-            <div class="cc-checkboxes">
-                <label class="cc-checkbox-label" for="has_standardized_patient">
-                    <input type="checkbox" id="has_standardized_patient" name="has_standardized_patient" value="true">
-                    <span class="cc-checkbox-custom"></span>
-                    <span class="cc-checkbox-text">
-                        <span class="material-symbols-outlined">person</span>
-                        Patient standardisé
-                    </span>
-                </label>
-                <label class="cc-checkbox-label" for="has_standardized_hcp">
-                    <input type="checkbox" id="has_standardized_hcp" name="has_standardized_hcp" value="true">
-                    <span class="cc-checkbox-custom"></span>
-                    <span class="cc-checkbox-text">
-                        <span class="material-symbols-outlined">stethoscope</span>
-                        Professionnel de santé standardisé
-                    </span>
-                </label>
-                <label class="cc-checkbox-label" for="has_iconography">
-                    <input type="checkbox" id="has_iconography" name="has_iconography" value="true">
-                    <span class="cc-checkbox-custom"></span>
-                    <span class="cc-checkbox-text">
-                        <span class="material-symbols-outlined">image</span>
-                        Iconographie
-                    </span>
-                </label>
-            </div>
-            <div class="cc-grid cc-grid-2 cc-mt">
-                <div class="cc-field cc-field-disabled">
-                    <label>Fichier ECOS (source)</label>
-                    <div class="cc-file-btn">
-                        <span class="material-symbols-outlined">upload_file</span>
-                        <span>Fonctionnalité à venir</span>
-                    </div>
-                </div>
-                <div class="cc-field cc-field-disabled">
-                    <label>Grille d'évaluation</label>
-                    <div class="cc-file-btn">
-                        <span class="material-symbols-outlined">table_chart</span>
-                        <span>Fonctionnalité à venir</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cc-submit-area">
-            <a href="{% url 'all_cases' %}" class="cc-cancel-btn">Annuler</a>
-            <button type="submit" id="cc-submit-btn" class="cc-submit-btn">
-                <span class="material-symbols-outlined">add_circle</span>
-                Créer le cas clinique
-            </button>
-        </div>
-    </form>
-</div>
+    <button type="submit" value="Submit" class="border" id="submit">Créer le cas</button>
+</form>
 {% endblock %}

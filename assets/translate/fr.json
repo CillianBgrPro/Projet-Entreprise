@@ -318,5 +318,21 @@
         "Added_on": "Ajouté le",
         "Button_view_details": "Voir les détails",
         "No_results": "Aucun cas clinique ne correspond à vos critères de recherche."
+    },
+    "case_creation": {
+        "Page_title": "Création de cas",
+        "Main_title": "Création de cas",
+        "Label_title": "Titre :",
+        "Placeholder_title": "Entrez le titre du cas ici",
+        "Label_prompt": "Prompt :",
+        "Placeholder_prompt": "Entrez votre prompt ici",
+        "Label_specialty1": "Spécialité 1 :",
+        "Label_specialty2": "Spécialité 2 :",
+        "Option_select": "Sélectionner",
+        "Label_difficulty": "Difficulté :",
+        "Difficulty_easy": "Facile",
+        "Difficulty_medium": "Moyen",
+        "Difficulty_hard": "Difficile",
+        "Submit_button": "Créer le cas"
     }
 }
