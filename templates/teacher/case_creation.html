@@ -1,22 +1,83 @@
-{% extends 'index.html' %} {% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/case_creation.css' %}">
+{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="{{ 'css/case_creation.css' %}">
 <h2>Creation de cas</h2>
 <form method="POST" action="{% url 'create_case' %}">
     {% csrf_token %}
+    <label for="ecos">Fichier Ecos:</label>
+    <!-- disabled placeholder button-->
+    <button type="file" class="border" id="submit" disabled>Ajoutez le fichier Ecos:</button>
+
     <div class="border text-section">
         <label for="title">Titre:</label>
         <input type="text" id="title" name="title" placeholder="Entrez le titre du cas ici" />
     </div>
 
-    <div class="border text-section" id="prompt">
-        <label for="prompt">Prompt:</label>
-        <textarea id="prompt" name="prompt" placeholder="Entrez votre prompt ici"></textarea>
+    <div class="split">
+        <div class="border text-section">
+            <label for="author">Auteur:</label>
+            <input type="text" id="author" name="author" placeholder="Entrez l'auteur du cas ici" />
+        </div>
+
+        <div class="border text-section">
+            <label for="reviewer">Relecteur:</label>
+            <input type="text" id="reviewer" name="reviewer" placeholder="Entrez le relecteur du cas ici" />
+        </div>
+    </div>
+
+    <div class="border text-section">
+        <label for="initialId">Situation initiale:</label>
+        <input type="text" id="initialId" name="initialId" placeholder="Séparez les id de situations par des virgules" />
+    </div>
+
+    <div class="border text-section">
+        <label for="briefing">Texte de départ:</label>
+        <input type="text" id="briefing" name="briefing" placeholder="Entrez le texte de départ ici" />
+    </div>
+
+    <div class="border text-section">
+        <label for="to_do">Ce qu'il faut faire:</label>
+        <input type="text" id="to_do" name="to_do" placeholder="Entrez ce qu'il faut faire ici" />
+    </div>
+
+    <div class="border text-section">
+        <label for="not_to_do">A ne pas faire:</label>
+        <input type="text" id="not_to_do" name="not_to_do" placeholder="Entrez ce qu'il ne faut pas faire ici" />
+    </div>
+
+    <div class="split">
+        <div class="border text-section">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" placeholder="Entrez la date ici" />
+        </div>
+
+        <div>
+            <label for="grading">Tableau de notation:</label>
+            <!-- disabled placeholder button-->
+            <button type="file" class="border" id="submit" disabled>Ajouter le fichier</button>
+        </div>
+    </div>
+
+    <div>
+        <label for="standardised_patient">Patient standardisé:</label>
+        <input type="checkbox" id="standardised_patient" name="standardised_patient" value="true">
+
+        <label for="standardised_doctor">Docteur standardisé:</label>
+        <input type="checkbox" id="standardised_doctor" name="standardised_doctor" value="true">
+
+        <label for="iconography">Iconographie:</label>
+        <input type="checkbox" id="iconography" name="iconography" value="true">
     </div>
 
     <div id="details">
         <div class="border details selection">
-            <label for="specialty">Spécialité 1:</label>
+            <label for="specialty1">Domaine d'aprentissage principal:</label>
             <select>
                 <option value="null" autofocus>Select</option>
                 {% for specialty in specialties %}
@@ -26,7 +87,7 @@
         </div>
 
         <div class="border details selection">
-            <label for="specialty">Spécialité 2:</label>
+            <label for="specialty2">Domaine d'aprentissage secondaire:</label>
             <select>
                 <option value="null" autofocus>Select</option>
                 {% for specialty in specialties %}
@@ -36,11 +97,20 @@
         </div>
 
         <div class="border details selection">
-            <label for="difficulty">Difficulté:</label>
+            <label for="study_year">Année d'étude:</label>
             <select>
-                <option value="1">Facile</option>
-                <option value="2" autofocus>Moyen</option>
-                <option value="3">Difficile</option>
+                <option value="mm1">MM1</option>
+                <option value="mm2" autofocus>MM2</option>
+                <option value="mm3">MM3</option>
+            </select>
+        </div>
+
+        <div class="border details selection">
+            <label for="knowledge">Connaissance:</label>
+            <select>
+                <option value="A">A</option>
+                <option value="B" autofocus>B</option>
+                <option value="AB">AB</option>
             </select>
         </div>
     </div>

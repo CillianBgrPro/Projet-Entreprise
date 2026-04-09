@@ -16,7 +16,7 @@ form {
 .text-section {
     flex-direction: column;
     background-color: white;
-    width: 90vw;
+    width: 90%;
 }
 
 .border {
@@ -27,6 +27,12 @@ form {
 .selection {
     background-color: #4b94bc;
     color: white;
+}
+
+.split {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
 }
 
 #prompt {
