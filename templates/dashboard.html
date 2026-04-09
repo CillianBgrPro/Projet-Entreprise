@@ -155,33 +155,7 @@
 <section>
     <h1>{{t.global_dashboard.teacher_dashboard.Title}}</h1>
 
-    <!-- Stat cards -->
-    <div class="cards">
-        <a href="{% url 'all_cases' %}" class="card card-blue">
-            <div class="card-icon"><span class="material-symbols-outlined">medical_services</span></div>
-            <div class="card-info">
-                <span class="card-value">{{ total_cases_created }}</span>
-                <span class="card-label">Cas créés</span>
-            </div>
-        </a>
-        <a href="#" class="card card-purple">
-            <div class="card-icon"><span class="material-symbols-outlined">fitness_center</span></div>
-            <div class="card-info">
-                <span class="card-value">{{ total_trainings }}</span>
-                <span class="card-label">Entraînements</span>
-            </div>
-        </a>
-        <a href="#" class="card card-green">
-            <div class="card-icon"><span class="material-symbols-outlined">school</span></div>
-            <div class="card-info">
-                <span class="card-value">{{ total_students_followed }}</span>
-                <span class="card-label">Étudiants suivis</span>
-            </div>
-        </a>
-    </div>
-
     <div class="top-infos">
-        <!-- Mes derniers cas -->
         <div class="section1 sections teacher-cases-section">
             <h2>{{t.global_dashboard.teacher_dashboard.Last_cases_title}}</h2>
             {% if recent_cases %}
@@ -218,7 +192,6 @@
             {% endif %}
         </div>
 
-        <!-- Performances récentes des étudiants -->
         <div class="section2 sections">
             <h2>{{t.global_dashboard.teacher_dashboard.Last_trainings_title}}</h2>
             {% if recent_performances %}
@@ -227,11 +200,13 @@
                 <div class="teacher-perf-item">
                     <span class="material-symbols-outlined log-icon">psychology</span>
                     <div class="teacher-perf-info">
-                        <span class="teacher-perf-student">{{ perf.student.user.get_full_name|default:perf.student.user.username }}</span>
+                        <span class="teacher-perf-student">{{
+                            perf.student.user.get_full_name|default:perf.student.user.username }}</span>
                         <span class="teacher-perf-case">{{ perf.case.name }}</span>
                         <span class="teacher-perf-date">{{ perf.realization_date|date:"d/m/Y à H:i" }}</span>
                     </div>
-                    <div class="teacher-perf-score {% if perf.total_score != None and perf.total_score >= 50 %}score-ok{% elif perf.total_score != None %}score-low{% endif %}">
+                    <div
+                        class="teacher-perf-score {% if perf.total_score != None and perf.total_score >= 50 %}score-ok{% elif perf.total_score != None %}score-low{% endif %}">
                         {% if perf.total_score != None %}{{ perf.total_score }}{% else %}—{% endif %}
                     </div>
                 </div>
@@ -247,10 +222,13 @@
     </div>
 
     <div class="actions">
-        <a href="{% url 'all_cases' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="{% url 'all_cases' %}"
+            class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
         <a href="#" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
-        <a href="{% url 'create_case' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
-        <a href="{% url 'ticket' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
+        <a href="{% url 'create_case' %}"
+            class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}"
+            class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
     </div>
 </section>
 
@@ -281,15 +259,18 @@
                         <div class="training-scores">
                             <div class="score-pill score-total">
                                 <span class="score-label">Score total</span>
-                                <span class="score-value">{% if tr.total_score != None %}{{ tr.total_score }}{% else %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.total_score != None %}{{ tr.total_score }}{% else
+                                    %}—{% endif %}</span>
                             </div>
                             <div class="score-pill score-clinical">
                                 <span class="score-label">Compétences</span>
-                                <span class="score-value">{% if tr.clinical_skills_score != None %}{{ tr.clinical_skills_score }}{% else %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.clinical_skills_score != None %}{{
+                                    tr.clinical_skills_score }}{% else %}—{% endif %}</span>
                             </div>
                             <div class="score-pill score-comm">
                                 <span class="score-label">Communication</span>
-                                <span class="score-value">{% if tr.communication_skills_score != None %}{{ tr.communication_skills_score }}{% else %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.communication_skills_score != None %}{{
+                                    tr.communication_skills_score }}{% else %}—{% endif %}</span>
                             </div>
                         </div>
                     </div>
