@@ -34,7 +34,7 @@ urlpatterns = [
      
      path('select-lang/<str:lang>/', views.set_language, name='set_language'),
      path('administrater/', views.users, name='users'),
-     path('administrater/', views.logs, name='logs'),
+     path('administrater/logs/', views.logs, name='logs'),
      path('administrater/donnees/', views.data, name='data'),
      path('mentions-legales/', views.legal_notices, name='legal_notices'),
      path('politiques-confidentialite/', views.privacy_policies, name='privacy_policies'),

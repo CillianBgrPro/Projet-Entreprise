@@ -184,12 +184,15 @@
     </div>
 
     <div class="actions">
-        <a href="{% url 'all_cases' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="{% url 'all_cases' %}"><button
+                class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
         <a href="#"><button
                 class="action-btn">{{t.global_dashboard.teacher_dashboard.Student_tracking_btn}}</button></a>
         <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
-        <a href="{% url 'create_case' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
-        <a href="{% url 'ticket' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
+        <a href="{% url 'create_case' %}"><button
+                class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}"><button
+                class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
     </div>
 </section>
 
@@ -197,44 +200,158 @@
 <section>
     <h1>{{t.global_dashboard.student_dashboard.Title}}</h1>
     <div class="top-infos">
-        <div class="section1 sections">
+
+        <div class="section1 sections student-last-training">
             <h2>{{t.global_dashboard.student_dashboard.Last_training_title}}</h2>
-            {% if last_training %}
-            <a href="{% url 'performance_detail' last_training.id %}" style="text-decoration: none; color: inherit;">
-                <ul>
-                    <li><strong>{{ last_training.case.name }}</strong> (Cas n°{{ last_training.case.id }})</li>
-                    <li>Date : {{ last_training.realization_date|date:"d/m/Y H:i" }}</li>
-                    <li>
-                        Notes obtenues :
-                        <ul>
-                            <li>Score total : {% if last_training.total_score != None %}{{ last_training.total_score }}{% else %}-{% endif %}</li>
-                            <li>Compétences cliniques : {% if last_training.clinical_skills_score != None %}{{ last_training.clinical_skills_score }}{% else %}-{% endif %}</li>
-                            <li>Communication : {% if last_training.communication_skills_score != None %}{{ last_training.communication_skills_score }}{% else %}-{% endif %}</li>
-                        </ul>
-                    </li>
-                </ul>
-            </a>
+            {% if last_trainings %}
+            <div class="trainings-list">
+                {% for tr in last_trainings %}
+                <a href="{% url 'performance_detail' tr.id %}" class="training-card-link">
+                    <div class="training-card">
+                        <div class="training-card-header">
+                            <span class="material-symbols-outlined training-card-icon">psychology</span>
+                            <div class="training-card-title">
+                                <strong>{{ tr.case.name }}</strong>
+                                <span class="training-case-id">Cas n°{{ tr.case.id }}</span>
+                            </div>
+                            <span class="training-arrow material-symbols-outlined">arrow_forward_ios</span>
+                        </div>
+                        <div class="training-card-date">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            {{ tr.realization_date|date:"d/m/Y à H:i" }}
+                        </div>
+                        <div class="training-scores">
+                            <div class="score-pill score-total">
+                                <span class="score-label">Score total</span>
+                                <span class="score-value">{% if tr.total_score != None %}{{ tr.total_score }}{% else %}—{% endif %}</span>
+                            </div>
+                            <div class="score-pill score-clinical">
+                                <span class="score-label">Compétences</span>
+                                <span class="score-value">{% if tr.clinical_skills_score != None %}{{ tr.clinical_skills_score }}{% else %}—{% endif %}</span>
+                            </div>
+                            <div class="score-pill score-comm">
+                                <span class="score-label">Communication</span>
+                                <span class="score-value">{% if tr.communication_skills_score != None %}{{ tr.communication_skills_score }}{% else %}—{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
             {% else %}
-            <p>Aucun entraînement réalisé pour le moment.</p>
+            <div class="training-empty">
+                <span class="material-symbols-outlined training-empty-icon">stethoscope</span>
+                <p>Aucun entraînement réalisé pour le moment.</p>
+                <a href="{% url 'all_cases' %}" class="training-start-btn">Démarrer un cas</a>
+            </div>
             {% endif %}
         </div>
 
-        <div class="section2 sections">
-            <h2>{{t.global_dashboard.student_dashboard.Progression_title}}</h2>
-            <canvas id="progressChart"></canvas>
-            <div>
-                <h3>{{t.global_dashboard.student_dashboard.Stats_title}}</h3>
-                <p>{{t.global_dashboard.student_dashboard.Rank_label}}</p>
-                <p>{{t.global_dashboard.student_dashboard.Trophies_label}}</p>
-                <p>{{t.global_dashboard.student_dashboard.Level_label}}</p>
+        <div class="section2 sections student-stats-panel">
+            <h2>Mes statistiques</h2>
+
+            {% if total_cases_done > 0 %}
+
+            {% if success_rate != None %}
+            <div class="stat-success-rate">
+                <div class="stat-rate-circle">
+                    <svg viewBox="0 0 120 120" class="rate-svg">
+                        <circle class="rate-track" cx="60" cy="60" r="50" />
+                        <circle class="rate-fill" cx="60" cy="60" r="50" style="--rate: {{ success_rate }}" />
+                    </svg>
+                    <div class="rate-label-center">
+                        <span class="rate-number">{{ success_rate }}%</span>
+                        <span class="rate-sub">Réussite</span>
+                    </div>
+                </div>
+                <div class="stat-rate-info">
+                    <p class="stat-rate-title">Taux de réussite</p>
+                    <p class="stat-rate-detail">{{ total_cases_done }} cas réalisé{{ total_cases_done|pluralize }}</p>
+                    {% if best_performance %}
+                    <p class="stat-rate-best">🏆 Meilleur : <strong>{{ best_performance.case.name }}</strong></p>
+                    {% endif %}
+                </div>
             </div>
+            {% endif %}
+
+            <div class="student-stats-grid">
+                <div class="stu-stat-item stu-stat-blue">
+                    <span class="material-symbols-outlined">assignment_turned_in</span>
+                    <div>
+                        <strong>{{ total_cases_done }}</strong>
+                        <span>Cas réalisés</span>
+                    </div>
+                </div>
+                {% if avg_score != None %}
+                <div class="stu-stat-item stu-stat-purple">
+                    <span class="material-symbols-outlined">equalizer</span>
+                    <div>
+                        <strong>{{ avg_score }}</strong>
+                        <span>Note moyenne</span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if max_score != None %}
+                <div class="stu-stat-item stu-stat-green">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <div>
+                        <strong>{{ max_score }}</strong>
+                        <span>Note la plus haute</span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if min_score != None %}
+                <div class="stu-stat-item stu-stat-orange">
+                    <span class="material-symbols-outlined">trending_down</span>
+                    <div>
+                        <strong>{{ min_score }}</strong>
+                        <span>Note la plus basse</span>
+                    </div>
+                </div>
+                {% endif %}
+                {% if median_score != None %}
+                <div class="stu-stat-item stu-stat-sky">
+                    <span class="material-symbols-outlined">bar_chart</span>
+                    <div>
+                        <strong>{{ median_score }}</strong>
+                        <span>Médiane</span>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="stu-stat-item stu-stat-pending">
+                    <span class="material-symbols-outlined">emoji_events</span>
+                    <div>
+                        <strong class="pending-value">—</strong>
+                        <span>Trophée</span>
+                        <span class="pending-badge">À compléter par le labo</span>
+                    </div>
+                </div>
+                <div class="stu-stat-item stu-stat-pending">
+                    <span class="material-symbols-outlined">leaderboard</span>
+                    <div>
+                        <strong class="pending-value">—</strong>
+                        <span>Rang</span>
+                        <span class="pending-badge">À compléter par le labo</span>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+            <div class="stats-empty">
+                <span class="material-symbols-outlined stats-empty-icon">bar_chart</span>
+                <p>Aucune statistique disponible.</p>
+                <p class="stats-empty-sub">Réalisez votre premier cas clinique pour voir vos résultats ici.</p>
+            </div>
+            {% endif %}
         </div>
+
     </div>
 
     <div class="actions">
         <a href="{% url 'all_cases' %}"
             class="action-btn"><button>{{t.global_dashboard.student_dashboard.Case_bank_btn}}</button></a>
-        <a href="{% url 'random_case' %}" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
+        <a href="{% url 'random_case' %}"
+            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
         <a href="{% url 'student_trainings' %}"
             class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_trainings_btn}}</button></a>
         <a href="{% url 'ticket' %}"

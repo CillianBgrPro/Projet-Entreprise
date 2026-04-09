@@ -135,11 +135,52 @@ def change_avatar(request):
 @login_required
 def student_dashboard(request):
     from .models import StudentPerformance
-    try:
-        last_training = StudentPerformance.objects.filter(student__user=request.user, is_finished=True).latest('realization_date')
-    except (StudentPerformance.DoesNotExist, Exception):
-        last_training = None
-    return render(request, 'dashboard.html', {'last_training': last_training})
+    from django.db.models import Avg, Max, Min, Count
+    import statistics as stats_lib
+
+    last_trainings = StudentPerformance.objects.filter(
+        student__user=request.user, is_finished=True
+    ).select_related('case').order_by('-realization_date')[:3] # je ne sais pas 2 ou 3 comme vous voudrais
+
+    finished_qs = StudentPerformance.objects.filter(
+        student__user=request.user, is_finished=True
+    )
+
+    total_cases_done = finished_qs.count()
+
+    scored_qs = finished_qs.exclude(total_score=None)
+    agg = scored_qs.aggregate(
+        avg_score=Avg('total_score'),
+        max_score=Max('total_score'),
+        min_score=Min('total_score'),
+    )
+    avg_score = round(agg['avg_score'], 1) if agg['avg_score'] is not None else None
+    max_score = agg['max_score']
+    min_score = agg['min_score']
+
+    scores_list = list(scored_qs.values_list('total_score', flat=True))
+    median_score = round(stats_lib.median(scores_list), 1) if scores_list else None
+
+    if scores_list and max_score is not None:
+        threshold = 50 if max_score > 20 else 10
+        nb_success = sum(1 for s in scores_list if s >= threshold)
+        success_rate = round((nb_success / len(scores_list)) * 100) if scores_list else 0
+    else:
+        success_rate = None
+
+    best_performance = scored_qs.order_by('-total_score').select_related('case').first()
+
+    context = {
+        'last_trainings': last_trainings,
+        'total_cases_done': total_cases_done,
+        'avg_score': avg_score,
+        'max_score': max_score,
+        'min_score': min_score,
+        'median_score': median_score,
+        'success_rate': success_rate,
+        'best_performance': best_performance,
+    }
+    return render(request, 'dashboard.html', context)
 
 @login_required
 def student_trainings(request):
@@ -299,13 +340,17 @@ def logs(request):
         return redirect('home')
     
     from .models import User, Ticket, StudentPerformance
-    latest_users = User.objects.all().order_by('-date_joined')[:50].values(
+    from django.utils import timezone
+    from datetime import timedelta
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+
+    latest_users = User.objects.filter(date_joined__gte=thirty_days_ago).order_by('-date_joined').values(
         'id', 'username', 'first_name', 'last_name', 'role', 'date_joined'
     )
-    latest_tickets = Ticket.objects.all().order_by('-created_at')[:50].values(
+    latest_tickets = Ticket.objects.filter(created_at__gte=thirty_days_ago).order_by('-created_at').values(
         'id', 'subject', 'status', 'created_at', 'user__username'
     )
-    latest_performances = StudentPerformance.objects.all().order_by('-realization_date')[:50].values(
+    latest_performances = StudentPerformance.objects.filter(realization_date__gte=thirty_days_ago).order_by('-realization_date').values(
         'id', 'student__user__username', 'case__name', 'realization_date', 'total_score'
     )
     
