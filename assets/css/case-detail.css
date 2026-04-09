@@ -49,17 +49,17 @@
 
 /* ---- Details grid ---- */
 .case-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.detail-item {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 16px 20px;
     box-shadow: var(--shadow-sm);
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.detail-item {
     display: flex;
     flex-direction: column;
     gap: 6px;
