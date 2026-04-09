@@ -229,7 +229,8 @@
             "Case_bank_btn": "Case bank",
             "Student_tracking_btn": "Student tracking",
             "Export_data_btn": "Export data",
-            "Create_case_btn": "Case creation"
+            "Create_case_btn": "Case creation",
+            "Tickets": "My Tickets"
         },
         "student_dashboard": {
             "Title": "Student dashboard",

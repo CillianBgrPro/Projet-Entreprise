@@ -229,7 +229,8 @@
             "Case_bank_btn": "Banque de cas",
             "Student_tracking_btn": "Suivi des étudiants",
             "Export_data_btn": "Exporter les données",
-            "Create_case_btn": "Création de cas"
+            "Create_case_btn": "Création de cas",
+            "Tickets": "Mes Tickets"
         },
         "student_dashboard": {
             "Title": "Tableau de bord étudiant",
