@@ -7,6 +7,7 @@ from .TrainingModel import Training
 from .StudentPerformanceModel import StudentPerformance
 from .TicketModel import Ticket, TicketReply
 from .StartingSituationModel import StartingSituation
+from .ItemsEDNModel import ItemsEDN
 
 __all__ = [
     'User',
@@ -14,6 +15,7 @@ __all__ = [
     'Professor',
     'Group',
     'ClinicalCase',
+    'ItemsEDN',
     'Training',
     'StudentPerformance',
     'Ticket',

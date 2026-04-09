@@ -9,8 +9,16 @@
 
 {% block content %}
 <div class="case-detail-wrapper">
-    <div style="margin-bottom: 20px;">
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <a href="{% url 'all_cases' %}" class="btn-secondary">← Retour à tous les cas</a>
+        {% if user.role == 'student' %}
+        <form method="POST" action="{% url 'start_case' case.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary" style="background-color: #2563eb; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;">
+                <span class="material-symbols-outlined" style="font-size: 20px;">play_arrow</span> Démarrer l'entraînement
+            </button>
+        </form>
+        {% endif %}
     </div>
 
     <div class="case-header">

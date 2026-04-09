@@ -1,9 +1,9 @@
-{% extends 'index.html' %} {% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %} {% block
-content %}
-<link rel="stylesheet" href="{% static 'css/case_creation.css' %}" />
-<link rel="stylesheet" href="../../assets/css/case_creation.css" />
+{% extends 'index.html' %} {% block title %}{{ t.case_creation.Page_title }} - DR. VIRTUORL{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ 'css/case_creation.css' %}">
 <h2>Creation de cas</h2>
-<form>
+<form method="POST" action="{% url 'create_case' %}">
+    {% csrf_token %}
     <div class="border text-section">
         <label for="title">Titre:</label>
         <input type="text" id="title" name="title" placeholder="Entrez le titre du cas ici" />

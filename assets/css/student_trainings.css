@@ -1,0 +1,194 @@
+/* ============================================================
+   STUDENT TRAININGS — Training history page
+   ============================================================ */
+
+:root {
+    --blue-dark: #2c4471;
+    --blue-light: #5ba2cf;
+    --blue-accent: #3a6ea5;
+    --shadow-soft: 0 4px 16px rgba(44, 68, 113, 0.10);
+    --shadow-hover: 0 8px 24px rgba(44, 68, 113, 0.16);
+    --radius: 12px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trainings-wrapper {
+    padding: 40px 20px 60px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.trainings-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.trainings-header h2 {
+    color: var(--blue-dark);
+    font-size: 30px;
+    margin: 0 0 6px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.trainings-subtitle {
+    color: #7b8a9e;
+    font-size: 15px;
+    margin: 0;
+}
+
+.trainings-header-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f3f7;
+    color: var(--blue-dark);
+    padding: 9px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all var(--transition);
+    border: 1px solid transparent;
+}
+
+.btn-back:hover {
+    background: var(--blue-dark);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+}
+
+.btn-back .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* Results */
+.results-section {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.results-header h3 {
+    font-size: 18px;
+    color: var(--blue-dark);
+    margin: 0;
+    font-weight: 600;
+}
+
+.result-count {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* Table */
+.trainings-table-container {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    border: 1px solid #eaeef3;
+}
+
+.trainings-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.trainings-table th,
+.trainings-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eef1f5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.trainings-table th {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-accent) 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.trainings-table tbody tr {
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.trainings-table tbody tr:hover {
+    background-color: #f0f5fa;
+    transform: scale(1.002);
+}
+
+.training-id {
+    font-weight: 700;
+    color: var(--blue-light);
+    font-size: 13px;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.status-finished {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-ongoing {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px !important;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 15px;
+    margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .trainings-wrapper { padding: 20px 12px; }
+    .trainings-header h2 { font-size: 24px; }
+    .trainings-table th, .trainings-table td { padding: 10px 8px; font-size: 13px; }
+}

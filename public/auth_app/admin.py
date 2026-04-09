@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     User, Student, Professor, Group, 
     ClinicalCase, Training, StudentPerformance,
-    Ticket, StartingSituation
+    Ticket, StartingSituation, ItemsEDN
 )
 
 #pour l'afffichage sur le webbb
@@ -15,3 +15,4 @@ admin.site.register(Training)
 admin.site.register(StudentPerformance)
 admin.site.register(Ticket)
 admin.site.register(StartingSituation)
+admin.site.register(ItemsEDN)

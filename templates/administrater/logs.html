@@ -1,2 +1,38 @@
+{% extends 'index.html' %}
 {% load static %}
-{% block title %}Données - DR. VIRTUORL{% endblock %}
+{% block title %}Historique complet - DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+<link rel="stylesheet" href="{% static 'css/logs.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="logs-page-container">
+    <h1>Historique complet du système</h1>
+
+    <div class="logs-list">
+        {% for log in logs %}
+        <div class="log-item log-{{ log.type }}">
+            <span class="log-icon material-symbols-outlined">{{ log.icon }}</span>
+            <div class="log-text">
+                <div class="log-message">
+                    <strong>{{ log.message }}</strong>
+                </div>
+                <div class="log-meta">
+                    <span class="log-tag tag-{{ log.type }}">{{ log.detail }}</span>
+                    <span class="log-date"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">schedule</span>{{ log.date|date:"d/m/Y H:i" }}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="log-item log-empty">
+            <span class="log-icon material-symbols-outlined">info</span>
+            <div class="log-text">
+                <span class="log-message">Aucun log disponible pour le moment.</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

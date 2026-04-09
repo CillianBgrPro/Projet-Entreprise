@@ -134,7 +134,20 @@ def change_avatar(request):
 
 @login_required
 def student_dashboard(request):
-    return render(request, 'dashboard.html')
+    from .models import StudentPerformance
+    try:
+        last_training = StudentPerformance.objects.filter(student__user=request.user, is_finished=True).latest('realization_date')
+    except (StudentPerformance.DoesNotExist, Exception):
+        last_training = None
+    return render(request, 'dashboard.html', {'last_training': last_training})
+
+@login_required
+def student_trainings(request):
+    from .models import StudentPerformance
+    trainings = StudentPerformance.objects.filter(
+        student__user=request.user
+    ).select_related('case').order_by('-realization_date')
+    return render(request, 'case/student_trainings.html', {'trainings': trainings})
 
 @login_required
 def teacher_dashboard(request):
@@ -285,7 +298,47 @@ def logs(request):
     if not request.user.is_superuser:
         return redirect('home')
     
-    return render(request, 'administrater/logs.html')
+    from .models import User, Ticket, StudentPerformance
+    latest_users = User.objects.all().order_by('-date_joined')[:50].values(
+        'id', 'username', 'first_name', 'last_name', 'role', 'date_joined'
+    )
+    latest_tickets = Ticket.objects.all().order_by('-created_at')[:50].values(
+        'id', 'subject', 'status', 'created_at', 'user__username'
+    )
+    latest_performances = StudentPerformance.objects.all().order_by('-realization_date')[:50].values(
+        'id', 'student__user__username', 'case__name', 'realization_date', 'total_score'
+    )
+    
+    logs = []
+    for users in latest_users:
+        logs.append({
+            'type': 'registration',
+            'icon': 'person_add',
+            'message': f"Inscription : {users['first_name']} {users['last_name']} ({users['username']})",
+            'detail': users['role'] or 'student',
+            'date': users['date_joined'],
+        })
+    for tickets in latest_tickets:
+        logs.append({
+            'type': 'ticket',
+            'icon': 'confirmation_number',
+            'message': f"Ticket ({tickets['user__username']}) : {tickets['subject']}",
+            'detail': tickets['status'],
+            'date': tickets['created_at'],
+        })
+    for performances in latest_performances:
+        logs.append({
+            'type': 'performance',
+            'icon': 'psychology',
+            'message': f"Entraînement : {performances['student__user__username']} sur le cas {performances['case__name']}",
+            'detail': f"Score: {performances['total_score']}" if performances['total_score'] is not None else "En cours",
+            'date': performances['realization_date'],
+        })
+        
+    logs.sort(key=lambda x: x['date'], reverse=True)
+    logs = logs[:100]
+    
+    return render(request, 'administrater/logs.html', {'logs': logs})
 
 def data(request):
     if not request.user.is_superuser:
@@ -319,22 +372,23 @@ def data(request):
         ('rgpd_consent', 'Consentement RGPD'),
     ]
 
-    # Champs exportables pour les entraînements
-    training_fields = [
-        ('id', 'ID Entraînement'),
+    # Champs exportables pour les performances
+    performance_fields = [
+        ('id', 'ID Performance'),
+        ('realization_date', 'Date de réalisation'),
+        ('student__ine', 'INE Étudiant'),
         ('case__name', 'Cas Clinique'),
-        ('group__name', 'Groupe'),
-        ('group__students__ine', 'INE Étudiant'),
-        ('professor__user__last_name', 'Nom Enseignant'),
-        ('status', 'Statut'),
-        ('created_at', 'Créé le'),
-        ('finished_at', 'Terminé le'),
+        ('total_score', 'Note totale'),
+        ('clinical_skills_score', 'Notes compétences cliniques'),
+        ('communication_skills_score', 'Notes communication'),
+        ('completion_time', 'Temps de réalisation'),
+        ('is_finished', 'Terminé'),
     ]
 
     context = {
         'student_fields': student_fields,
         'teacher_fields': teacher_fields,
-        'training_fields': training_fields,
+        'performance_fields': performance_fields,
     }
 
     return render(request, 'administrater/data-export.html', context)
@@ -619,14 +673,111 @@ def ticket_change_status(request, ticket_id):
 @login_required
 def all_cases(request):
     from .models import ClinicalCase
-    cases = ClinicalCase.objects.all()
-    return render(request, 'case/all_case.html', {'cases': cases})
+
+    name = request.GET.get('name', '').strip()
+    speciality = request.GET.get('speciality', '').strip()
+    study_level = request.GET.get('study_level', '').strip()
+    knowledge_level = request.GET.get('knowledge_level', '').strip()
+    primary_learning_domain = request.GET.get('primary_learning_domain', '').strip()
+    date_from = request.GET.get('date_from', '').strip()
+    date_to = request.GET.get('date_to', '').strip()
+
+    cases = ClinicalCase.objects.search(
+        name=name or None,
+        speciality=speciality or None,
+        study_level=study_level or None,
+        knowledge_level=knowledge_level or None,
+        primary_learning_domain=primary_learning_domain or None,
+        date_from=date_from or None,
+        date_to=date_to or None,
+    ).order_by('-created_at')
+
+    # création dynamique des filtres, pas en dur donc on peut rajouter des spécialités
+    all_specialities = sorted(ClinicalCase.objects.exclude(speciality='').values_list('speciality', flat=True).distinct())
+    all_study_levels = sorted(ClinicalCase.objects.exclude(study_level='').values_list('study_level', flat=True).distinct())
+    all_knowledge_levels = sorted(ClinicalCase.objects.exclude(knowledge_level='').values_list('knowledge_level', flat=True).distinct())
+    all_domains = sorted(ClinicalCase.objects.exclude(primary_learning_domain='').values_list('primary_learning_domain', flat=True).distinct())
+
+    context = {
+        'cases': cases,
+        'case_count': cases.count(),
+        'filter_name': name,
+        'filter_speciality': speciality,
+        'filter_study_level': study_level,
+        'filter_knowledge_level': knowledge_level,
+        'filter_primary_learning_domain': primary_learning_domain,
+        'filter_date_from': date_from,
+        'filter_date_to': date_to,
+        'speciality_choices': all_specialities,
+        'study_level_choices': all_study_levels,
+        'knowledge_level_choices': all_knowledge_levels,
+        'domain_choices': all_domains,
+    }
+    return render(request, 'case/all_case.html', context)
+
+@login_required
+def random_case(request):
+    from .models import ClinicalCase
+    case_obj = ClinicalCase.objects.order_by('?').first()
+    if case_obj:
+        return redirect('case_detail', case_id=case_obj.id)
+    return redirect('all_cases')
 
 @login_required
 def case_detail(request, case_id):
     from .models import ClinicalCase
     case_obj = get_object_or_404(ClinicalCase, id=case_id)
     return render(request, 'case/case_detail.html', {'case': case_obj})
+
+@login_required
+def start_case(request, case_id):
+    if request.method != 'POST':
+        return redirect('case_detail', case_id=case_id)
+        
+    from .models import ClinicalCase, Student, StudentPerformance
+    from django.utils import timezone
+    from django.contrib import messages
+    
+    case_obj = get_object_or_404(ClinicalCase, id=case_id)
+    
+    try:
+        student = Student.objects.get(user=request.user)
+    except Student.DoesNotExist:
+        messages.error(request, "Seuls les étudiants peuvent démarrer un cas.")
+        return redirect('case_detail', case_id=case_id)
+        
+    # Création de l'essai (StudentPerformance)
+    performance = StudentPerformance.objects.create(
+        student=student,
+        case=case_obj,
+        realization_date=timezone.now()
+    )
+    
+    return redirect('play_performance', performance_id=performance.id)
+
+@login_required
+def play_performance(request, performance_id):
+    from .models import StudentPerformance
+    from django.contrib import messages
+    performance = get_object_or_404(StudentPerformance, id=performance_id)
+    
+    if performance.student.user != request.user:
+        messages.error(request, "Accès refusé.")
+        return redirect('home')
+        
+    return render(request, 'case/play_case.html', {'performance': performance, 'case': performance.case})
+
+@login_required
+def performance_detail(request, performance_id):
+    from .models import StudentPerformance
+    from django.contrib import messages
+    performance = get_object_or_404(StudentPerformance, id=performance_id)
+    
+    if not request.user.is_superuser and performance.student.user != request.user:
+        messages.error(request, "Accès refusé.")
+        return redirect('home')
+        
+    return render(request, 'case/performance_detail.html', {'performance': performance})
 
 
 
@@ -664,7 +815,7 @@ def dynamic_export_csv(request):
         allowed_models = {
             'Student': 'Student',
             'Professor': 'Professor',
-            'Training': 'Training',
+            'StudentPerformance': 'StudentPerformance',
         }
 
         if model_name not in allowed_models:
@@ -692,18 +843,19 @@ def dynamic_export_csv(request):
             'university': 'Université',
             'rgpd_consent': 'Consentement RGPD',
             'scientific_study': 'Consentement étude scientifique',
-            'id': 'ID Entraînement',
+            'id': 'ID Performance',
+            'realization_date': 'Date de réalisation',
+            'student__ine': 'INE Étudiant',
             'case__name': 'Cas Clinique',
-            'group__name': 'Groupe',
-            'group__students__ine': 'INE Étudiant',
-            'professor__user__last_name': 'Nom Enseignant',
-            'status': 'Statut',
-            'created_at': 'Créé le',
-            'finished_at': 'Terminé le',
+            'total_score': 'Note totale',
+            'clinical_skills_score': 'Notes compétences cliniques',
+            'communication_skills_score': 'Notes communication',
+            'completion_time': 'Temps de réalisation',
+            'is_finished': 'Terminé',
         }
 
         # Les champs booléens à convertir en Oui/Non
-        boolean_fields = {'rgpd_consent', 'scientific_study'}
+        boolean_fields = {'rgpd_consent', 'scientific_study', 'is_finished'}
 
         # Prèp ficher csv 
         response = HttpResponse(content_type='text/csv; charset=utf-8')
@@ -716,7 +868,7 @@ def dynamic_export_csv(request):
         writer.writerow(header)
 
         # Récupération des données
-        if model_name == 'Training':
+        if model_name == 'StudentPerformance':
             objects = model.objects.values_list(*selected_columns)
         else:
             objects = model.objects.select_related('user').values_list(*selected_columns)
@@ -735,3 +887,29 @@ def dynamic_export_csv(request):
         return response
 
     return redirect('data')
+
+@login_required
+def create_case(request):
+    if request.method == 'POST':
+        from .models import ClinicalCase
+        from django.contrib import messages
+        
+        try:
+            professor = request.user.professor_profile
+            
+            case_obj = ClinicalCase.objects.create(
+                creator_professor=professor,
+                name=request.POST.get('name'),
+                speciality=request.POST.get('speciality'),
+                study_level=request.POST.get('study_level'),
+                knowledge_level=request.POST.get('knowledge_level'),
+                primary_learning_domain=request.POST.get('primary_learning_domain'),
+            )
+            
+            messages.success(request, "Cas créé avec succès.")
+            return redirect('case_detail', case_id=case_obj.id)
+        except Exception as e:
+            messages.error(request, f"Erreur lors de la création du cas: {str(e)}")
+            return redirect('create_case')
+        
+    return render(request, 'teacher/case_creation.html')

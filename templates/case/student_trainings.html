@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Mes entraînements — DR. VIRTUORL{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/student_trainings.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="trainings-wrapper">
+    <div class="trainings-header">
+        <div class="trainings-header-actions">
+            <a href="{% url 'dashboard_redirect' %}" class="btn-back">
+                <span class="material-symbols-outlined">arrow_back</span> Retour au tableau de bord
+            </a>
+        </div>
+        <h2>📋 Mes entraînements</h2>
+        <p class="trainings-subtitle">Historique de tous vos entraînements sur les cas cliniques</p>
+    </div>
+
+    <div class="results-section">
+        <div class="results-header">
+            <h3>Résultats <span class="result-count">{{ trainings|length }} entraînement{{ trainings|length|pluralize:"s" }}</span></h3>
+        </div>
+
+        <div class="trainings-table-container">
+            <table class="trainings-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">Id</th>
+                        <th style="width: 18%;">Date</th>
+                        <th style="width: 28%;">Cas clinique</th>
+                        <th style="width: 14%;">Score total</th>
+                        <th style="width: 14%;">Clinique</th>
+                        <th style="width: 14%;">Communication</th>
+                        <th style="width: 10%;">Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in trainings %}
+                    <tr onclick="window.location.href='{% url 'performance_detail' t.id %}'">
+                        <td><span class="training-id">{{ t.id }}</span></td>
+                        <td>{{ t.realization_date|date:"d/m/Y H:i" }}</td>
+                        <td><strong>{{ t.case.name }}</strong></td>
+                        <td>{% if t.total_score != None %}{{ t.total_score }}{% else %}-{% endif %}</td>
+                        <td>{% if t.clinical_skills_score != None %}{{ t.clinical_skills_score }}{% else %}-{% endif %}</td>
+                        <td>{% if t.communication_skills_score != None %}{{ t.communication_skills_score }}{% else %}-{% endif %}</td>
+                        <td>
+                            <span class="status-badge {% if t.is_finished %}status-finished{% else %}status-ongoing{% endif %}">
+                                {% if t.is_finished %}Terminé{% else %}En cours{% endif %}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">fitness_center</span>
+                            <p>Aucun entraînement réalisé pour le moment.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

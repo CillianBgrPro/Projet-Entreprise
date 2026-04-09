@@ -47,14 +47,14 @@
     <!-- entrainements-->
     <div class="export-card">
         <h2>
-            <span class="material-symbols-outlined export-icon-training">sports_gymnastics</span>
-            Exporter les Entraînements
+            <span class="material-symbols-outlined export-icon-training">analytics</span>
+            Exporter les Performances des Étudiants
         </h2>
         <p class="export-desc">Sélectionnez les colonnes à inclure dans le fichier CSV.</p>
 
         <form action="{% url 'dynamic_export_csv' %}" method="POST">
             {% csrf_token %}
-            <input type="hidden" name="model_name" value="Training">
+            <input type="hidden" name="model_name" value="StudentPerformance">
 
             <div class="export-check-all-container">
                 <label class="check-all-label-training">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="export-checkbox-grid">
-                {% for field_name, field_label in training_fields %}
+                {% for field_name, field_label in performance_fields %}
                 <label class="checkbox-label">
                     <input type="checkbox" name="columns" value="{{ field_name }}" class="training-col">
                     {{ field_label }}
@@ -73,7 +73,7 @@
 
             <button type="submit" class="export-btn-training">
                 <span class="material-symbols-outlined">download</span>
-                Télécharger le CSV des entraînements
+                Télécharger le CSV des performances
             </button>
         </form>
     </div>

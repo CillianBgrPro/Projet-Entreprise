@@ -17,7 +17,7 @@
                 <span class="card-value">{{ total_users }}</span>
                 <span class="card-label">{{t.global_dashboard.admin_dashboard.total_user}}</span>
             </div>
-            <div class="card-badge">+{{ recent_registrations }} <small>(7j)</small></div>
+            <div class="card-badge">+{{ recent_registrations }} <small>(7J)</small></div>
         </a>
         <a href="{% url 'users' %}" class="card card-purple">
             <div class="card-icon"><span class="material-symbols-outlined">school</span></div>
@@ -184,13 +184,12 @@
     </div>
 
     <div class="actions">
-        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="{% url 'all_cases' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
         <a href="#"><button
                 class="action-btn">{{t.global_dashboard.teacher_dashboard.Student_tracking_btn}}</button></a>
         <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
-        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
-        <a href="{% url 'ticket' %}"><button
-                class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
+        <a href="{% url 'create_case' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
     </div>
 </section>
 
@@ -200,23 +199,24 @@
     <div class="top-infos">
         <div class="section1 sections">
             <h2>{{t.global_dashboard.student_dashboard.Last_training_title}}</h2>
-            <ul>
-                <li>{{ last_training.name }}</li>
-                <li>
-                    {{t.global_dashboard.student_dashboard.Successful_aspects}}
-                    <ul>
-                        <li>{{ last_training.successful_aspects.0 }}</li>
-                        <li>{{ last_training.successful_aspects.1 }}</li>
-                    </ul>
-                </li>
-                <li>
-                    {{t.global_dashboard.student_dashboard.Improvement_areas}}
-                    <ul>
-                        <li>{{ last_training.improvement_areas.0 }}</li>
-                        <li>{{ last_training.improvement_areas.1 }}</li>
-                    </ul>
-                </li>
-            </ul>
+            {% if last_training %}
+            <a href="{% url 'performance_detail' last_training.id %}" style="text-decoration: none; color: inherit;">
+                <ul>
+                    <li><strong>{{ last_training.case.name }}</strong> (Cas n°{{ last_training.case.id }})</li>
+                    <li>Date : {{ last_training.realization_date|date:"d/m/Y H:i" }}</li>
+                    <li>
+                        Notes obtenues :
+                        <ul>
+                            <li>Score total : {% if last_training.total_score != None %}{{ last_training.total_score }}{% else %}-{% endif %}</li>
+                            <li>Compétences cliniques : {% if last_training.clinical_skills_score != None %}{{ last_training.clinical_skills_score }}{% else %}-{% endif %}</li>
+                            <li>Communication : {% if last_training.communication_skills_score != None %}{{ last_training.communication_skills_score }}{% else %}-{% endif %}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </a>
+            {% else %}
+            <p>Aucun entraînement réalisé pour le moment.</p>
+            {% endif %}
         </div>
 
         <div class="section2 sections">
@@ -234,11 +234,9 @@
     <div class="actions">
         <a href="{% url 'all_cases' %}"
             class="action-btn"><button>{{t.global_dashboard.student_dashboard.Case_bank_btn}}</button></a>
-        <a href="#" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
-        <a href="#"
+        <a href="{% url 'random_case' %}" class="action-btn"><button>{{t.global_dashboard.student_dashboard.Random_case_btn}}</button></a>
+        <a href="{% url 'student_trainings' %}"
             class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_trainings_btn}}</button></a>
-        <a href="#"
-            class="action-btn"><button>{{t.global_dashboard.student_dashboard.Previous_corrections_btn}}</button></a>
         <a href="{% url 'ticket' %}"
             class="action-btn"><button>{{t.global_dashboard.student_dashboard.Tickets}}</button></a>
     </div>

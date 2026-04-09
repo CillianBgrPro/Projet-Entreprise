@@ -3,35 +3,139 @@
 
 {% block title %}Cas cliniques - Virtuorl{% endblock %}
 
-{% block content %}
+{% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/all-case.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="container">
-    <h1 class="page-title">Tous les cas cliniques</h1>
-    
-    {% if cases %}
-        <div class="cases-grid">
-            {% for case in cases %}
-                <div class="case-card">
-                    <h3 class="case-name">{{ case.name }}</h3>
-                    
-                    <div class="case-details">
-                        <p><strong>Spécialité :</strong> {{ case.speciality|default:"Non renseignée" }}</p>
-                        <p><strong>Niveau d'étude :</strong> {{ case.study_level|default:"Non renseigné" }}</p>
-                        <p><strong>Domaine principal :</strong> {{ case.primary_learning_domain|default:"Non renseigné" }}</p>
-                        <p><strong>Auteur :</strong> {{ case.author|default:"Non renseigné" }}</p>
-                    </div>
-                    
-                    <div class="case-footer">
-                        <span class="case-date">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
-                        <a href="{% url 'case_detail' case.id %}" class="btn-view-case">Voir les détails</a>
-                    </div>
+    <div class="page-header">
+        <div class="page-header-actions">
+            <a href="{% url 'dashboard_redirect' %}" class="btn-back">
+                <span class="material-symbols-outlined">arrow_back</span> Retour au tableau de bord
+            </a>
+        </div>
+        <h1 class="page-title">🔬 Tous les cas cliniques</h1>
+        <p class="page-subtitle">Recherchez et filtrez les cas cliniques par critères</p>
+    </div>
+
+    <!-- Filtres -->
+    <div class="filter-card">
+        <form method="GET" action="{% url 'all_cases' %}" class="filter-form">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label for="filter-name">
+                        <span class="material-symbols-outlined">search</span> Nom
+                    </label>
+                    <input type="text" name="name" id="filter-name" placeholder="Rechercher par nom..." value="{{ filter_name }}">
                 </div>
-            {% endfor %}
+
+                <div class="filter-group">
+                    <label for="filter-speciality">
+                        <span class="material-symbols-outlined">medical_services</span> Spécialité
+                    </label>
+                    <select name="speciality" id="filter-speciality">
+                        <option value="">Toutes les spécialités</option>
+                        {% for s in speciality_choices %}
+                        <option value="{{ s }}" {% if filter_speciality == s %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-study-level">
+                        <span class="material-symbols-outlined">school</span> Niveau d'étude
+                    </label>
+                    <select name="study_level" id="filter-study-level">
+                        <option value="">Tous les niveaux</option>
+                        {% for l in study_level_choices %}
+                        <option value="{{ l }}" {% if filter_study_level == l %}selected{% endif %}>{{ l }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-knowledge-level">
+                        <span class="material-symbols-outlined">psychology</span> Rang
+                    </label>
+                    <select name="knowledge_level" id="filter-knowledge-level">
+                        <option value="">Tous les rangs</option>
+                        {% for k in knowledge_level_choices %}
+                        <option value="{{ k }}" {% if filter_knowledge_level == k %}selected{% endif %}>{{ k }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-domain">
+                        <span class="material-symbols-outlined">category</span> Domaine
+                    </label>
+                    <select name="primary_learning_domain" id="filter-domain">
+                        <option value="">Tous les domaines</option>
+                        {% for d in domain_choices %}
+                        <option value="{{ d }}" {% if filter_primary_learning_domain == d %}selected{% endif %}>{{ d }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-date-from">
+                        <span class="material-symbols-outlined">calendar_today</span> Date début
+                    </label>
+                    <input type="date" name="date_from" id="filter-date-from" value="{{ filter_date_from }}">
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-date-to">
+                        <span class="material-symbols-outlined">event</span> Date fin
+                    </label>
+                    <input type="date" name="date_to" id="filter-date-to" value="{{ filter_date_to }}">
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn-filter">
+                    <span class="material-symbols-outlined">search</span> Filtrer
+                </button>
+                <a href="{% url 'all_cases' %}" class="btn-reset">
+                    <span class="material-symbols-outlined">restart_alt</span> Réinitialiser
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Résultats -->
+    <div class="results-section">
+        <div class="results-header">
+            <h3>Résultats <span class="result-count">{{ case_count }} cas</span></h3>
         </div>
-    {% else %}
-        <div class="no-cases">
-            <p>Aucun cas clinique n'est disponible pour le moment.</p>
-        </div>
-    {% endif %}
+
+        {% if cases %}
+            <div class="cases-grid">
+                {% for case in cases %}
+                    <div class="case-card">
+                        <h3 class="case-name">{{ case.name }}</h3>
+                        
+                        <div class="case-details">
+                            <p><strong>Spécialité :</strong> {{ case.speciality|default:"Non renseignée" }}</p>
+                            <p><strong>Niveau d'étude :</strong> {{ case.study_level|default:"Non renseigné" }}</p>
+                            <p><strong>Domaine principal :</strong> {{ case.primary_learning_domain|default:"Non renseigné" }}</p>
+                            <p><strong>Auteur :</strong> {{ case.author|default:"Non renseigné" }}</p>
+                        </div>
+                        
+                        <div class="case-footer">
+                            <span class="case-date">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
+                            <a href="{% url 'case_detail' case.id %}" class="btn-view-case">Voir les détails</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-cases">
+                <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">search_off</span>
+                <p>Aucun cas clinique ne correspond à vos critères de recherche.</p>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

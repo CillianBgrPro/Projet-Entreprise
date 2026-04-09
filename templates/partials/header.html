@@ -6,8 +6,7 @@
         <div class="logo">
             <a href="{% url 'home' %}">VirtuORL
                 {% if not user.is_authenticated %}
-                <span style="font-size: 0.7em; font-weight: 400; color: var(--text-muted);">{{ t.header.Not_connected
-                    }}</span>
+                <span style="font-size: 0.7em; font-weight: 400; color: var(--text-muted);">{{ t.header.Not_connected}}</span>
                 {% elif user.is_superuser %}
                 <span class="role-badge admin">{{ t.header.Admin_badge }}</span>
                 {% elif user.role == 'teacher' %}
@@ -45,7 +44,7 @@
             <li><a href="#">{{ t.header.Students }}</a></li>
             <li><a href="#">{{ t.header.Export_data }}</a></li>
             {% else %}
-            <li><a href="#">{{ t.header.Train }}</a></li>
+            <li><a href="{% url 'all_cases' %}">{{ t.header.Train }}</a></li>
             {% endif %}
 
             <li><a href="{% url 'logout_view' %}">{{ t.header.Disconnect }}</a></li>

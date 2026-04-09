@@ -19,6 +19,7 @@ class StudentPerformance(models.Model):
         verbose_name="Log d'évaluation",
         help_text="Log du débriefing avec l'agent évaluateur (JSON)"
     )
+    is_finished = models.BooleanField(default=False, verbose_name="Finished")
 
     objects = StudentPerformanceManager()
 

@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block title %}Démarrage de l'entraînement - {{ case.name }}{% endblock %}
+
+{% block content %}
+<div class="play-case-container" style="padding: 60px 20px; text-align: center; max-width: 800px; margin: 0 auto; background-color: #fff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-top: 40px;">
+    
+    <span class="material-symbols-outlined" style="font-size: 64px; color: #2563eb; margin-bottom: 20px;">science</span>
+    
+    <h2 style="color: #1e293b; font-size: 28px; margin-bottom: 15px;">Entraînement : {{ case.name }} (Cas n°{{ case.id }})</h2>
+    <p style="color: #64748b; font-size: 16px;">Identifiant de l'essai : <strong>{{ performance.id }}</strong></p>
+    
+    <div style="background-color: #f8fafc; padding: 30px; border-radius: 8px; border: 1px dashed #cbd5e1; margin-top: 30px; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: #475569; line-height: 1.6; margin: 0;">
+            Cette page affichera par la suite la simulation du cas clinique à réaliser.<br>
+            <strong>Elle sera complétée par le laboratoire, en mettant à jour les données sur l'essai (id de l'exercice: {{ performance.id }}).</strong>
+        </p>
+    </div>
+
+    <a href="{% url 'case_detail' case.id %}" style="display: inline-block; text-decoration: none; color: #2563eb; font-weight: 500; font-size: 16px;">
+        &larr; Revenir aux détails du cas
+    </a>
+</div>
+{% endblock %}

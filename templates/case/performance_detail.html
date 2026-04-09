@@ -1,0 +1,64 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Détails de la performance{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/performance_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="performance-container">
+    <a href="{% url 'dashboard_redirect' %}" class="back-btn">&larr; Retour au tableau de bord</a>
+    
+    <div class="performance-header">
+        <h1>Détails de l'entraînement</h1>
+        <p><strong>Cas clinique :</strong> <a href="{% url 'case_detail' performance.case.id %}" class="case-link">{{ performance.case.name }} (n°{{ performance.case.id }})</a></p>
+    </div>
+
+    <div class="performance-details">
+        <div class="detail-item">
+            <h3>Informations générales</h3>
+            <ul>
+                <li><strong>Étudiant :</strong> {{ performance.student.user.first_name }} {{ performance.student.user.last_name }}</li>
+                <li><strong>Date de réalisation :</strong> {{ performance.realization_date|date:"d/m/Y H:i" }}</li>
+                <li><strong>Temps de réalisation :</strong> 
+                    {% if performance.completion_time %}
+                        {{ performance.completion_time }}
+                    {% else %}
+                        Non défini
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        
+        <div class="detail-item scores-section">
+            <h3>Résultats</h3>
+            <ul>
+                <li><strong>Score total :</strong> {% if performance.total_score != None %}{{ performance.total_score }}{% else %}-{% endif %}</li>
+                <li><strong>Compétences cliniques :</strong> {% if performance.clinical_skills_score != None %}{{ performance.clinical_skills_score }}{% else %}-{% endif %}</li>
+                <li><strong>Communication :</strong> {% if performance.communication_skills_score != None %}{{ performance.communication_skills_score }}{% else %}-{% endif %}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="logs-section">
+        <h3>Log de conversation</h3>
+        {% if performance.conversation_log %}
+            <div class="log-box">
+                <pre>{{ performance.conversation_log|pprint }}</pre>
+            </div>
+        {% else %}
+            <p>Aucun log de conversation disponible.</p>
+        {% endif %}
+
+        <h3>Log d'évaluation</h3>
+        {% if performance.evaluation_log %}
+            <div class="log-box">
+                <pre>{{ performance.evaluation_log|pprint }}</pre>
+            </div>
+        {% else %}
+            <p>Aucun log d'évaluation disponible.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

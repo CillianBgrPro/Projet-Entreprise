@@ -46,6 +46,12 @@ urlpatterns = [
      path('ticket/<int:ticket_id>/status/', views.ticket_change_status, name='ticket_change_status'),
      path('all-cases/', views.all_cases, name='all_cases'),
      path('administrater/trainings/', views.admin_all_trainings, name='admin_all_trainings'),
+     path('case/random/', views.random_case, name='random_case'),
+     path('mes-entrainements/', views.student_trainings, name='student_trainings'),
      path('case/<int:case_id>/', views.case_detail, name='case_detail'),
+     path('case/<int:case_id>/start/', views.start_case, name='start_case'),
+     path('performance/<int:performance_id>/', views.performance_detail, name='performance_detail'),
+     path('performance/<int:performance_id>/play/', views.play_performance, name='play_performance'),
      path('administrater/export-dynamique/', views.dynamic_export_csv, name='dynamic_export_csv'),
+     path('create-case/', views.create_case, name='create_case'),
 ]
