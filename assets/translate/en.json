@@ -286,5 +286,36 @@
         "New_password": "New password",
         "Confirm_password": "Confirm new password",
         "Save_password": "Save password"
+    },
+
+    "all_cases_listing": {
+        "Page_title_meta": "Clinical Cases - Virtuorl",
+        "Back_to_dashboard": "Back to dashboard",
+        "Title": "🔬 All Clinical Cases",
+        "Subtitle": "Search and filter clinical cases by criteria",
+        "Filter_name": "Name",
+        "Filter_name_placeholder": "Search by name...",
+        "Filter_speciality": "Specialty",
+        "Filter_all_specialities": "All specialties",
+        "Filter_study_level": "Study level",
+        "Filter_all_levels": "All levels",
+        "Filter_rank": "Rank",
+        "Filter_all_ranks": "All ranks",
+        "Filter_domain": "Domain",
+        "Filter_all_domains": "All domains",
+        "Filter_start_date": "Start date",
+        "Filter_end_date": "End date",
+        "Button_filter": "Filter",
+        "Button_reset": "Reset",
+        "Results_title": "Results",
+        "Results_count": "cases",
+        "Label_speciality": "Specialty:",
+        "Label_study_level": "Study level:",
+        "Label_domain": "Primary domain:",
+        "Label_author": "Author:",
+        "Not_specified": "Not specified",
+        "Added_on": "Added on",
+        "Button_view_details": "View details",
+        "No_results": "No clinical cases match your search criteria."
     }
 }

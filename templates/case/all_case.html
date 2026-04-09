@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Cas cliniques - Virtuorl{% endblock %}
+{% block title %}{{ t.all_cases_listing.Page_title_meta }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/all-case.css' %}">
@@ -12,11 +12,11 @@
     <div class="page-header">
         <div class="page-header-actions">
             <a href="{% url 'dashboard_redirect' %}" class="btn-back">
-                <span class="material-symbols-outlined">arrow_back</span> Retour au tableau de bord
+                <span class="material-symbols-outlined">arrow_back</span> {{ t.all_cases_listing.Back_to_dashboard }}
             </a>
         </div>
-        <h1 class="page-title">🔬 Tous les cas cliniques</h1>
-        <p class="page-subtitle">Recherchez et filtrez les cas cliniques par critères</p>
+        <h1 class="page-title">{{ t.all_cases_listing.Title }}</h1>
+        <p class="page-subtitle">{{ t.all_cases_listing.Subtitle }}</p>
     </div>
 
     <!-- Filtres -->
@@ -25,17 +25,17 @@
             <div class="filter-grid">
                 <div class="filter-group">
                     <label for="filter-name">
-                        <span class="material-symbols-outlined">search</span> Nom
+                        <span class="material-symbols-outlined">search</span> {{ t.all_cases_listing.Filter_name }}
                     </label>
-                    <input type="text" name="name" id="filter-name" placeholder="Rechercher par nom..." value="{{ filter_name }}">
+                    <input type="text" name="name" id="filter-name" placeholder="{{ t.all_cases_listing.Filter_name_placeholder }}" value="{{ filter_name }}">
                 </div>
 
                 <div class="filter-group">
                     <label for="filter-speciality">
-                        <span class="material-symbols-outlined">medical_services</span> Spécialité
+                        <span class="material-symbols-outlined">medical_services</span> {{ t.all_cases_listing.Filter_speciality }}
                     </label>
                     <select name="speciality" id="filter-speciality">
-                        <option value="">Toutes les spécialités</option>
+                        <option value="">{{ t.all_cases_listing.Filter_all_specialities }}</option>
                         {% for s in speciality_choices %}
                         <option value="{{ s }}" {% if filter_speciality == s %}selected{% endif %}>{{ s }}</option>
                         {% endfor %}
@@ -44,10 +44,10 @@
 
                 <div class="filter-group">
                     <label for="filter-study-level">
-                        <span class="material-symbols-outlined">school</span> Niveau d'étude
+                        <span class="material-symbols-outlined">school</span> {{ t.all_cases_listing.Filter_study_level }}
                     </label>
                     <select name="study_level" id="filter-study-level">
-                        <option value="">Tous les niveaux</option>
+                        <option value="">{{ t.all_cases_listing.Filter_all_levels }}</option>
                         {% for l in study_level_choices %}
                         <option value="{{ l }}" {% if filter_study_level == l %}selected{% endif %}>{{ l }}</option>
                         {% endfor %}
@@ -56,10 +56,10 @@
 
                 <div class="filter-group">
                     <label for="filter-knowledge-level">
-                        <span class="material-symbols-outlined">psychology</span> Rang
+                        <span class="material-symbols-outlined">psychology</span> {{ t.all_cases_listing.Filter_rank }}
                     </label>
                     <select name="knowledge_level" id="filter-knowledge-level">
-                        <option value="">Tous les rangs</option>
+                        <option value="">{{ t.all_cases_listing.Filter_all_ranks }}</option>
                         {% for k in knowledge_level_choices %}
                         <option value="{{ k }}" {% if filter_knowledge_level == k %}selected{% endif %}>{{ k }}</option>
                         {% endfor %}
@@ -68,10 +68,10 @@
 
                 <div class="filter-group">
                     <label for="filter-domain">
-                        <span class="material-symbols-outlined">category</span> Domaine
+                        <span class="material-symbols-outlined">category</span> {{ t.all_cases_listing.Filter_domain }}
                     </label>
                     <select name="primary_learning_domain" id="filter-domain">
-                        <option value="">Tous les domaines</option>
+                        <option value="">{{ t.all_cases_listing.Filter_all_domains }}</option>
                         {% for d in domain_choices %}
                         <option value="{{ d }}" {% if filter_primary_learning_domain == d %}selected{% endif %}>{{ d }}</option>
                         {% endfor %}
@@ -80,14 +80,14 @@
 
                 <div class="filter-group">
                     <label for="filter-date-from">
-                        <span class="material-symbols-outlined">calendar_today</span> Date début
+                        <span class="material-symbols-outlined">calendar_today</span> {{ t.all_cases_listing.Filter_start_date }}
                     </label>
                     <input type="date" name="date_from" id="filter-date-from" value="{{ filter_date_from }}">
                 </div>
 
                 <div class="filter-group">
                     <label for="filter-date-to">
-                        <span class="material-symbols-outlined">event</span> Date fin
+                        <span class="material-symbols-outlined">event</span> {{ t.all_cases_listing.Filter_end_date }}
                     </label>
                     <input type="date" name="date_to" id="filter-date-to" value="{{ filter_date_to }}">
                 </div>
@@ -95,10 +95,10 @@
 
             <div class="filter-actions">
                 <button type="submit" class="btn-filter">
-                    <span class="material-symbols-outlined">search</span> Filtrer
+                    <span class="material-symbols-outlined">search</span> {{ t.all_cases_listing.Button_filter }}
                 </button>
                 <a href="{% url 'all_cases' %}" class="btn-reset">
-                    <span class="material-symbols-outlined">restart_alt</span> Réinitialiser
+                    <span class="material-symbols-outlined">restart_alt</span> {{ t.all_cases_listing.Button_reset }}
                 </a>
             </div>
         </form>
@@ -107,34 +107,34 @@
     <!-- Résultats -->
     <div class="results-section">
         <div class="results-header">
-            <h3>Résultats <span class="result-count">{{ case_count }} cas</span></h3>
+            <h3>{{ t.all_cases_listing.Results_title }} <span class="result-count">{{ case_count }} {{ t.all_cases_listing.Results_count }}</span></h3>
         </div>
 
         {% if cases %}
-            <div class="cases-grid">
-                {% for case in cases %}
-                    <div class="case-card">
-                        <h3 class="case-name">{{ case.name }}</h3>
-                        
-                        <div class="case-details">
-                            <p><strong>Spécialité :</strong> {{ case.speciality|default:"Non renseignée" }}</p>
-                            <p><strong>Niveau d'étude :</strong> {{ case.study_level|default:"Non renseigné" }}</p>
-                            <p><strong>Domaine principal :</strong> {{ case.primary_learning_domain|default:"Non renseigné" }}</p>
-                            <p><strong>Auteur :</strong> {{ case.author|default:"Non renseigné" }}</p>
-                        </div>
-                        
-                        <div class="case-footer">
-                            <span class="case-date">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
-                            <a href="{% url 'case_detail' case.id %}" class="btn-view-case">Voir les détails</a>
-                        </div>
-                    </div>
-                {% endfor %}
+        <div class="cases-grid">
+            {% for case in cases %}
+            <div class="case-card">
+                <h3 class="case-name">{{ case.name }}</h3>
+
+                <div class="case-details">
+                    <p><strong>{{ t.all_cases_listing.Label_speciality }}</strong> {{ case.speciality|default:t.all_cases_listing.Not_specified }}</p>
+                    <p><strong>{{ t.all_cases_listing.Label_study_level }}</strong> {{ case.study_level|default:t.all_cases_listing.Not_specified }}</p>
+                    <p><strong>{{ t.all_cases_listing.Label_domain }}</strong> {{ case.primary_learning_domain|default:t.all_cases_listing.Not_specified }}</p>
+                    <p><strong>{{ t.all_cases_listing.Label_author }}</strong> {{ case.author|default:t.all_cases_listing.Not_specified }}</p>
+                </div>
+
+                <div class="case-footer">
+                    <span class="case-date">{{ t.all_cases_listing.Added_on }} {{ case.created_at|date:"d/m/Y" }}</span>
+                    <a href="{% url 'case_detail' case.id %}" class="btn-view-case">{{ t.all_cases_listing.Button_view_details }}</a>
+                </div>
             </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <div class="no-cases">
-                <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">search_off</span>
-                <p>Aucun cas clinique ne correspond à vos critères de recherche.</p>
-            </div>
+        <div class="no-cases">
+            <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">search_off</span>
+            <p>{{ t.all_cases_listing.No_results }}</p>
+        </div>
         {% endif %}
     </div>
 </div>
