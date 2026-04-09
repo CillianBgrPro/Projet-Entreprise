@@ -200,8 +200,7 @@
                 <div class="teacher-perf-item">
                     <span class="material-symbols-outlined log-icon">psychology</span>
                     <div class="teacher-perf-info">
-                        <span class="teacher-perf-student">{{
-                            perf.student.user.get_full_name|default:perf.student.user.username }}</span>
+                        <span class="teacher-perf-student">{{ perf.student.user.get_full_name|default:perf.student.user.username }}</span>
                         <span class="teacher-perf-case">{{ perf.case.name }}</span>
                         <span class="teacher-perf-date">{{ perf.realization_date|date:"d/m/Y à H:i" }}</span>
                     </div>
@@ -259,18 +258,15 @@
                         <div class="training-scores">
                             <div class="score-pill score-total">
                                 <span class="score-label">Score total</span>
-                                <span class="score-value">{% if tr.total_score != None %}{{ tr.total_score }}{% else
-                                    %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.total_score != None %}{{ tr.total_score }}{% else %}—{% endif %}</span>
                             </div>
                             <div class="score-pill score-clinical">
                                 <span class="score-label">Compétences</span>
-                                <span class="score-value">{% if tr.clinical_skills_score != None %}{{
-                                    tr.clinical_skills_score }}{% else %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.clinical_skills_score != None %}{{ tr.clinical_skills_score }}{% else %}—{% endif %}</span>
                             </div>
                             <div class="score-pill score-comm">
                                 <span class="score-label">Communication</span>
-                                <span class="score-value">{% if tr.communication_skills_score != None %}{{
-                                    tr.communication_skills_score }}{% else %}—{% endif %}</span>
+                                <span class="score-value">{% if tr.communication_skills_score != None %}{{ tr.communication_skills_score }}{% else %}—{% endif %}</span>
                             </div>
                         </div>
                     </div>
