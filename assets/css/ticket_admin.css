@@ -378,8 +378,11 @@
     white-space: normal;
 }
 
-.ticket-table th {
+.ticket-table thead {
     background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-accent) 100%);
+}
+
+.ticket-table th {
     color: white;
     font-weight: 600;
     font-size: 13px;
