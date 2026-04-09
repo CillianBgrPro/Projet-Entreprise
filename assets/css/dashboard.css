@@ -269,7 +269,8 @@ section>h1 {
     margin-bottom: 32px;
 }
 
-a.card, .card {
+a.card,
+.card {
     background: var(--bg-card);
     border-radius: var(--radius-md);
     padding: 20px;
@@ -596,114 +597,642 @@ a.card, .card {
     color: #9aabbf;
 }
 
-    /* ============================
+/* ============================
    Animations
    ============================ */
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(25px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(16px);
-        }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
     }
 
-    /* ============================
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================
    Responsive
    ============================ */
 
-    @media (max-width: 1024px) {
-        .cards {
-            grid-template-columns: repeat(3, 1fr);
-        }
+@media (max-width: 1024px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .top-infos {
+        flex-direction: column;
     }
 
-    @media (max-width: 768px) {
-        .top-infos {
-            flex-direction: column;
-        }
-
-        section h1 {
-            font-size: 2rem;
-        }
-
-        .cards {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .card-value {
-            font-size: 1.6rem;
-        }
+    section h1 {
+        font-size: 2rem;
     }
 
-    @media (max-width: 480px) {
-        section {
-            padding: 24px 4%;
-        }
-
-        section h1 {
-            font-size: 1.6rem;
-        }
-
-        .cards {
-            grid-template-columns: 1fr;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .actions {
-            grid-template-columns: 1fr;
-            padding: 20px;
-        }
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    /* ============================================================
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-value {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    section {
+        padding: 24px 4%;
+    }
+
+    section h1 {
+        font-size: 1.6rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
-    @media (max-width: 900px) {
-        .top-infos {
-            grid-template-columns: 1fr;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
+@media (max-width: 900px) {
+    .top-infos {
+        grid-template-columns: 1fr;
     }
 
-    @media (max-width: 600px) {
-        .cards {
-            grid-template-columns: 1fr 1fr;
-        }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
-        section {
-            padding: 24px 16px 40px;
-        }
+@media (max-width: 600px) {
+    .cards {
+        grid-template-columns: 1fr 1fr;
     }
 
-    @media (max-width: 400px) {
-        .cards {
-            grid-template-columns: 1fr;
-        }
+    section {
+        padding: 24px 16px 40px;
     }
+}
+
+@media (max-width: 400px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   STUDENT DASHBOARD — Dernier entraînement (gauche)
+   ============================================================ */
+
+.student-last-training {
+    max-height: none;
+}
+
+.trainings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    max-height: 590px;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(91, 162, 207, 0.3) transparent;
+}
+
+.trainings-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.trainings-list::-webkit-scrollbar-thumb {
+    background: rgba(91, 162, 207, 0.3);
+    border-radius: 10px;
+}
+
+.trainings-list .training-card {
+    padding: 16px 18px;
+}
+
+.training-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.training-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f4f8fd 100%);
+    border-radius: 18px;
+    padding: 22px;
+    border: 1px solid rgba(91, 162, 207, 0.15);
+    box-shadow: 0 6px 20px rgba(44, 68, 113, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease backwards;
+}
+
+.training-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(91, 162, 207, 0.15);
+}
+
+.training-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.training-card-icon {
+    font-size: 32px;
+    color: var(--blue-light);
+    background: rgba(91, 162, 207, 0.1);
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.training-card-title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.training-card-title strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    line-height: 1.3;
+}
+
+.training-case-id {
+    font-size: 0.8rem;
+    color: #9aabbf;
+    font-weight: 500;
+}
+
+.training-arrow {
+    font-size: 16px;
+    color: #c0cfe0;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.training-card:hover .training-arrow {
+    color: var(--blue-light);
+    transform: translateX(3px);
+}
+
+.training-card-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #8a9bb0;
+    margin-bottom: 18px;
+    padding: 8px 12px;
+    background: rgba(91, 162, 207, 0.05);
+    border-radius: 10px;
+}
+
+.training-card-date .material-symbols-outlined {
+    font-size: 16px;
+    color: var(--blue-light);
+}
+
+.training-scores {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.score-pill {
+    flex: 1;
+    min-width: 80px;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+}
+
+.score-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.75;
+}
+
+.score-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.score-total {
+    background: linear-gradient(135deg, rgba(91, 162, 207, 0.12), rgba(91, 162, 207, 0.06));
+    color: #4a8ec0;
+    border: 1px solid rgba(91, 162, 207, 0.2);
+}
+
+.score-clinical {
+    background: linear-gradient(135deg, rgba(0, 184, 148, 0.12), rgba(0, 184, 148, 0.06));
+    color: #00a882;
+    border: 1px solid rgba(0, 184, 148, 0.2);
+}
+
+.score-comm {
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.12), rgba(108, 92, 231, 0.06));
+    color: #6c5ce7;
+    border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+/* Empty state */
+.training-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    flex: 1;
+}
+
+.training-empty-icon {
+    font-size: 56px;
+    color: rgba(91, 162, 207, 0.35);
+}
+
+.training-empty p {
+    color: #9aabbf;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.training-start-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 22px;
+    background: var(--blue-light);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(91, 162, 207, 0.3);
+}
+
+.training-start-btn:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   STUDENT DASHBOARD — Panneau statistiques (droite)
+   ============================================================ */
+
+.student-stats-panel {
+    max-height: none;
+    overflow: visible;
+}
+
+/* --- Taux de réussite --- */
+.stat-success-rate {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, rgba(91, 162, 207, 0.06), rgba(108, 92, 231, 0.06));
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(91, 162, 207, 0.12);
+    animation: fadeIn 0.6s ease backwards;
+}
+
+.stat-rate-circle {
+    position: relative;
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+}
+
+.rate-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.rate-track {
+    fill: none;
+    stroke: rgba(91, 162, 207, 0.1);
+    stroke-width: 10;
+}
+
+.rate-fill {
+    fill: none;
+    stroke: url(#rateGradient);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 314.16;
+    stroke-dashoffset: calc(314.16 - (314.16 * var(--rate) / 100));
+    transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+    stroke: var(--blue-light);
+}
+
+.rate-label-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.rate-number {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    line-height: 1.1;
+}
+
+.rate-sub {
+    font-size: 0.65rem;
+    color: #8a9bb0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-rate-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.stat-rate-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin: 0;
+}
+
+.stat-rate-detail {
+    font-size: 0.85rem;
+    color: #7a8a9e;
+    margin: 0;
+}
+
+.stat-rate-best {
+    font-size: 0.82rem;
+    color: #7a8a9e;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.stat-rate-best strong {
+    color: var(--blue-dark);
+}
+
+/* --- Grille stats numériques --- */
+.student-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    animation: fadeIn 0.7s ease backwards;
+    animation-delay: 0.1s;
+}
+
+.stu-stat-item {
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stu-stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stu-stat-item .material-symbols-outlined {
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stu-stat-item>div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stu-stat-item strong {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.stu-stat-item span:not(.material-symbols-outlined) {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.75;
+    line-height: 1.3;
+}
+
+/* Colors */
+.stu-stat-blue {
+    background: rgba(91, 162, 207, 0.09);
+    border: 1px solid rgba(91, 162, 207, 0.18);
+    color: #3a7dae;
+}
+
+.stu-stat-blue .material-symbols-outlined {
+    background: rgba(91, 162, 207, 0.15);
+    color: #5ba2cf;
+}
+
+.stu-stat-purple {
+    background: rgba(108, 92, 231, 0.08);
+    border: 1px solid rgba(108, 92, 231, 0.16);
+    color: #5a4ec0;
+}
+
+.stu-stat-purple .material-symbols-outlined {
+    background: rgba(108, 92, 231, 0.14);
+    color: #6c5ce7;
+}
+
+.stu-stat-green {
+    background: rgba(0, 184, 148, 0.08);
+    border: 1px solid rgba(0, 184, 148, 0.16);
+    color: #00896c;
+}
+
+.stu-stat-green .material-symbols-outlined {
+    background: rgba(0, 184, 148, 0.14);
+    color: #00b894;
+}
+
+.stu-stat-orange {
+    background: rgba(225, 112, 85, 0.08);
+    border: 1px solid rgba(225, 112, 85, 0.16);
+    color: #b8502e;
+}
+
+.stu-stat-orange .material-symbols-outlined {
+    background: rgba(225, 112, 85, 0.14);
+    color: #e17055;
+}
+
+.stu-stat-sky {
+    background: rgba(9, 132, 227, 0.08);
+    border: 1px solid rgba(9, 132, 227, 0.16);
+    color: #0660a9;
+}
+
+.stu-stat-sky .material-symbols-outlined {
+    background: rgba(9, 132, 227, 0.14);
+    color: #0984e3;
+}
+
+/* --- Empty stats state --- */
+.stats-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex: 1;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.stats-empty-icon {
+    font-size: 56px;
+    color: rgba(91, 162, 207, 0.3);
+}
+
+.stats-empty p {
+    color: #9aabbf;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.stats-empty-sub {
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    max-width: 260px;
+}
+
+/* --- Responsive student panels --- */
+@media (max-width: 768px) {
+    .student-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .training-scores {
+        flex-direction: column;
+    }
+
+    .stat-success-rate {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .stat-rate-circle {
+        margin: 0 auto;
+    }
+
+    .stat-rate-info {
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .student-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Cases en attente (Trophée / Rang) --- */
+.stu-stat-pending {
+    background: rgba(180, 190, 210, 0.07);
+    border: 1.5px dashed rgba(150, 165, 190, 0.35);
+    color: #8a9bb8;
+}
+
+.stu-stat-pending .material-symbols-outlined {
+    background: rgba(150, 165, 190, 0.1);
+    color: #aabbd0;
+}
+
+.stu-stat-pending:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: default;
+}
+
+.pending-value {
+    color: #b0bfd0 !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.05em;
+}
+
+.pending-badge {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #8a9bb8, #aabbd0);
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
