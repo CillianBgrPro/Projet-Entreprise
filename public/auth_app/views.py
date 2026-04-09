@@ -192,7 +192,50 @@ def student_trainings(request):
 
 @login_required
 def teacher_dashboard(request):
-    return render(request, 'dashboard.html')
+    from .models import ClinicalCase, Training, StudentPerformance, Professor
+    from django.db.models import Avg, Count
+
+    try:
+        professor = request.user.professor_profile
+    except Exception:
+        professor = None
+
+    # Derniers cas créés par ce professeur
+    recent_cases = []
+    total_cases_created = 0
+    total_trainings = 0
+    total_students_followed = 0
+    recent_performances = []
+
+    if professor:
+        cases_qs = ClinicalCase.objects.filter(creator_professor=professor).order_by('-created_at')
+        total_cases_created = cases_qs.count()
+        recent_cases = list(cases_qs[:5])
+
+        # Entraînements de ce professeur
+        trainings_qs = Training.objects.filter(professor=professor).select_related('case', 'group')
+        total_trainings = trainings_qs.count()
+
+        # Étudiants suivis (via groupes liés aux entraînements)
+        from .models import Student
+        total_students_followed = Student.objects.filter(
+            groups__professors=professor
+        ).distinct().count()
+
+        # Dernières performances sur les cas de ce professeur
+        recent_performances = StudentPerformance.objects.filter(
+            case__creator_professor=professor,
+            is_finished=True
+        ).select_related('case', 'student__user').order_by('-realization_date')[:8]
+
+    context = {
+        'recent_cases': recent_cases,
+        'total_cases_created': total_cases_created,
+        'total_trainings': total_trainings,
+        'total_students_followed': total_students_followed,
+        'recent_performances': recent_performances,
+    }
+    return render(request, 'dashboard.html', context)
 
 @login_required
 def admin_dashboard(request):
@@ -944,11 +987,21 @@ def create_case(request):
             
             case_obj = ClinicalCase.objects.create(
                 creator_professor=professor,
-                name=request.POST.get('name'),
-                speciality=request.POST.get('speciality'),
-                study_level=request.POST.get('study_level'),
-                knowledge_level=request.POST.get('knowledge_level'),
-                primary_learning_domain=request.POST.get('primary_learning_domain'),
+                name=request.POST.get('name', ''),
+                author=request.POST.get('author', ''),
+                reviewer=request.POST.get('reviewer', ''),
+                speciality=request.POST.get('speciality', ''),
+                study_level=request.POST.get('study_level', ''),
+                knowledge_level=request.POST.get('knowledge_level', ''),
+                primary_learning_domain=request.POST.get('primary_learning_domain', ''),
+                secondary_learning_domain=request.POST.get('secondary_learning_domain', ''),
+                objective=request.POST.get('objective', ''),
+                briefing_text=request.POST.get('briefing_text', ''),
+                instructions_to_do=request.POST.get('instructions_to_do', ''),
+                instructions_not_to_do=request.POST.get('instructions_not_to_do', ''),
+                has_standardized_patient=request.POST.get('has_standardized_patient') == 'true',
+                has_standardized_hcp=request.POST.get('has_standardized_hcp') == 'true',
+                has_iconography=request.POST.get('has_iconography') == 'true',
             )
             
             messages.success(request, "Cas créé avec succès.")
@@ -956,5 +1009,5 @@ def create_case(request):
         except Exception as e:
             messages.error(request, f"Erreur lors de la création du cas: {str(e)}")
             return redirect('create_case')
-        
+    
     return render(request, 'teacher/case_creation.html')

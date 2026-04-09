@@ -154,45 +154,103 @@
 {% elif user.role == 'teacher' %}
 <section>
     <h1>{{t.global_dashboard.teacher_dashboard.Title}}</h1>
+
+    <!-- Stat cards -->
+    <div class="cards">
+        <a href="{% url 'all_cases' %}" class="card card-blue">
+            <div class="card-icon"><span class="material-symbols-outlined">medical_services</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_cases_created }}</span>
+                <span class="card-label">Cas créés</span>
+            </div>
+        </a>
+        <a href="#" class="card card-purple">
+            <div class="card-icon"><span class="material-symbols-outlined">fitness_center</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_trainings }}</span>
+                <span class="card-label">Entraînements</span>
+            </div>
+        </a>
+        <a href="#" class="card card-green">
+            <div class="card-icon"><span class="material-symbols-outlined">school</span></div>
+            <div class="card-info">
+                <span class="card-value">{{ total_students_followed }}</span>
+                <span class="card-label">Étudiants suivis</span>
+            </div>
+        </a>
+    </div>
+
     <div class="top-infos">
-        <div class="section1 sections">
+        <!-- Mes derniers cas -->
+        <div class="section1 sections teacher-cases-section">
             <h2>{{t.global_dashboard.teacher_dashboard.Last_cases_title}}</h2>
-            <ul>
-                {% for case in cases %}
-                <li>
-                    <button>{{ case.name }}</button>
-                    <p>{{ case.specialty }}</p>
-                    <p>{{ case.level }}</p>
-                </li>
+            {% if recent_cases %}
+            <div class="teacher-cases-list">
+                {% for case in recent_cases %}
+                <a href="{% url 'case_detail' case.id %}" class="teacher-case-card-link">
+                    <div class="teacher-case-card">
+                        <div class="teacher-case-header">
+                            <span class="material-symbols-outlined teacher-case-icon">description</span>
+                            <div class="teacher-case-title">
+                                <strong>{{ case.name }}</strong>
+                                <span class="teacher-case-meta">
+                                    {% if case.speciality %}{{ case.speciality }}{% endif %}
+                                    {% if case.study_level %} · {{ case.study_level }}{% endif %}
+                                    {% if case.knowledge_level %} · Rang {{ case.knowledge_level }}{% endif %}
+                                </span>
+                            </div>
+                            <span class="teacher-case-arrow material-symbols-outlined">arrow_forward_ios</span>
+                        </div>
+                        <div class="teacher-case-date">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            {{ case.created_at|date:"d/m/Y" }}
+                        </div>
+                    </div>
+                </a>
                 {% endfor %}
-            </ul>
+            </div>
+            {% else %}
+            <div class="training-empty">
+                <span class="material-symbols-outlined training-empty-icon">description</span>
+                <p>Aucun cas créé pour le moment.</p>
+                <a href="{% url 'create_case' %}" class="training-start-btn">Créer un cas</a>
+            </div>
+            {% endif %}
         </div>
 
+        <!-- Performances récentes des étudiants -->
         <div class="section2 sections">
             <h2>{{t.global_dashboard.teacher_dashboard.Last_trainings_title}}</h2>
-            <ul>
-                {% for training in trainings %}
-                <li>
-                    <p>{{t.global_dashboard.teacher_dashboard.Student_name_placeholder}}</p>
-                    <button>{{t.global_dashboard.teacher_dashboard.Case_name_placeholder}}</button>
-                    <p>{{t.global_dashboard.teacher_dashboard.Score_label}}</p>
-                    <p>{{t.global_dashboard.teacher_dashboard.Time_label}}</p>
-                </li>
+            {% if recent_performances %}
+            <div class="logs-list">
+                {% for perf in recent_performances %}
+                <div class="teacher-perf-item">
+                    <span class="material-symbols-outlined log-icon">psychology</span>
+                    <div class="teacher-perf-info">
+                        <span class="teacher-perf-student">{{ perf.student.user.get_full_name|default:perf.student.user.username }}</span>
+                        <span class="teacher-perf-case">{{ perf.case.name }}</span>
+                        <span class="teacher-perf-date">{{ perf.realization_date|date:"d/m/Y à H:i" }}</span>
+                    </div>
+                    <div class="teacher-perf-score {% if perf.total_score != None and perf.total_score >= 50 %}score-ok{% elif perf.total_score != None %}score-low{% endif %}">
+                        {% if perf.total_score != None %}{{ perf.total_score }}{% else %}—{% endif %}
+                    </div>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
+            {% else %}
+            <div class="training-empty">
+                <span class="material-symbols-outlined training-empty-icon">bar_chart</span>
+                <p>Aucune performance disponible.</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 
     <div class="actions">
-        <a href="{% url 'all_cases' %}"><button
-                class="action-btn">{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
-        <a href="#"><button
-                class="action-btn">{{t.global_dashboard.teacher_dashboard.Student_tracking_btn}}</button></a>
-        <a href="#"><button class="action-btn">{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
-        <a href="{% url 'create_case' %}"><button
-                class="action-btn">{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
-        <a href="{% url 'ticket' %}"><button
-                class="action-btn">{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
+        <a href="{% url 'all_cases' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Case_bank_btn}}</button></a>
+        <a href="#" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Export_data_btn}}</button></a>
+        <a href="{% url 'create_case' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Create_case_btn}}</button></a>
+        <a href="{% url 'ticket' %}" class="action-btn"><button>{{t.global_dashboard.teacher_dashboard.Tickets}}</button></a>
     </div>
 </section>
 
