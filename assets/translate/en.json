@@ -317,5 +317,21 @@
         "Added_on": "Added on",
         "Button_view_details": "View details",
         "No_results": "No clinical cases match your search criteria."
+    },
+    "case_creation": {
+        "Page_title": "Case Creation",
+        "Main_title": "Case Creation",
+        "Label_title": "Title:",
+        "Placeholder_title": "Enter case title here",
+        "Label_prompt": "Prompt:",
+        "Placeholder_prompt": "Enter your prompt here",
+        "Label_specialty1": "Specialty 1:",
+        "Label_specialty2": "Specialty 2:",
+        "Option_select": "Select",
+        "Label_difficulty": "Difficulty:",
+        "Difficulty_easy": "Easy",
+        "Difficulty_medium": "Medium",
+        "Difficulty_hard": "Hard",
+        "Submit_button": "Create case"
     }
 }
