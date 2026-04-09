@@ -62,7 +62,8 @@
                     style="padding:10px; border-radius:8px; border:1px solid #d1d5db; font-size:16px; background-color:white;">
                     <option value="">-- Sélectionnez un professeur --</option>
                     {% for prof in professors %}
-                    <option value="{{ prof.id }}">{{ prof.user.first_name }} {{ prof.user.last_name }} ({{prof.speciality }})</option>
+                    <option value="{{ prof.id }}">{{ prof.user.first_name }} {{ prof.user.last_name }}
+                        ({{prof.speciality }})</option>
                     {% endfor %}
                 </select>
             </div>

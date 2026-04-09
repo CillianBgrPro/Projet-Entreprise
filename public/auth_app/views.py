@@ -299,13 +299,17 @@ def logs(request):
         return redirect('home')
     
     from .models import User, Ticket, StudentPerformance
-    latest_users = User.objects.all().order_by('-date_joined')[:50].values(
+    from django.utils import timezone
+    from datetime import timedelta
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+
+    latest_users = User.objects.filter(date_joined__gte=thirty_days_ago).order_by('-date_joined').values(
         'id', 'username', 'first_name', 'last_name', 'role', 'date_joined'
     )
-    latest_tickets = Ticket.objects.all().order_by('-created_at')[:50].values(
+    latest_tickets = Ticket.objects.filter(created_at__gte=thirty_days_ago).order_by('-created_at').values(
         'id', 'subject', 'status', 'created_at', 'user__username'
     )
-    latest_performances = StudentPerformance.objects.all().order_by('-realization_date')[:50].values(
+    latest_performances = StudentPerformance.objects.filter(realization_date__gte=thirty_days_ago).order_by('-realization_date').values(
         'id', 'student__user__username', 'case__name', 'realization_date', 'total_score'
     )
     

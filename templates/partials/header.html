@@ -37,7 +37,7 @@
             <li><a href="{% url 'dashboard_redirect' %}">Dashboard</a></li>
 
             {% if user.is_superuser %}
-            <li><a href="#">{{ t.header.Logs }}</a></li>
+            <li><a href="{% url 'logs' %}">{{ t.header.Logs }}</a></li>
             <li><a href="{% url 'users' %}">{{ t.header.Users }}</a></li>
             <li><a href="{% url 'data' %}">{{ t.header.Data }}</a></li>
             {% elif user.role == 'teacher' %}
