@@ -54,4 +54,16 @@ urlpatterns = [
      path('performance/<int:performance_id>/play/', views.play_performance, name='play_performance'),
      path('administrater/export-dynamique/', views.dynamic_export_csv, name='dynamic_export_csv'),
      path('create-case/', views.create_case, name='create_case'),
+     path('dashboard/professeur/entrainements/', views.teacher_all_trainings, name='teacher_all_trainings'),
 ]
+# a laisser pour que django puisse charger le css
+from django.conf import settings
+from django.urls import re_path
+from django.views.static import serve
+
+if not settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^static/(?P<path>.*)$', serve, {
+            'document_root': settings.STATICFILES_DIRS[0] if getattr(settings, 'STATICFILES_DIRS', None) else settings.STATIC_ROOT,
+        }),
+    ]

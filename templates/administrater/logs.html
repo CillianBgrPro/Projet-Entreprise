@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Historique complet - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.admin_logs.Page_title }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
@@ -9,7 +9,7 @@
 
 {% block content %}
 <section class="logs-page-container">
-    <h1>Activité des 30 derniers jours</h1>
+    <h1>{{ t.admin_logs.Title }}</h1>
 
     <div class="logs-list">
         {% for log in logs %}
@@ -21,7 +21,7 @@
                 </div>
                 <div class="log-meta">
                     <span class="log-tag tag-{{ log.type }}">{{ log.detail }}</span>
-                    <span class="log-date"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">schedule</span>{{ log.date|date:"d/m/Y H:i" }}</span>
+                    <span class="log-date"><span class="material-symbols-outlined log-date-icon">schedule</span>{{ log.date|date:"d/m/Y H:i" }}</span>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="log-item log-empty">
             <span class="log-icon material-symbols-outlined">info</span>
             <div class="log-text">
-                <span class="log-message">Aucun log disponible pour le moment.</span>
+                <span class="log-message">{{ t.admin_logs.No_logs }}</span>
             </div>
         </div>
         {% endfor %}

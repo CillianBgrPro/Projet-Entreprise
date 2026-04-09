@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Tous les entraînements - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.admin_trainings.Page_title }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/admin_users.css' %}">
@@ -9,9 +9,9 @@
 
 {% block content %}
 <div class="admin-container">
-    <a href="{% url 'admin_dashboard' %}" class="btn-secondary">Retour au Dashboard</a>
+    <a href="{% url 'admin_dashboard' %}" class="btn-secondary">{{ t.admin_trainings.Back_dashboard }}</a>
 
-    <h2>Supervision de tous les entraînements</h2>
+    <h2>{{ t.admin_trainings.Title }}</h2>
 
     <div class="list-section">
         {% if trainings %}
@@ -19,12 +19,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Cas Clinique</th>
-                        <th>Enseignant (Créateur)</th>
-                        <th>Groupe</th>
-                        <th>Date de création</th>
-                        <th>Statut</th>
+                        <th>{{ t.admin_trainings.Id }}</th>
+                        <th>{{ t.admin_trainings.Clinical_case }}</th>
+                        <th>{{ t.admin_trainings.Teacher_creator }}</th>
+                        <th>{{ t.admin_trainings.Group }}</th>
+                        <th>{{ t.admin_trainings.Creation_date }}</th>
+                        <th>{{ t.admin_trainings.Status }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,7 @@
                         <td>
                             <span
                                 class="status-badge {% if training.status == 'Terminé' %}status-finished{% else %}status-pending{% endif %}">
-                                {{ training.status|default:"En cours" }}
+                                {{ training.status|default:t.admin_trainings.Status_ongoing }}
                             </span>
                         </td>
                     </tr>
@@ -47,7 +47,7 @@
             </table>
         </div>
         {% else %}
-        <p class="empty-state">Aucun entraînement n'a été créé pour le moment.</p>
+        <p class="empty-state">{{ t.admin_trainings.No_trainings }}</p>
         {% endif %}
     </div>
 </div>

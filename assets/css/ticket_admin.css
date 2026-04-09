@@ -453,4 +453,167 @@
     .btn-filter, .btn-reset { width: 100%; justify-content: center; }
     .filter-header h2 { font-size: 24px; }
     .ticket-table th, .ticket-table td { padding: 10px 8px; font-size: 13px; }
+    .thread-container { padding: 20px 16px; }
+    .admin-status-form { flex-direction: column; }
+}
+
+/* ========================================= */
+/* TICKET DETAIL — Classes for inline-style removal */
+/* ========================================= */
+
+.ticket-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ticket-detail-header h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    text-align: left;
+}
+
+.alert-message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.admin-status-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.status-select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.reply-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.ticket-closed-info {
+    margin-top: 30px;
+    padding: 15px;
+    background: #e9ecef;
+    border-radius: 5px;
+    text-align: center;
+    color: #495057;
+}
+
+/* ========================================= */
+/* ADMIN USERS — Filter form improvements    */
+/* ========================================= */
+
+.filters-container {
+    margin-bottom: 30px;
+}
+
+.filter-form-users {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.form-group-users {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 250px;
+    flex: 1;
+}
+
+.form-group-users label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+}
+
+.label-icon {
+    font-size: 18px;
+    color: var(--blue-light);
+}
+
+.form-group-users select {
+    padding: 10px 14px;
+    border: 1.5px solid #dce1e8;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #333;
+    background: #fafbfc;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.form-group-users select:focus {
+    border-color: var(--blue-light);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(91, 162, 207, 0.15);
+}
+
+.list-section-title {
+    font-size: 1.1rem;
+    color: var(--blue-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-results-icon {
+    font-size: 22px;
+    color: var(--blue-light);
+}
+
+.total-count {
+    font-size: 13px;
+    color: #7a8a9e;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .filter-form-users {
+        flex-direction: column;
+    }
+    .form-group-users {
+        min-width: 100%;
+    }
+    .admin-container {
+        padding: 20px 4%;
+    }
+    .admin-container h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-results-section h3 {
+        font-size: 1.2rem;
+    }
 }

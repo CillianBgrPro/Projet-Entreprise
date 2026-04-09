@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Création de cas — DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.case_creation_full.Page_title }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/case_creation.css' %}">
@@ -13,8 +13,8 @@
             <span class="material-symbols-outlined">medical_services</span>
         </div>
         <div>
-            <h1 class="cc-title">Création d'un cas clinique</h1>
-            <p class="cc-subtitle">Renseignez les informations du nouveau cas ci-dessous.</p>
+            <h1 class="cc-title">{{ t.case_creation_full.Main_title }}</h1>
+            <p class="cc-subtitle">{{ t.case_creation_full.Subtitle }}</p>
         </div>
     </div>
 
@@ -37,29 +37,29 @@
         <div class="cc-card">
             <div class="cc-card-header">
                 <span class="material-symbols-outlined">info</span>
-                <h2>Informations générales</h2>
+                <h2>{{ t.case_creation_full.Section_general }}</h2>
             </div>
             <div class="cc-grid cc-grid-1">
                 <div class="cc-field">
-                    <label for="name">Titre du cas <span class="cc-required">*</span></label>
-                    <input type="text" id="name" name="name" placeholder="Entrez le titre du cas clinique" required />
+                    <label for="name">{{ t.case_creation_full.Label_title }} <span class="cc-required">{{ t.case_creation_full.Required }}</span></label>
+                    <input type="text" id="name" name="name" placeholder="{{ t.case_creation_full.Placeholder_title }}" required />
                 </div>
             </div>
             <div class="cc-grid cc-grid-2">
                 <div class="cc-field">
-                    <label for="author">Auteur</label>
-                    <input type="text" id="author" name="author" placeholder="Nom de l'auteur" />
+                    <label for="author">{{ t.case_creation_full.Label_author }}</label>
+                    <input type="text" id="author" name="author" placeholder="{{ t.case_creation_full.Placeholder_author }}" />
                 </div>
                 <div class="cc-field">
-                    <label for="reviewer">Relecteur</label>
-                    <input type="text" id="reviewer" name="reviewer" placeholder="Nom du relecteur" />
+                    <label for="reviewer">{{ t.case_creation_full.Label_reviewer }}</label>
+                    <input type="text" id="reviewer" name="reviewer" placeholder="{{ t.case_creation_full.Placeholder_reviewer }}" />
                 </div>
             </div>
             <div class="cc-grid cc-grid-1">
                 <div class="cc-field">
-                    <label for="objective">Objectif pédagogique</label>
+                    <label for="objective">{{ t.case_creation_full.Label_objective }}</label>
                     <textarea id="objective" name="objective" rows="3"
-                        placeholder="Décrivez l'objectif pédagogique de ce cas"></textarea>
+                        placeholder="{{ t.case_creation_full.Placeholder_objective }}"></textarea>
                 </div>
             </div>
         </div>
@@ -67,67 +67,67 @@
         <div class="cc-card">
             <div class="cc-card-header">
                 <span class="material-symbols-outlined">category</span>
-                <h2>Classification</h2>
+                <h2>{{ t.case_creation_full.Section_classification }}</h2>
             </div>
             <div class="cc-grid cc-grid-2">
                 <div class="cc-field">
-                    <label for="primary_learning_domain">Domaine d'apprentissage principal <span
-                            class="cc-required">*</span></label>
+                    <label for="primary_learning_domain">{{ t.case_creation_full.Label_primary_domain }} <span
+                            class="cc-required">{{ t.case_creation_full.Required }}</span></label>
                     <select id="primary_learning_domain" name="primary_learning_domain">
-                        <option value="" disabled selected>Sélectionnez un domaine</option>
+                        <option value="" disabled selected>{{ t.case_creation_full.Select_domain }}</option>
                         {% for specialty in specialties %}
                         <option value="{{ specialty.id }}">{{ specialty.name }}</option>
                         {% endfor %}
-                        <option value="Urgence vitale">Urgence vitale</option>
-                        <option value="Examen clinique">Examen clinique</option>
-                        <option value="Raisonnement diagnostique">Raisonnement diagnostique</option>
-                        <option value="Prescription">Prescription</option>
-                        <option value="Communication">Communication</option>
-                        <option value="Gestes techniques">Gestes techniques</option>
-                        <option value="Prévention">Prévention</option>
-                        <option value="Ethique">Éthique</option>
+                        <option value="Urgence vitale">{{ t.case_creation_full.Domain_urgence }}</option>
+                        <option value="Examen clinique">{{ t.case_creation_full.Domain_examen }}</option>
+                        <option value="Raisonnement diagnostique">{{ t.case_creation_full.Domain_diagnostic }}</option>
+                        <option value="Prescription">{{ t.case_creation_full.Domain_prescription }}</option>
+                        <option value="Communication">{{ t.case_creation_full.Domain_communication }}</option>
+                        <option value="Gestes techniques">{{ t.case_creation_full.Domain_gestes }}</option>
+                        <option value="Prévention">{{ t.case_creation_full.Domain_prevention }}</option>
+                        <option value="Ethique">{{ t.case_creation_full.Domain_ethique }}</option>
                     </select>
                 </div>
                 <div class="cc-field">
-                    <label for="secondary_learning_domain">Domaine d'apprentissage secondaire</label>
+                    <label for="secondary_learning_domain">{{ t.case_creation_full.Label_secondary_domain }}</label>
                     <select id="secondary_learning_domain" name="secondary_learning_domain">
-                        <option value="">Aucun</option>
+                        <option value="">{{ t.case_creation_full.Option_none }}</option>
                         {% for specialty in specialties %}
                         <option value="{{ specialty.id }}">{{ specialty.name }}</option>
                         {% endfor %}
-                        <option value="Urgence vitale">Urgence vitale</option>
-                        <option value="Examen clinique">Examen clinique</option>
-                        <option value="Raisonnement diagnostique">Raisonnement diagnostique</option>
-                        <option value="Prescription">Prescription</option>
-                        <option value="Communication">Communication</option>
-                        <option value="Gestes techniques">Gestes techniques</option>
-                        <option value="Prévention">Prévention</option>
-                        <option value="Ethique">Éthique</option>
+                        <option value="Urgence vitale">{{ t.case_creation_full.Domain_urgence }}</option>
+                        <option value="Examen clinique">{{ t.case_creation_full.Domain_examen }}</option>
+                        <option value="Raisonnement diagnostique">{{ t.case_creation_full.Domain_diagnostic }}</option>
+                        <option value="Prescription">{{ t.case_creation_full.Domain_prescription }}</option>
+                        <option value="Communication">{{ t.case_creation_full.Domain_communication }}</option>
+                        <option value="Gestes techniques">{{ t.case_creation_full.Domain_gestes }}</option>
+                        <option value="Prévention">{{ t.case_creation_full.Domain_prevention }}</option>
+                        <option value="Ethique">{{ t.case_creation_full.Domain_ethique }}</option>
                     </select>
                 </div>
             </div>
             <div class="cc-grid cc-grid-3">
                 <div class="cc-field">
-                    <label for="study_level">Année d'étude <span class="cc-required">*</span></label>
+                    <label for="study_level">{{ t.case_creation_full.Label_study_level }} <span class="cc-required">{{ t.case_creation_full.Required }}</span></label>
                     <select id="study_level" name="study_level">
-                        <option value="" disabled selected>Sélectionner</option>
+                        <option value="" disabled selected>{{ t.case_creation_full.Select_placeholder }}</option>
                         <option value="MM1">MM1</option>
                         <option value="MM2">MM2</option>
                         <option value="MM3">MM3</option>
                     </select>
                 </div>
                 <div class="cc-field">
-                    <label for="knowledge_level">Rang de connaissance <span class="cc-required">*</span></label>
+                    <label for="knowledge_level">{{ t.case_creation_full.Label_knowledge_level }} <span class="cc-required">{{ t.case_creation_full.Required }}</span></label>
                     <select id="knowledge_level" name="knowledge_level">
-                        <option value="" disabled selected>Sélectionner</option>
-                        <option value="A">Rang A</option>
-                        <option value="B">Rang B</option>
-                        <option value="AB">Rang A/B</option>
+                        <option value="" disabled selected>{{ t.case_creation_full.Select_placeholder }}</option>
+                        <option value="A">{{ t.case_creation_full.Rank_A }}</option>
+                        <option value="B">{{ t.case_creation_full.Rank_B }}</option>
+                        <option value="AB">{{ t.case_creation_full.Rank_AB }}</option>
                     </select>
                 </div>
                 <div class="cc-field">
-                    <label for="speciality">Spécialité</label>
-                    <input type="text" id="speciality" name="speciality" placeholder="Ex : Cardiologie" />
+                    <label for="speciality">{{ t.case_creation_full.Label_speciality }}</label>
+                    <input type="text" id="speciality" name="speciality" placeholder="{{ t.case_creation_full.Placeholder_speciality }}" />
                 </div>
             </div>
         </div>
@@ -135,25 +135,25 @@
         <div class="cc-card">
             <div class="cc-card-header">
                 <span class="material-symbols-outlined">description</span>
-                <h2>Contenu clinique</h2>
+                <h2>{{ t.case_creation_full.Section_content }}</h2>
             </div>
             <div class="cc-grid cc-grid-1">
                 <div class="cc-field">
-                    <label for="briefing_text">Texte de départ (briefing)</label>
+                    <label for="briefing_text">{{ t.case_creation_full.Label_briefing }}</label>
                     <textarea id="briefing_text" name="briefing_text" rows="4"
-                        placeholder="Décrivez la situation initiale présentée à l'étudiant"></textarea>
+                        placeholder="{{ t.case_creation_full.Placeholder_briefing }}"></textarea>
                 </div>
             </div>
             <div class="cc-grid cc-grid-2">
                 <div class="cc-field">
-                    <label for="instructions_to_do">Ce qu'il faut faire</label>
+                    <label for="instructions_to_do">{{ t.case_creation_full.Label_instructions_do }}</label>
                     <textarea id="instructions_to_do" name="instructions_to_do" rows="3"
-                        placeholder="Listez les actions attendues"></textarea>
+                        placeholder="{{ t.case_creation_full.Placeholder_instructions_do }}"></textarea>
                 </div>
                 <div class="cc-field">
-                    <label for="instructions_not_to_do">Ce qu'il ne faut pas faire</label>
+                    <label for="instructions_not_to_do">{{ t.case_creation_full.Label_instructions_not_do }}</label>
                     <textarea id="instructions_not_to_do" name="instructions_not_to_do" rows="3"
-                        placeholder="Listez les actions à éviter"></textarea>
+                        placeholder="{{ t.case_creation_full.Placeholder_instructions_not_do }}"></textarea>
                 </div>
             </div>
         </div>
@@ -161,7 +161,7 @@
         <div class="cc-card">
             <div class="cc-card-header">
                 <span class="material-symbols-outlined">tune</span>
-                <h2>Options du cas</h2>
+                <h2>{{ t.case_creation_full.Section_options }}</h2>
             </div>
             <div class="cc-checkboxes">
                 <label class="cc-checkbox-label" for="has_standardized_patient">
@@ -169,7 +169,7 @@
                     <span class="cc-checkbox-custom"></span>
                     <span class="cc-checkbox-text">
                         <span class="material-symbols-outlined">person</span>
-                        Patient standardisé
+                        {{ t.case_creation_full.Option_patient }}
                     </span>
                 </label>
                 <label class="cc-checkbox-label" for="has_standardized_hcp">
@@ -177,7 +177,7 @@
                     <span class="cc-checkbox-custom"></span>
                     <span class="cc-checkbox-text">
                         <span class="material-symbols-outlined">stethoscope</span>
-                        Professionnel de santé standardisé
+                        {{ t.case_creation_full.Option_hcp }}
                     </span>
                 </label>
                 <label class="cc-checkbox-label" for="has_iconography">
@@ -185,33 +185,33 @@
                     <span class="cc-checkbox-custom"></span>
                     <span class="cc-checkbox-text">
                         <span class="material-symbols-outlined">image</span>
-                        Iconographie
+                        {{ t.case_creation_full.Option_iconography }}
                     </span>
                 </label>
             </div>
             <div class="cc-grid cc-grid-2 cc-mt">
                 <div class="cc-field cc-field-disabled">
-                    <label>Fichier ECOS (source)</label>
+                    <label>{{ t.case_creation_full.Label_source_file }}</label>
                     <div class="cc-file-btn">
                         <span class="material-symbols-outlined">upload_file</span>
-                        <span>Fonctionnalité à venir</span>
+                        <span>{{ t.case_creation_full.Feature_coming }}</span>
                     </div>
                 </div>
                 <div class="cc-field cc-field-disabled">
-                    <label>Grille d'évaluation</label>
+                    <label>{{ t.case_creation_full.Label_eval_grid }}</label>
                     <div class="cc-file-btn">
                         <span class="material-symbols-outlined">table_chart</span>
-                        <span>Fonctionnalité à venir</span>
+                        <span>{{ t.case_creation_full.Feature_coming }}</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="cc-submit-area">
-            <a href="{% url 'all_cases' %}" class="cc-cancel-btn">Annuler</a>
+            <a href="{% url 'all_cases' %}" class="cc-cancel-btn">{{ t.case_creation_full.Cancel_button }}</a>
             <button type="submit" id="cc-submit-btn" class="cc-submit-btn">
                 <span class="material-symbols-outlined">add_circle</span>
-                Créer le cas clinique
+                {{ t.case_creation_full.Submit_button }}
             </button>
         </div>
     </form>

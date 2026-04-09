@@ -861,7 +861,7 @@ def performance_detail(request, performance_id):
     from django.contrib import messages
     performance = get_object_or_404(StudentPerformance, id=performance_id)
     
-    if not request.user.is_superuser and performance.student.user != request.user:
+    if not request.user.is_superuser and performance.student.user != request.user and getattr(request.user, 'role', '') != 'teacher':
         messages.error(request, "Accès refusé.")
         return redirect('home')
         
@@ -1011,3 +1011,29 @@ def create_case(request):
             return redirect('create_case')
     
     return render(request, 'teacher/case_creation.html')
+
+@login_required
+def teacher_all_trainings(request):
+    if request.user.role != 'teacher':
+        return redirect('home')
+
+    from .models import StudentPerformance
+    from django.db.models import Q
+    from django.core.paginator import Paginator
+
+    search_query = request.GET.get('search', '').strip()
+    
+    performances = StudentPerformance.objects.select_related('student__user', 'case').all().order_by('-realization_date')
+
+    if search_query:
+        performances = performances.filter(
+            Q(student__user__first_name__icontains=search_query) |
+            Q(student__user__last_name__icontains=search_query) |
+            Q(case__name__icontains=search_query)
+        )
+
+    paginator = Paginator(performances, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'teacher/all_trainings.html', {'performances': page_obj, 'search_query': search_query, 'paginator': paginator})

@@ -165,7 +165,7 @@
                 .then(r => r.json())
                 .then(data => {
                     if (data.status === 'ok') {
-                        avatarFeedback.innerHTML = '<span class="feedback-success"><span class="material-symbols-outlined">check_circle</span> Avatar mis à jour !</span>';
+                        avatarFeedback.innerHTML = '<span class="feedback-success"><span class="material-symbols-outlined">check_circle</span> {{ t.account_settings.Avatar_updated }}</span>';
                         const headerIcon = document.querySelector('header .account span.material-symbols-outlined');
                         if (headerIcon) headerIcon.textContent = avatar;
                     } else {
@@ -174,7 +174,7 @@
                     setTimeout(() => { avatarFeedback.innerHTML = ''; }, 3000);
                 })
                 .catch(() => {
-                    avatarFeedback.innerHTML = '<span class="feedback-error"><span class="material-symbols-outlined">error</span> Erreur réseau.</span>';
+                    avatarFeedback.innerHTML = '<span class="feedback-error"><span class="material-symbols-outlined">error</span> {{ t.account_settings.Network_error }}</span>';
                     setTimeout(() => { avatarFeedback.innerHTML = ''; }, 3000);
                 });
         });

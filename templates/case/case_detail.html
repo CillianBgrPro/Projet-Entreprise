@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Détails du cas - {{ case.name }}{% endblock %}
+{% block title %}{{ t.case_detail.Page_title }} - {{ case.name }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/case-detail.css' %}">
@@ -9,13 +9,13 @@
 
 {% block content %}
 <div class="case-detail-wrapper">
-    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-        <a href="{% url 'all_cases' %}" class="btn-secondary">← Retour à tous les cas</a>
+    <div class="case-detail-topbar">
+        <a href="{% url 'all_cases' %}" class="btn-secondary">{{ t.case_detail.Back_all_cases }}</a>
         {% if user.role == 'student' %}
-        <form method="POST" action="{% url 'start_case' case.id %}" style="display: inline;">
+        <form method="POST" action="{% url 'start_case' case.id %}" class="start-training-form">
             {% csrf_token %}
-            <button type="submit" class="btn-primary" style="background-color: #2563eb; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;">
-                <span class="material-symbols-outlined" style="font-size: 20px;">play_arrow</span> Démarrer l'entraînement
+            <button type="submit" class="btn-primary btn-start-training">
+                <span class="material-symbols-outlined">play_arrow</span> {{ t.case_detail.Start_training }}
             </button>
         </form>
         {% endif %}
@@ -23,122 +23,121 @@
 
     <div class="case-header">
         <h2 class="case-title">{{ case.name }}</h2>
-        <span class="detail-value">Ajouté le {{ case.created_at|date:"d/m/Y" }}</span>
+        <span class="detail-value">{{ t.case_detail.Added_on }} {{ case.created_at|date:"d/m/Y" }}</span>
     </div>
 
     <div class="case-grid">
         <div class="detail-item">
-            <span class="detail-label">Enseignant créateur</span>
+            <span class="detail-label">{{ t.case_detail.Creator_teacher }}</span>
             <span class="detail-value">{{ case.creator_professor }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Auteur</span>
-            <span class="detail-value">{{ case.author|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Author }}</span>
+            <span class="detail-value">{{ case.author|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Relecteur</span>
-            <span class="detail-value">{{ case.reviewer|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Reviewer }}</span>
+            <span class="detail-value">{{ case.reviewer|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">ID Patient Virtuel</span>
-            <span class="detail-value">{{ case.virtual_patient_id|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Virtual_patient_id }}</span>
+            <span class="detail-value">{{ case.virtual_patient_id|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Année d'étude</span>
-            <span class="detail-value">{{ case.study_level|default:"Non renseignée" }}</span>
+            <span class="detail-label">{{ t.case_detail.Study_year }}</span>
+            <span class="detail-value">{{ case.study_level|default:t.case_detail.Not_specified_f }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Niveau de connaissance</span>
-            <span class="detail-value">{{ case.knowledge_level|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Knowledge_level }}</span>
+            <span class="detail-value">{{ case.knowledge_level|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Spécialité</span>
-            <span class="detail-value">{{ case.speciality|default:"Non renseignée" }}</span>
+            <span class="detail-label">{{ t.case_detail.Speciality }}</span>
+            <span class="detail-value">{{ case.speciality|default:t.case_detail.Not_specified_f }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Item</span>
-            <span class="detail-value">{{ case.item_id|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Item }}</span>
+            <span class="detail-value">{{ case.item_id|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Domaine d'apprentissage principal</span>
-            <span class="detail-value">{{ case.primary_learning_domain|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Primary_domain }}</span>
+            <span class="detail-value">{{ case.primary_learning_domain|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Domaine d'apprentissage secondaire</span>
-            <span class="detail-value">{{ case.secondary_learning_domain|default:"Non renseigné" }}</span>
+            <span class="detail-label">{{ t.case_detail.Secondary_domain }}</span>
+            <span class="detail-value">{{ case.secondary_learning_domain|default:t.case_detail.Not_specified }}</span>
         </div>
         <div class="detail-item">
-            <span class="detail-label">Situation de départ</span>
+            <span class="detail-label">{{ t.case_detail.Starting_situation }}</span>
             <span class="detail-value">
                 {% for situation in case.starting_situation_id.all %}
                     {{ situation.text_situation }}{% if not forloop.last %}<br>{% endif %}
                 {% empty %}
-                    Non renseignée
+                    {{ t.case_detail.Not_specified_f }}
                 {% endfor %}
             </span>
         </div>
 
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Options activées</span>
+            <span class="detail-label">{{ t.case_detail.Enabled_options }}</span>
             <div>
-                {% if case.has_standardized_patient %}<span class="badge">Patient standardisé</span>{% endif %}
-                {% if case.has_standardized_hcp %}<span class="badge">Professionnel de santé standardisé</span>{% endif %}
-                {% if case.has_iconography %}<span class="badge">Iconographie</span>{% endif %}
+                {% if case.has_standardized_patient %}<span class="badge">{{ t.case_detail.Standardized_patient }}</span>{% endif %}
+                {% if case.has_standardized_hcp %}<span class="badge">{{ t.case_detail.Standardized_hcp }}</span>{% endif %}
+                {% if case.has_iconography %}<span class="badge">{{ t.case_detail.Iconography }}</span>{% endif %}
                 {% if not case.has_standardized_patient and not case.has_standardized_hcp and not case.has_iconography %}
-                    <span class="detail-value">Aucune option</span>
+                    <span class="detail-value">{{ t.case_detail.No_option }}</span>
                 {% endif %}
             </div>
         </div>
 
         {% if case.source_file_path %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Fichier source</span>
+            <span class="detail-label">{{ t.case_detail.Source_file }}</span>
             <span class="detail-value">
-                <a href="{{ case.source_file_path }}" target="_blank" style="color: #2563eb; text-decoration: underline;">Voir le document source</a>
+                <a href="{{ case.source_file_path }}" target="_blank" class="source-link">{{ t.case_detail.View_source }}</a>
             </span>
         </div>
         {% endif %}
 
         {% if case.objective %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Objectif</span>
-            <span class="detail-value" style="white-space: pre-wrap;">{{ case.objective }}</span>
+            <span class="detail-label">{{ t.case_detail.Objective }}</span>
+            <span class="detail-value detail-prewrap">{{ case.objective }}</span>
         </div>
         {% endif %}
 
         {% if case.briefing_text %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Texte de briefing</span>
-            <span class="detail-value" style="white-space: pre-wrap;">{{ case.briefing_text }}</span>
+            <span class="detail-label">{{ t.case_detail.Briefing_text }}</span>
+            <span class="detail-value detail-prewrap">{{ case.briefing_text }}</span>
         </div>
         {% endif %}
 
         {% if case.instructions_to_do %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Instructions à réaliser</span>
-            <span class="detail-value" style="white-space: pre-wrap;">{{ case.instructions_to_do }}</span>
+            <span class="detail-label">{{ t.case_detail.Instructions_do }}</span>
+            <span class="detail-value detail-prewrap">{{ case.instructions_to_do }}</span>
         </div>
         {% endif %}
 
         {% if case.instructions_not_to_do %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Instructions hors cadre</span>
-            <span class="detail-value" style="white-space: pre-wrap;">{{ case.instructions_not_to_do }}</span>
+            <span class="detail-label">{{ t.case_detail.Instructions_not_do }}</span>
+            <span class="detail-value detail-prewrap">{{ case.instructions_not_to_do }}</span>
         </div>
         {% endif %}
 
         {% if case.evaluation_grid %}
         <div class="detail-item detail-full-width">
-            <span class="detail-label">Grille d'évaluation</span>
-            <pre class="detail-value" style="background: #f8fafc; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{{ case.evaluation_grid|pprint }}</code></pre>
+            <span class="detail-label">{{ t.case_detail.Evaluation_grid }}</span>
+            <pre class="detail-value detail-code"><code>{{ case.evaluation_grid|pprint }}</code></pre>
         </div>
         {% endif %}
 
-        <!-- à rajouter pour les enseignants et les admins, voir comment on peut stocker les fichiers -->
         {% if user.is_superuser or user.role == 'teacher' %}
         {% if case.source_file_path %}
             <a href="{{ case.source_file_path }}" class="btn-download" target="_blank" download>
-                📥 Télécharger le fichier source
+                {{ t.case_detail.Download_source }}
             </a>
         {% endif %}
     {% endif %}

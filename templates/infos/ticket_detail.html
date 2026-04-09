@@ -16,21 +16,20 @@
     {% endif %}
 
     <div class="thread-container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="margin: 0; color: var(--blue-dark);">{{ ticket.subject }}</h2>
-            <span class="status-badge" style=" 
-                {% if ticket.status|lower == 'ouvert' %}background-color: var(--status-open-bg); color: var(--status-open);
-                {% elif ticket.status|lower == 'résolu' or ticket.status|lower == 'resolu' %}background-color: var(--status-resolved-bg); color: var(--status-resolved);
-                {% elif ticket.status|lower == 'clos' %}background-color: var(--status-closed-bg); color: var(--status-closed);
-                {% else %}background-color: var(--status-progress-bg); color: var(--status-progress);{% endif %}">
-                Statut : {{ ticket.status }}
+        <div class="ticket-detail-header">
+            <h2>{{ ticket.subject }}</h2>
+            <span class="status-badge
+                {% if ticket.status|lower == 'ouvert' %}status-open
+                {% elif ticket.status|lower == 'résolu' or ticket.status|lower == 'resolu' %}status-resolved
+                {% elif ticket.status|lower == 'clos' %}status-closed
+                {% else %}status-progress{% endif %}">
+                {{t.ticket_details.status}} {{ ticket.status }}
             </span>
         </div>
 
         {% if messages %}
         {% for message in messages %}
-        <div
-            style="padding: 10px; margin-bottom: 20px; border-radius: 5px; {% if message.tags == 'success' %}background-color: #d4edda; color: #155724;{% else %}background-color: #f8d7da; color: #721c24;{% endif %}">
+        <div class="alert-message {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
             {{ message }}
         </div>
         {% endfor %}
@@ -39,23 +38,22 @@
         {% if user.is_superuser %}
         <div class="admin-controls">
             <strong>{{t.ticket_details.admin_panel}}</strong> {{t.ticket_details.update_status}}
-            <form method="POST" action="{% url 'ticket_change_status' ticket.id %}"
-                style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
+            <form method="POST" action="{% url 'ticket_change_status' ticket.id %}" class="admin-status-form">
                 {% csrf_token %}
-                <select name="status" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                <select name="status" class="status-select">
                     <option value="Ouvert" {% if ticket.status == 'Ouvert' %}selected{% endif %}>{{t.ticket_details.status_open}}</option>
                     <option value="En cours" {% if ticket.status == 'En cours' %}selected{% endif %}>{{t.ticket_details.status_progress}}</option>
                     <option value="Résolu" {% if ticket.status == 'Résolu' %}selected{% endif %}>{{t.ticket_details.status_resolved}}</option>
                     <option value="Clos" {% if ticket.status == 'Clos' %}selected{% endif %}>{{t.ticket_details.status_closed}}</option>
                 </select>
-                <button type="submit" class="btn-primary" style="padding: 8px 15px;">{{t.ticket_details.update_button}}</button>
+                <button type="submit" class="btn-primary">{{t.ticket_details.update_button}}</button>
             </form>
         </div>
         {% endif %}
 
         <div class="message-bubble">
             <div class="message-header">
-                <span>{{ ticket.user.first_name }} {{ ticket.user.last_name }} ({% if ticket.user.is_superuser %}Admin{% else %}Auteur{% endif %})</span>
+                <span>{{ ticket.user.first_name }} {{ ticket.user.last_name }} ({% if ticket.user.is_superuser %}{{ t.ticket_details.admin_label }}{% else %}{{ t.ticket_details.author_label }}{% endif %})</span>
                 <span>{{ ticket.created_at|date:"d/m/Y H:i" }}</span>
             </div>
             <div class="message-content">{{ ticket.message }}</div>
@@ -64,7 +62,7 @@
         {% for reply in replies %}
         <div class="message-bubble {% if reply.user.is_superuser %}admin{% endif %}">
             <div class="message-header">
-                <span>{{ reply.user.first_name }} {{ reply.user.last_name }} {% if reply.user.is_superuser %}(Admin){% endif %}</span>
+                <span>{{ reply.user.first_name }} {{ reply.user.last_name }} {% if reply.user.is_superuser %}({{ t.ticket_details.admin_label }}){% endif %}</span>
                 <span>{{ reply.created_at|date:"d/m/Y H:i" }}</span>
             </div>
             <div class="message-content">{{ reply.message }}</div>
@@ -75,15 +73,14 @@
         <div class="reply-form">
             <form method="POST" action="{% url 'ticket_detail' ticket.id %}">
                 {% csrf_token %}
-                <label for="reply_message" style="font-weight: bold; margin-bottom: 10px; display: block;">{{t.ticket_details.new_reply}}</label>
+                <label for="reply_message" class="reply-label">{{t.ticket_details.new_reply}}</label>
                 <textarea id="reply_message" name="reply_message" rows="4" required
                     placeholder="{{t.ticket_details.reply_placeholder}}"></textarea>
                 <button type="submit" class="btn-primary">{{t.ticket_details.reply_button}}</button>
             </form>
         </div>
         {% else %}
-        <div
-            style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 5px; text-align: center; color: #495057;">
+        <div class="ticket-closed-info">
             {{t.ticket_details.ticket_closed}}
         </div>
         {% endif %}

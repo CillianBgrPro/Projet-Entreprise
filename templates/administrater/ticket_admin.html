@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Filtrer les Tickets - DR. VIRTUORL{% endblock %}
+{% block title %}{{ t.ticket_admin_page.Page_title }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/ticket_admin.css' %}">
@@ -12,11 +12,11 @@
     <div class="filter-header">
         <div class="filter-header-actions">
             <a href="{% url 'admin_dashboard' %}" class="btn-back">
-                <span class="material-symbols-outlined">arrow_back</span> Retour au Dashboard
+                <span class="material-symbols-outlined">arrow_back</span> {{ t.ticket_admin_page.Back_dashboard }}
             </a>
         </div>
-        <h2>🔍 Filtrer les tickets</h2>
-        <p class="filter-subtitle">Recherchez et filtrez les tickets par critères</p>
+        <h2>{{ t.ticket_admin_page.Title }}</h2>
+        <p class="filter-subtitle">{{ t.ticket_admin_page.Subtitle }}</p>
     </div>
 
     <div class="filter-card">
@@ -24,10 +24,10 @@
             <div class="filter-grid">
                 <div class="filter-group">
                     <label for="filter-status">
-                        <span class="material-symbols-outlined">flag</span> Statut
+                        <span class="material-symbols-outlined">flag</span> {{ t.ticket_admin_page.Filter_status }}
                     </label>
                     <select name="status" id="filter-status">
-                        <option value="">Tous les statuts</option>
+                        <option value="">{{ t.ticket_admin_page.All_statuses }}</option>
                         {% for s in status_choices %}
                         <option value="{{ s }}" {% if filter_status == s %}selected{% endif %}>{{ s }}</option>
                         {% endfor %}
@@ -36,28 +36,28 @@
 
                 <div class="filter-group">
                     <label for="filter-subject">
-                        <span class="material-symbols-outlined">subject</span> Sujet
+                        <span class="material-symbols-outlined">subject</span> {{ t.ticket_admin_page.Filter_subject }}
                     </label>
-                    <input type="text" name="subject" id="filter-subject" placeholder="Rechercher par sujet..." value="{{ filter_subject }}">
+                    <input type="text" name="subject" id="filter-subject" placeholder="{{ t.ticket_admin_page.Search_by_subject }}" value="{{ filter_subject }}">
                 </div>
 
                 <div class="filter-group">
                     <label for="filter-user">
-                        <span class="material-symbols-outlined">person</span> Utilisateur
+                        <span class="material-symbols-outlined">person</span> {{ t.ticket_admin_page.Filter_user }}
                     </label>
-                    <input type="text" name="user" id="filter-user" placeholder="Nom d'utilisateur..." value="{{ filter_user }}">
+                    <input type="text" name="user" id="filter-user" placeholder="{{ t.ticket_admin_page.Search_by_user }}" value="{{ filter_user }}">
                 </div>
 
                 <div class="filter-group">
                     <label for="filter-date-from">
-                        <span class="material-symbols-outlined">calendar_today</span> Date début
+                        <span class="material-symbols-outlined">calendar_today</span> {{ t.ticket_admin_page.Filter_date_from }}
                     </label>
                     <input type="date" name="date_from" id="filter-date-from" value="{{ filter_date_from }}">
                 </div>
 
                 <div class="filter-group">
                     <label for="filter-date-to">
-                        <span class="material-symbols-outlined">event</span> Date fin
+                        <span class="material-symbols-outlined">event</span> {{ t.ticket_admin_page.Filter_date_to }}
                     </label>
                     <input type="date" name="date_to" id="filter-date-to" value="{{ filter_date_to }}">
                 </div>
@@ -65,17 +65,17 @@
                 <div class="filter-group filter-group-checkbox">
                     <input type="checkbox" name="zero_replies" id="filter-zero-replies" value="true" {% if filter_zero_replies == 'true' %}checked{% endif %}>
                     <label for="filter-zero-replies">
-                        <span class="material-symbols-outlined">forum</span> 0 réponse uniquement
+                        <span class="material-symbols-outlined">forum</span> {{ t.ticket_admin_page.Zero_replies_only }}
                     </label>
                 </div>
             </div>
 
             <div class="filter-actions">
                 <button type="submit" class="btn-filter">
-                    <span class="material-symbols-outlined">search</span> Filtrer
+                    <span class="material-symbols-outlined">search</span> {{ t.ticket_admin_page.Button_filter }}
                 </button>
                 <a href="{% url 'ticket_admin' %}" class="btn-reset">
-                    <span class="material-symbols-outlined">restart_alt</span> Réinitialiser
+                    <span class="material-symbols-outlined">restart_alt</span> {{ t.ticket_admin_page.Button_reset }}
                 </a>
             </div>
         </form>
@@ -84,50 +84,51 @@
     <!-- Résultats -->
     <div class="results-section">
         <div class="results-header">
-            <h3>Résultats <span class="result-count">{{ ticket_count }} ticket{{ ticket_count|pluralize:"s" }}</span></h3>
+            <h3>{{ t.ticket_admin_page.Results_title }} <span class="result-count">{{ ticket_count }} {{ t.ticket_admin_page.Ticket_label }}{{ ticket_count|pluralize:"s" }}</span></h3>
         </div>
 
         <div class="ticket-table-container">
             <table class="ticket-table">
                 <thead>
                     <tr>
-                        <th style="width: 8%;">Id</th>
-                        <th style="width: 15%;">Date</th>
-                        <th style="width: 22%;">Utilisateur / Rôle</th>
-                        <th style="width: 30%;">Sujet</th>
-                        <th style="width: 12%;">Statut</th>
-                        <th style="width: 13%;">Réponses</th>
+                        <th style="width: 8%;">{{ t.ticket_admin_page.Col_id }}</th>
+                        <th style="width: 15%;">{{ t.ticket_admin_page.Col_date }}</th>
+                        <th style="width: 22%;">{{ t.ticket_admin_page.Col_user_role }}</th>
+                        <th style="width: 30%;">{{ t.ticket_admin_page.Col_subject }}</th>
+                        <th style="width: 12%;">{{ t.ticket_admin_page.Col_status }}</th>
+                        <th style="width: 13%;">{{ t.ticket_admin_page.Col_replies }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for t in tickets %}
-                    <tr onclick="window.location.href='{% url 'ticket_detail' t.id %}'">
-                        <td><span class="ticket-id">{{ t.id }}</span></td>
-                        <td>{{ t.created_at|date:"d/m/Y H:i" }}</td>
+                    
+                    {% for t_item in tickets %}
+                    <tr onclick="window.location.href='{% url 'ticket_detail' t_item.id %}'">
+                        <td><span class="ticket-id">{{ t_item.id }}</span></td>
+                        <td>{{ t_item.created_at|date:"d/m/Y H:i" }}</td>
                         <td>
-                            <strong>{{ t.user.first_name }} {{ t.user.last_name }}</strong><br>
-                            <span class="user-role">{{ t.user.get_role_display|default:t.user.role }}</span>
+                            <strong>{{ t_item.user.first_name }} {{ t_item.user.last_name }}</strong><br>
+                            <span class="user-role">{{ t_item.user.get_role_display|default:t_item.user.role }}</span>
                         </td>
-                        <td>{{ t.subject }}</td>
+                        <td>{{ t_item.subject }}</td>
                         <td>
                             <span class="status-badge
-                                {% if t.status|lower == 'ouvert' %}status-open
-                                {% elif t.status|lower == 'en cours' %}status-progress
-                                {% elif t.status|lower == 'résolu' or t.status|lower == 'resolu' %}status-resolved
-                                {% elif t.status|lower == 'clos' %}status-closed
+                                {% if t_item.status|lower == 'ouvert' %}status-open
+                                {% elif t_item.status|lower == 'en cours' %}status-progress
+                                {% elif t_item.status|lower == 'résolu' or t_item.status|lower == 'resolu' %}status-resolved
+                                {% elif t_item.status|lower == 'clos' %}status-closed
                                 {% endif %}">
-                                {{ t.status }}
+                                {{ t_item.status }}
                             </span>
                         </td>
                         <td>
-                            <span class="reply-count">{{ t.replies.count }}</span>
+                            <span class="reply-count">{{ t_item.replies.count }}</span>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
                         <td colspan="6" class="empty-state">
-                            <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">search_off</span>
-                            <p>Aucun ticket ne correspond à vos critères de recherche.</p>
+                            <span class="material-symbols-outlined empty-state-icon">search_off</span>
+                            <p>{{ t.ticket_admin_page.No_results }}</p>
                         </td>
                     </tr>
                     {% endfor %}

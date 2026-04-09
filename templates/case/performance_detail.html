@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Détails de la performance{% endblock %}
+{% block title %}{{ t.performance_detail.Page_title }}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/performance_detail.css' %}">
@@ -8,56 +8,56 @@
 
 {% block content %}
 <div class="performance-container">
-    <a href="{% url 'dashboard_redirect' %}" class="back-btn">&larr; Retour au tableau de bord</a>
+    <a href="{% url 'dashboard_redirect' %}" class="back-btn">{{ t.performance_detail.Back_dashboard }}</a>
     
     <div class="performance-header">
-        <h1>Détails de l'entraînement</h1>
-        <p><strong>Cas clinique :</strong> <a href="{% url 'case_detail' performance.case.id %}" class="case-link">{{ performance.case.name }} (n°{{ performance.case.id }})</a></p>
+        <h1>{{ t.performance_detail.Title }}</h1>
+        <p><strong>{{ t.performance_detail.Clinical_case }}</strong> <a href="{% url 'case_detail' performance.case.id %}" class="case-link">{{ performance.case.name }} (n°{{ performance.case.id }})</a></p>
     </div>
 
     <div class="performance-details">
         <div class="detail-item">
-            <h3>Informations générales</h3>
+            <h3>{{ t.performance_detail.Section_general }}</h3>
             <ul>
-                <li><strong>Étudiant :</strong> {{ performance.student.user.first_name }} {{ performance.student.user.last_name }}</li>
-                <li><strong>Date de réalisation :</strong> {{ performance.realization_date|date:"d/m/Y H:i" }}</li>
-                <li><strong>Temps de réalisation :</strong> 
+                <li><strong>{{ t.performance_detail.Student }}</strong> {{ performance.student.user.first_name }} {{ performance.student.user.last_name }}</li>
+                <li><strong>{{ t.performance_detail.Realization_date }}</strong> {{ performance.realization_date|date:"d/m/Y H:i" }}</li>
+                <li><strong>{{ t.performance_detail.Completion_time }}</strong> 
                     {% if performance.completion_time %}
                         {{ performance.completion_time }}
                     {% else %}
-                        Non défini
+                        {{ t.performance_detail.Not_defined }}
                     {% endif %}
                 </li>
             </ul>
         </div>
         
         <div class="detail-item scores-section">
-            <h3>Résultats</h3>
+            <h3>{{ t.performance_detail.Section_results }}</h3>
             <ul>
-                <li><strong>Score total :</strong> {% if performance.total_score != None %}{{ performance.total_score }}{% else %}-{% endif %}</li>
-                <li><strong>Compétences cliniques :</strong> {% if performance.clinical_skills_score != None %}{{ performance.clinical_skills_score }}{% else %}-{% endif %}</li>
-                <li><strong>Communication :</strong> {% if performance.communication_skills_score != None %}{{ performance.communication_skills_score }}{% else %}-{% endif %}</li>
+                <li><strong>{{ t.performance_detail.Total_score }}</strong> {% if performance.total_score != None %}{{ performance.total_score }}{% else %}-{% endif %}</li>
+                <li><strong>{{ t.performance_detail.Clinical_skills }}</strong> {% if performance.clinical_skills_score != None %}{{ performance.clinical_skills_score }}{% else %}-{% endif %}</li>
+                <li><strong>{{ t.performance_detail.Communication }}</strong> {% if performance.communication_skills_score != None %}{{ performance.communication_skills_score }}{% else %}-{% endif %}</li>
             </ul>
         </div>
     </div>
 
     <div class="logs-section">
-        <h3>Log de conversation</h3>
+        <h3>{{ t.performance_detail.Conversation_log }}</h3>
         {% if performance.conversation_log %}
             <div class="log-box">
                 <pre>{{ performance.conversation_log|pprint }}</pre>
             </div>
         {% else %}
-            <p>Aucun log de conversation disponible.</p>
+            <p>{{ t.performance_detail.No_conversation_log }}</p>
         {% endif %}
 
-        <h3>Log d'évaluation</h3>
+        <h3>{{ t.performance_detail.Evaluation_log }}</h3>
         {% if performance.evaluation_log %}
             <div class="log-box">
                 <pre>{{ performance.evaluation_log|pprint }}</pre>
             </div>
         {% else %}
-            <p>Aucun log d'évaluation disponible.</p>
+            <p>{{ t.performance_detail.No_evaluation_log }}</p>
         {% endif %}
     </div>
 </div>

@@ -162,3 +162,29 @@
     margin-right: 6px;
     font-size: 18px;
 }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    .data-export-container {
+        padding: 20px 16px;
+    }
+    .export-card {
+        padding: 20px;
+    }
+    .export-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    .export-card h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .data-export-container {
+        padding: 16px 10px;
+    }
+    .export-card {
+        padding: 16px;
+        border-radius: 8px;
+    }
+}

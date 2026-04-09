@@ -41,8 +41,7 @@
             <li><a href="{% url 'users' %}">{{ t.header.Users }}</a></li>
             <li><a href="{% url 'data' %}">{{ t.header.Data }}</a></li>
             {% elif user.role == 'teacher' %}
-            <li><a href="#">{{ t.header.Students }}</a></li>
-            <li><a href="#">{{ t.header.Export_data }}</a></li>
+            <li><a href="{% url 'teacher_all_trainings' %}">{{ t.header.All_student_trainings }}</a></li>
             {% else %}
             <li><a href="{% url 'all_cases' %}">{{ t.header.Train }}</a></li>
             {% endif %}
