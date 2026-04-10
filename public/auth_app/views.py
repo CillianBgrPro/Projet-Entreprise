@@ -20,6 +20,16 @@ from django.apps import apps
 
 
 def register(request):
+    """
+    Handle user registration.
+
+    If the request method is POST, it processes the form submission.
+    If the form is valid, it saves the new user and logs them in,
+    then redirects to the home page. If the username already exists,
+    it adds an error message to the form.
+
+    If the request method is GET, it simply renders the registration form.
+    """
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request=request)
         if form.is_valid():
@@ -36,7 +46,18 @@ def register(request):
     
     return render(request, 'connexion/inscription.html', {'form': form})
 
+
 def login_view(request):
+    """
+    Handle user login.
+
+    If the request method is POST, it processes the form submission.
+    It attempts to authenticate the user and logs them in if successful,
+    redirecting to the home page. If authentication fails, it adds an error
+    message to the form indicating whether the username or password is incorrect.
+
+    If the request method is GET, it simply renders the login form.
+    """
     if request.method == 'POST':
         u_name = request.POST.get('username')
         p_word = request.POST.get('password')
@@ -65,9 +86,16 @@ def login_view(request):
     
     return render(request, 'connexion/connexion.html')
 
+
 def home(request):
+    """
+    Handle the home page.
+
+    If the request method is GET, it simply renders the home template.
+    """
     # logout(request)
     return render(request, 'accueil.html')
+
 
 ALLOWED_AVATARS = [
     'person', 'person_2', 'person_3', 'person_4',
@@ -79,8 +107,16 @@ ALLOWED_AVATARS = [
     'star', 'favorite', 'diamond',
 ]
 
+
 @login_required
 def account(request):
+    """
+    Handle the user account management page.
+
+    If the request method is POST, it processes the password change form.
+    It validates and saves the new password if valid. If not, it adds errors to the form.
+    If the request method is GET, it simply renders the account settings template.
+    """
     """Redirige vers le bon dashboard selon le rôle de l'utilisateur."""
     user = request.user
     password_changed = False
@@ -111,8 +147,15 @@ def account(request):
         'password_changed': password_changed,
     })
 
+
 @login_required
 def dashboard_redirect(request):
+    """
+    Handle the dashboard redirection based on user role.
+
+    If the request method is GET, it redirects to the appropriate dashboard based on whether
+    the user is a superuser, teacher, or student.
+    """
     user = request.user
     if user.is_superuser:
         return redirect('admin_dashboard')
@@ -121,8 +164,16 @@ def dashboard_redirect(request):
     else:
         return redirect('student_dashboard')
 
+
 @login_required
 def change_avatar(request):
+    """
+    Handle the avatar change for authenticated users.
+
+    If the request method is POST, it processes the new avatar form.
+    It updates the user's avatar if valid. If not, it returns an error response.
+    If the request method is GET, it returns a method not allowed response.
+    """
     if request.method == 'POST':
         avatar = request.POST.get('avatar', '').strip()
         if avatar in ALLOWED_AVATARS:
@@ -132,8 +183,14 @@ def change_avatar(request):
         return JsonResponse({'status': 'error', 'message': 'Avatar invalide.'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Méthode non autorisée.'}, status=405)
 
+
 @login_required
 def student_dashboard(request):
+    """
+    Handle the student dashboard.
+
+    If the request method is GET, it calculates various statistics and renders the dashboard template.
+    """
     from .models import StudentPerformance
     from django.db.models import Avg, Max, Min, Count
     import statistics as stats_lib
@@ -182,16 +239,28 @@ def student_dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
+
 @login_required
 def student_trainings(request):
+    """
+    Handle the list of student trainings.
+
+    If the request method is GET, it retrieves and renders the student's training history.
+    """
     from .models import StudentPerformance
     trainings = StudentPerformance.objects.filter(
         student__user=request.user
     ).select_related('case').order_by('-realization_date')
     return render(request, 'case/student_trainings.html', {'trainings': trainings})
 
+
 @login_required
 def teacher_dashboard(request):
+    """
+    Handle the teacher dashboard.
+
+    If the request method is GET, it calculates various statistics and renders the dashboard template.
+    """
     from .models import ClinicalCase, Training, StudentPerformance, Professor
     from django.db.models import Avg, Count
 
@@ -237,8 +306,14 @@ def teacher_dashboard(request):
     }
     return render(request, 'dashboard.html', context)
 
+
 @login_required
 def admin_dashboard(request):
+    """
+    Handle the admin dashboard.
+
+    If the request method is GET, it calculates various statistics and renders the dashboard template.
+    """
     if not request.user.is_superuser:
         return redirect('home')
 
@@ -310,11 +385,24 @@ def admin_dashboard(request):
 
     return render(request, 'dashboard.html', context)
 
+
 def logout_view(request):
+    """
+    Handle user logout.
+
+    If the request method is GET, it logs out the user and redirects to the home page.
+    """
     logout(request)
     return redirect('home')
 
+
 def users(request):
+    """
+    Handle the list of all users.
+
+    Only accessible by superusers. It handles filtering and displaying users based on search queries,
+    universities, or specific professors.
+    """
     if not request.user.is_superuser:
         return redirect('home')
     
@@ -379,12 +467,19 @@ def users(request):
     return render(request, 'administrater/users.html', context)
 
 def logs(request):
+    """
+    Logs view to display recent user registrations, tickets, and student performances.
+    
+    Returns:
+        HttpResponse: Rendered template with logs data.
+    """
     if not request.user.is_superuser:
         return redirect('home')
     
     from .models import User, Ticket, StudentPerformance
     from django.utils import timezone
     from datetime import timedelta
+    
     thirty_days_ago = timezone.now() - timedelta(days=30)
 
     latest_users = User.objects.filter(date_joined__gte=thirty_days_ago).order_by('-date_joined').values(
@@ -429,6 +524,12 @@ def logs(request):
     return render(request, 'administrater/logs.html', {'logs': logs})
 
 def data(request):
+    """
+    Data view to export fields for students and teachers.
+
+    Returns:
+        HttpResponse: Rendered template with exportable data fields.
+    """
     if not request.user.is_superuser:
         return redirect('home')
 
@@ -482,6 +583,12 @@ def data(request):
     return render(request, 'administrater/data-export.html', context)
 
 def send_code_view(request):
+    """
+    Sends a verification code to the provided email address.
+
+    Returns:
+        JsonResponse: JSON response indicating success or failure.
+    """
     email = request.GET.get('email', '').strip().lower()
     if not email:
         return JsonResponse({'status': 'error', 'message': 'Email manquant'})
@@ -525,6 +632,12 @@ def send_code_view(request):
         return JsonResponse({'status': 'error', 'message': str(e)})
 
 def verify_code(request):
+    """
+    Verifies the provided verification code.
+
+    Returns:
+        JsonResponse: JSON response indicating success or failure.
+    """
     code_saisi = request.GET.get('code', '').strip()
     code_attendu = request.session.get('verification_code')
     code_timestamp = request.session.get('verification_code_time', 0)
@@ -542,6 +655,12 @@ def verify_code(request):
 
 @login_required
 def export_students_csv(request):
+    """
+    Exports students data to a CSV file.
+
+    Returns:
+        HttpResponse: Downloadable CSV file.
+    """
     if not request.user.is_superuser:
         return redirect('home')
         
@@ -579,26 +698,62 @@ def export_students_csv(request):
     return response
 
 def set_language(request, lang):
+    """
+    Sets the user's language preference.
+
+    Args:
+        request (HttpRequest): The current request.
+        lang (str): The language code ('fr' or 'en').
+
+    Returns:
+        HttpResponse: Redirects to the referrer page.
+    """
     if lang in ['fr', 'en']:
         request.session['lang'] = lang
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 def legal_notices(request):
+    """
+    Renders the legal notices page.
+
+    Returns:
+        HttpResponse: Rendered template for legal notices.
+    """
     return render(request, 'infos/mentions_legales.html')
 
 def privacy_policies(request):
+    """
+    Renders the privacy policies page.
+
+    Returns:
+        HttpResponse: Rendered template for privacy policies.
+    """
     return render(request, 'infos/politiques_confidentialite.html')
 
 @login_required
 def open_ticket(request):
+    """
+    Renders the ticket opening page.
+
+    Returns:
+        HttpResponse: Rendered template for ticket opening.
+    """
     return render(request, 'infos/ouvrir_ticket.html')
 
 @login_required
 def contact(request):
+    """
+    Handles the creation of a new ticket and sends a confirmation email.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     if request.method == 'POST':
+        # Extract subject and message from form data, stripping any leading/trailing whitespace
         sujet = request.POST.get('subject', '').strip()
         message = request.POST.get('message', '').strip()
         
+        # Create a new ticket instance if both subject and message are provided
         if sujet and message:
             from .models import Ticket
             Ticket.objects.create(
@@ -608,8 +763,8 @@ def contact(request):
                 status='Ouvert'
             )
             
-
             try:
+                # Send confirmation email if resend API key is available
                 if resend.api_key:
                     resend.Emails.send({
                         "from": "mail@mailentreprise.carodavid2026.fr",
@@ -647,14 +802,34 @@ def contact(request):
 
 @login_required
 def ticket(request):
+    """
+    Displays a list of tickets created by the authenticated user.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     from .models import Ticket
     tickets = Ticket.objects.filter(user=request.user)
     return render(request, 'infos/dashboard_ticket.html', {'tickets': tickets})
 
+@login_required
 def study_details(request):
+    """
+    Renders the details of a study.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     return render(request, 'infos/details_etude.html')
 
+@login_required
 def ticket_admin(request):
+    """
+    Admin interface to manage tickets. Filters and displays tickets based on various criteria.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     if not request.user.is_superuser:
         return redirect('home')
     from .models import Ticket
@@ -691,6 +866,13 @@ def ticket_admin(request):
 
 @login_required
 def ticket_detail(request, ticket_id):
+    """
+    Displays the details of a specific ticket and allows users to reply.
+    
+    :param request: Django HttpRequest object containing user input
+    :param ticket_id: ID of the ticket to be displayed
+    :return: HttpResponse object with rendered template
+    """
     from .models import Ticket, TicketReply
     ticket = get_object_or_404(Ticket, id=ticket_id)
     
@@ -707,7 +889,7 @@ def ticket_detail(request, ticket_id):
                 user=request.user,
                 message=message
             )
-            # Envoyer un e-mail à l'auteur si la réponse vient de l'administrateur
+            # Send confirmation email to the user if this is a reply from an administrator
             if request.user.is_superuser:
                 try:
                     import resend
@@ -744,6 +926,13 @@ def ticket_detail(request, ticket_id):
 
 @login_required
 def ticket_change_status(request, ticket_id):
+    """
+    Allows superusers to change the status of a specific ticket.
+    
+    :param request: Django HttpRequest object containing user input
+    :param ticket_id: ID of the ticket whose status needs to be changed
+    :return: HttpResponse object redirecting to the ticket detail page
+    """
     if not request.user.is_superuser:
         return redirect('home')
         
@@ -760,6 +949,12 @@ def ticket_change_status(request, ticket_id):
 
 @login_required
 def all_cases(request):
+    """
+    Displays a list of clinical cases and allows filtering.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     from .models import ClinicalCase
 
     name = request.GET.get('name', '').strip()
@@ -780,7 +975,7 @@ def all_cases(request):
         date_to=date_to or None,
     ).order_by('-created_at')
 
-    # création dynamique des filtres, pas en dur donc on peut rajouter des spécialités
+    # Dynamically create filters for specialities, study levels, and knowledge levels
     all_specialities = sorted(ClinicalCase.objects.exclude(speciality='').values_list('speciality', flat=True).distinct())
     all_study_levels = sorted(ClinicalCase.objects.exclude(study_level='').values_list('study_level', flat=True).distinct())
     all_knowledge_levels = sorted(ClinicalCase.objects.exclude(knowledge_level='').values_list('knowledge_level', flat=True).distinct())
@@ -805,6 +1000,12 @@ def all_cases(request):
 
 @login_required
 def random_case(request):
+    """
+    Redirects to a random clinical case.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object redirecting to the random case detail page
+    """
     from .models import ClinicalCase
     case_obj = ClinicalCase.objects.order_by('?').first()
     if case_obj:
@@ -813,12 +1014,26 @@ def random_case(request):
 
 @login_required
 def case_detail(request, case_id):
+    """
+    Displays the details of a specific clinical case.
+    
+    :param request: Django HttpRequest object containing user input
+    :param case_id: ID of the clinical case to be displayed
+    :return: HttpResponse object with rendered template
+    """
     from .models import ClinicalCase
     case_obj = get_object_or_404(ClinicalCase, id=case_id)
     return render(request, 'case/case_detail.html', {'case': case_obj})
 
 @login_required
 def start_case(request, case_id):
+    """
+    Handles the starting of a clinical case by an authenticated student.
+    
+    :param request: Django HttpRequest object containing user input
+    :param case_id: ID of the clinical case to be started
+    :return: HttpResponse object redirecting to the performance play page
+    """
     if request.method != 'POST':
         return redirect('case_detail', case_id=case_id)
         
@@ -834,7 +1049,7 @@ def start_case(request, case_id):
         messages.error(request, "Seuls les étudiants peuvent démarrer un cas.")
         return redirect('case_detail', case_id=case_id)
         
-    # Création de l'essai (StudentPerformance)
+    # Create a new performance record (StudentPerformance)
     performance = StudentPerformance.objects.create(
         student=student,
         case=case_obj,
@@ -845,6 +1060,13 @@ def start_case(request, case_id):
 
 @login_required
 def play_performance(request, performance_id):
+    """
+    Displays the performance page for a clinical case.
+    
+    :param request: Django HttpRequest object containing user input
+    :param performance_id: ID of the student performance record
+    :return: HttpResponse object with rendered template
+    """
     from .models import StudentPerformance
     from django.contrib import messages
     performance = get_object_or_404(StudentPerformance, id=performance_id)
@@ -857,6 +1079,13 @@ def play_performance(request, performance_id):
 
 @login_required
 def performance_detail(request, performance_id):
+    """
+    Displays the details of a specific student performance record.
+    
+    :param request: Django HttpRequest object containing user input
+    :param performance_id: ID of the student performance record to be displayed
+    :return: HttpResponse object with rendered template
+    """
     from .models import StudentPerformance
     from django.contrib import messages
     performance = get_object_or_404(StudentPerformance, id=performance_id)
@@ -867,10 +1096,14 @@ def performance_detail(request, performance_id):
         
     return render(request, 'case/performance_detail.html', {'performance': performance})
 
-
-
 @login_required
 def admin_all_trainings(request):
+    """
+    Displays a list of all trainings managed by the superuser.
+    
+    :param request: Django HttpRequest object containing user input
+    :return: HttpResponse object with rendered template
+    """
     if not request.user.is_superuser:
         return redirect('home')
         
@@ -885,9 +1118,18 @@ def admin_all_trainings(request):
         error_msg = f"Une erreur s'est produite lors du chargement des entraînements:<br><pre>{traceback.format_exc()}</pre>"
         return HttpResponse(error_msg, status=500)
 
-
+# View to handle dynamic CSV export for various models
 @login_required
 def dynamic_export_csv(request):
+    """
+    Handle the dynamic CSV export for data from different models.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: A CSV file with selected columns from the specified model.
+    """
     if not request.user.is_superuser:
         return redirect('home')
 
@@ -945,10 +1187,10 @@ def dynamic_export_csv(request):
         # Les champs booléens à convertir en Oui/Non
         boolean_fields = {'rgpd_consent', 'scientific_study', 'is_finished'}
 
-        # Prèp ficher csv 
+        # Préparer le fichier CSV 
         response = HttpResponse(content_type='text/csv; charset=utf-8')
         response['Content-Disposition'] = f'attachment; filename="export_{model_name.lower()}.csv"'
-        response.write('\ufeff')
+        response.write('\ufeff')  # BOM for Excel
         writer = csv.writer(response, delimiter=';')
 
         # En-tête avec les labels lisibles
@@ -976,12 +1218,21 @@ def dynamic_export_csv(request):
 
     return redirect('data')
 
+# View to handle the creation of a new clinical case
 @login_required
 def create_case(request):
+    """
+    Handle the creation of a new clinical case.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirects to the case detail page or displays an error message.
+    """
     if request.method == 'POST':
         from .models import ClinicalCase
         from django.contrib import messages
-        
         try:
             professor = request.user.professor_profile
             
@@ -1012,15 +1263,25 @@ def create_case(request):
     
     return render(request, 'teacher/case_creation.html')
 
+# View to display all trainings for teachers
 @login_required
 def teacher_all_trainings(request):
+    """
+    Display all student performances for teachers.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Render the template with a list of performances.
+    """
     if request.user.role != 'teacher':
         return redirect('home')
 
     from .models import StudentPerformance
     from django.db.models import Q
     from django.core.paginator import Paginator
-
+    
     search_query = request.GET.get('search', '').strip()
     
     performances = StudentPerformance.objects.select_related('student__user', 'case').all().order_by('-realization_date')
