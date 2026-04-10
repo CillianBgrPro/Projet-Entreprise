@@ -5,7 +5,7 @@ from django.conf import settings
 def translations(request):
     lang = request.session.get('lang', 'fr')
 
-    file_path = os.path.join('assets/translate', f'{lang}.json')
+    file_path = os.path.join(settings.BASE_DIR.parent, 'assets', 'translate', f'{lang}.json')
     
     translations_data = {}
     
